@@ -1,10 +1,12 @@
-﻿using InventoryControl.WebUI.Identity.Entity;
+﻿using InventoryControl.WebUI.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryControl.WebUI.Controllers
 {
     public class UsuarioController : BaseController 
     {
+       
         /// <summary>
         /// 
         /// </summary>
@@ -13,16 +15,6 @@ namespace InventoryControl.WebUI.Controllers
         {
             return View();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Login()
-        {
-            if (User.Identity.IsAuthenticated)
-            { 
-                
-            }
-        }
+      
     }
 }

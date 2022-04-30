@@ -1,4 +1,5 @@
-﻿using InventoryControl.WebUI.Models;
+﻿using InventoryControl.WebUI.Attributes;
+using InventoryControl.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -15,11 +16,13 @@ namespace InventoryControl.WebUI.Controllers
             _logger = logger;
         }
 
+
+        [SessionExpire]
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if User.Identity.IsAuthenticated)
             {
-                HttpContext.Session
+                return RedirectToAction("Login", "Account", new { });
             }
             return View();
         }

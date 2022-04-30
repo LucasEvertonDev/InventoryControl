@@ -25,7 +25,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.Name = "INVENTORY_CONTROL";
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
-    options.LoginPath = "Usuario/Login";
+    options.LoginPath = "/Account/Login";
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
     options.SlidingExpiration = true;
 });
