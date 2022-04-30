@@ -1,9 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using InventoryControl.Application.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace InventoryControl.WebUI.Identity.Stores
 {
     public class UserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IUserRoleStore<ApplicationUser>
     {
+        private readonly IUsuarioService _usuarioService;
+
+        public UserStore(IUsuarioService usuarioService)
+        {
+            _usuarioService = usuarioService;
+        }
+
         private bool disposedValue;
 
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -16,19 +24,37 @@ namespace InventoryControl.WebUI.Identity.Stores
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = await _usuarioService.FindById(int.Parse(userId));
+            var roles = await _usuarioService.FindAcessosByPerfilUsuarioId(user.PerfilUsuarioId.Value);
+            return new ApplicationUser()
+            {
+                Id = user.Id,
+                UserName = user.Login,
+                Email = user.Email,
+                PasswordHash = user.Senha,
+                Roles = roles.Select(a => a.Nome).ToList()
+            };
         }
 
-        public Task<ApplicationUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = await _usuarioService.FindByUsername(normalizedUserName);
+            var roles = await _usuarioService.FindAcessosByPerfilUsuarioId(user.PerfilUsuarioId.Value);
+            return new ApplicationUser()
+            {
+                Id = user.Id,
+                UserName = user.Login,
+                Email = user.Email,
+                PasswordHash = user.Senha,
+                Roles = roles.Select(a => a.Nome).ToList()
+            };
         }
 
         public Task<string> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.UserName);
         }
 
         public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -87,7 +113,7 @@ namespace InventoryControl.WebUI.Identity.Stores
 
         public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Task<string> GetPasswordHashAsync(ApplicationUser user, CancellationToken cancellationToken)

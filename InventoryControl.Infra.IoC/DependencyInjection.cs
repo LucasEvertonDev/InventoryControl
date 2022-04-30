@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using InventoryControl.Application.Interfaces;
 using InventoryControl.Application.Mapping;
+using InventoryControl.Application.Services;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using InventoryControl.Infra.Data.Context;
@@ -30,7 +32,13 @@ namespace InventoryControl.Infra.IoC
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
-            
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAcessosService, AcessosService>();
+            services.AddScoped<IRepository<MapPerfilUsuariosAcessos>, Repository<MapPerfilUsuariosAcessos>>();
+            services.AddScoped<IRepository<Acesso>, Repository<Acesso>>();
+
+
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new DomainToDTOMappingProfile());

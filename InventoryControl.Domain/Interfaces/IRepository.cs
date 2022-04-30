@@ -8,10 +8,34 @@ namespace InventoryControl.Domain.Interfaces
 {
     public interface IRepository<T> where T : IEntity
     {
-        IEnumerable<T> FindAll();
-        T? FindById(int? id);
-        T Insert(T domain);
-        T Update(T domain);
-        T Delete(T domain);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<T>> FindAll();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<T>? FindById(int? id);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        Task<T> Insert(T domain);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        Task<T> Update(T domain);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        Task<T> Delete(T domain);
     }
 }

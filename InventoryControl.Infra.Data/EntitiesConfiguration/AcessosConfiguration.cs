@@ -13,6 +13,7 @@ namespace InventoryControl.Infra.Data.EntitiesConfiguration
     {
         public void Configure(EntityTypeBuilder<Acesso> builder)
         {
+            builder.ToTable("Acesso");
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Nome).HasMaxLength(30).IsRequired();
             builder.Property(u => u.Descricao).HasMaxLength(100).IsRequired();

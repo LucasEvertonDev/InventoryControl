@@ -15,8 +15,9 @@ namespace InventoryControl.Infra.Data.Context
            : base(options)
         { }
 
-        public DbSet<Usuario>? Users { get; set; }
-
+        public DbSet<Usuario> Users { get; set; }
+        public DbSet<Acesso> Acessos { get; set; }
+        public DbSet<MapPerfilUsuariosAcessos> MapPerfilUsuariosAcessos { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

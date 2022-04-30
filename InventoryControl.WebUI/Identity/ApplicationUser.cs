@@ -8,6 +8,7 @@ namespace InventoryControl.WebUI.Identity
         public ApplicationUser()
         { 
             Roles = new List<string>();
+            PasswordHash = "";
         }
         public IList<string> Roles { get; set; } 
     }

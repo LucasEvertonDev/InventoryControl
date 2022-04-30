@@ -1,6 +1,7 @@
 ﻿using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using InventoryControl.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace InventoryControl.Infra.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        protected readonly ApplicationDbContext _applicationDbContext;
+        protected ApplicationDbContext _applicationDbContext;
 
         public Repository(ApplicationDbContext applicationDbContext)
         {
@@ -23,10 +24,10 @@ namespace InventoryControl.Infra.Data.Repository
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        public TEntity Delete(TEntity domain)
+        public async Task<TEntity> Delete(TEntity domain)
         {
             _applicationDbContext.Remove(domain);
-            _applicationDbContext.SaveChanges();
+            await _applicationDbContext.SaveChangesAsync();
             return domain;
         }
 
@@ -35,29 +36,31 @@ namespace InventoryControl.Infra.Data.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TEntity? FindById(int? id)
+        public async Task<TEntity>? FindById(int? id)
         {
-            return _applicationDbContext.Set<TEntity>().Find(id);
+            TEntity? val = await _applicationDbContext.Set<TEntity>().FindAsync(id);
+            return val;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<TEntity> FindAll()
+        public async Task<IEnumerable<TEntity>> FindAll()
         {
-            return _applicationDbContext.Set<TEntity>().ToList();
+            return await _applicationDbContext.Set<TEntity>().ToListAsync();
         }
 
+        
         /// <summary>
         /// 
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        public TEntity Insert(TEntity domain)
+        public async Task<TEntity> Insert(TEntity domain)
         {
             _applicationDbContext.Add(domain);
-            _applicationDbContext.SaveChanges();
+            await _applicationDbContext.SaveChangesAsync();
             return domain;
         }
 
@@ -66,10 +69,10 @@ namespace InventoryControl.Infra.Data.Repository
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        public TEntity Update(TEntity domain)
+        public async Task<TEntity> Update(TEntity domain)
         {
             _applicationDbContext.Update(domain);
-            _applicationDbContext.SaveChanges();
+            await _applicationDbContext.SaveChangesAsync();
             return domain;
         }
     }

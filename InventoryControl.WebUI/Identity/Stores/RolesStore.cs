@@ -1,9 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using InventoryControl.Application.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace InventoryControl.WebUI.Identity.Stores
 {
     public class RoleStore : IRoleStore<ApplicationRole>
     {
+        private readonly IAcessosService _acessoService;
+
+        public RoleStore(IAcessosService acessosService)
+        {
+            _acessoService = acessosService;
+        }
+
         public Task<IdentityResult> CreateAsync(ApplicationRole role, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
@@ -16,22 +24,32 @@ namespace InventoryControl.WebUI.Identity.Stores
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
 
-        public Task<ApplicationRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)
+        public async Task<ApplicationRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var role = await _acessoService.FindById(int.Parse(roleId));
+            return new ApplicationRole()
+            {
+                Id = role.Id,
+                Name = role.Nome,
+            };
         }
 
-        public Task<ApplicationRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
+        public async Task<ApplicationRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var role = await _acessoService.FindByName(normalizedRoleName);
+            return new ApplicationRole()
+            {
+                Id = role.Id,
+                Name = role.Nome,
+            };
         }
 
         public Task<string> GetNormalizedRoleNameAsync(ApplicationRole role, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(role.Name);
         }
 
         public Task<string> GetRoleIdAsync(ApplicationRole role, CancellationToken cancellationToken)

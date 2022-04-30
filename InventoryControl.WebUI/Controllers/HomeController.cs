@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace InventoryControl.WebUI.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,7 +20,7 @@ namespace InventoryControl.WebUI.Controllers
         [SessionExpire]
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account", new { });
             }

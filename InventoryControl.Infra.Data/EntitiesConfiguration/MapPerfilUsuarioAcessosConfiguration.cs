@@ -13,6 +13,7 @@ namespace InventoryControl.Infra.Data.EntitiesConfiguration
     {
         public void Configure(EntityTypeBuilder<MapPerfilUsuariosAcessos> builder)
         {
+            builder.ToTable("MapPerfilUsuariosAcessos");
             builder.HasKey(m => m.Id);
 
             builder.HasOne(m => m.PerfilUsuario)
