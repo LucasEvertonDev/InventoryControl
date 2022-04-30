@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 
 namespace InventoryControl.Infra.Data.EntitiesConfiguration
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class PerfillUsuarioConfiguration : IEntityTypeConfiguration<PerfilUsuario>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<PerfilUsuario> builder)
         {
-            builder.HasKey(t => t.Id);
+            builder.HasKey(u => u.Id);
+            builder.Property(u => u.Nome).HasMaxLength(30).IsRequired();
+            builder.Property(u => u.Situacao).IsRequired();
         }
     }
 }

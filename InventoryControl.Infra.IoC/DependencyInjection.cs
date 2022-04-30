@@ -29,7 +29,7 @@ namespace InventoryControl.Infra.IoC
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
             
             var mapperConfig = new MapperConfiguration(mc =>
             {

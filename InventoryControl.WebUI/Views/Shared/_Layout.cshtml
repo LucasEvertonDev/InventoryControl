@@ -34,14 +34,14 @@
   <body>
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-        <partial name="_LayoutMenu.cshtml" />
+        @await Html.PartialAsync("_LayoutMenu")
         <div class="layout-page">
-          <partial name="_LayoutNavBar.cshtml" />
+          @await Html.PartialAsync("_LayoutNavBar")
           <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
                 @RenderBody()
             </div>
-            <partial name="_LayoutFooter.cshtml" />
+            @await Html.PartialAsync("_LayoutFooter")
             <div class="content-backdrop fade"></div>
           </div>
         </div>

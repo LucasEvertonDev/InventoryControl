@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryControl.Domain.Entities
+namespace InventoryControl.Application.Models
 {
-    public class User : Entity
+    public class UsuarioModel : BaseModel
     {
     }
 }

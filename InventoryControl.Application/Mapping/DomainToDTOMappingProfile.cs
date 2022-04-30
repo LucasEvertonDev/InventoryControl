@@ -13,7 +13,7 @@ namespace InventoryControl.Application.Mapping
     {
         public DomainToDTOMappingProfile()
         {
-            CreateMap<User, UserModel>().ReverseMap();
+            CreateMap<Usuario, UsuarioModel>().ReverseMap();
         }
     }
 }
