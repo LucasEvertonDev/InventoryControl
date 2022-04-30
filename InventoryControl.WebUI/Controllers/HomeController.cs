@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 namespace InventoryControl.WebUI.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
