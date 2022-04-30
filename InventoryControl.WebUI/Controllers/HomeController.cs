@@ -20,7 +20,7 @@ namespace InventoryControl.WebUI.Controllers
         [SessionExpire]
         public IActionResult Index()
         {
-            if User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account", new { });
             }
