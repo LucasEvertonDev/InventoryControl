@@ -1,4 +1,5 @@
 using InventoryControl.Infra.IoC;
+using InventoryControl.WebUI.Config;
 using InventoryControl.WebUI.Identity;
 using InventoryControl.WebUI.Identity.Hasher;
 using InventoryControl.WebUI.Identity.Stores;
@@ -63,8 +64,6 @@ app.UseAuthorization();
 
 app.UseSession();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.ConfigurateRoutes();
 
 app.Run();
