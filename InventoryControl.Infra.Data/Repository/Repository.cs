@@ -14,6 +14,8 @@ namespace InventoryControl.Infra.Data.Repository
     {
         protected ApplicationDbContext _applicationDbContext;
 
+        public Task<IQueryable<TEntity>> Itens => Task.FromResult(_applicationDbContext.Set<TEntity>().AsQueryable());
+
         public Repository(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
@@ -24,11 +26,10 @@ namespace InventoryControl.Infra.Data.Repository
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        public async Task<TEntity> Delete(TEntity domain)
+        public Task<TEntity> Delete(TEntity domain)
         {
             _applicationDbContext.Remove(domain);
-            await _applicationDbContext.SaveChangesAsync();
-            return domain;
+            return Task.FromResult(domain);
         }
 
         /// <summary>
@@ -57,11 +58,10 @@ namespace InventoryControl.Infra.Data.Repository
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        public async Task<TEntity> Insert(TEntity domain)
+        public Task<TEntity> Insert(TEntity domain)
         {
             _applicationDbContext.Add(domain);
-            await _applicationDbContext.SaveChangesAsync();
-            return domain;
+            return Task.FromResult(domain);
         }
 
         /// <summary>
@@ -69,11 +69,19 @@ namespace InventoryControl.Infra.Data.Repository
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        public async Task<TEntity> Update(TEntity domain)
+        public Task<TEntity> Update(TEntity domain)
         {
             _applicationDbContext.Update(domain);
+            return Task.FromResult(domain);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task Save()
+        {
             await _applicationDbContext.SaveChangesAsync();
-            return domain;
         }
     }
 }

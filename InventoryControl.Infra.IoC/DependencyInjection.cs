@@ -38,13 +38,14 @@ namespace InventoryControl.Infra.IoC
             services.AddScoped<IRepository<MapPerfilUsuariosAcessos>, Repository<MapPerfilUsuariosAcessos>>();
             services.AddScoped<IRepository<Acesso>, Repository<Acesso>>();
 
-
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new DomainToDTOMappingProfile());
             });
 
             services.AddSingleton(mapperConfig.CreateMapper());
+
+            services.AddMemoryCache();
 
             return services;
         }

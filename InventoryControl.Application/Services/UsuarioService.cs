@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InventoryControl.Application.Services
 {
-    public class UsuarioService : IUsuarioService
+    public class UsuarioService : Service, IUsuarioService
     {
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IRepository<MapPerfilUsuariosAcessos> _mapPerfilUsuariosAcessos;
@@ -64,6 +64,26 @@ namespace InventoryControl.Application.Services
         {
             var users = await _usuarioRepository.FindAll();
             return users.Where(a => a.Login.ToLower() == userName.ToLower()).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Usuario> Login(string userName, string password)
+        {
+            var user = await this.FindByUsername(userName);
+            if (user == null || user.Id < 1)
+            {
+                LogicalException("Username não cadastrado!");
+            }
+
+            if (!user.Senha.Equals(password))
+            {
+                LogicalException("Password inválido!");
+            }
+            return user;
         }
     }
 }

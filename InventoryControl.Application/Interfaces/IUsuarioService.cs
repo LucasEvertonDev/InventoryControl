@@ -13,5 +13,7 @@ namespace InventoryControl.Application.Interfaces
         Task<Usuario> FindByName(string name);
         Task<Usuario> FindByUsername(string userName);
         Task<List<Acesso>> FindAcessosByPerfilUsuarioId(int perfilUsuario);
+        Task<Usuario> Login(string userName, string password);
+        
     }
 }

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html
   lang="en"
-  class="light-style layout-menu-fixed"
+  class="light-style customizer-hide"
   dir="ltr"
   data-theme="theme-default"
   data-assets-path="~/theme/assets/"
@@ -13,7 +13,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-    <title>App Name</title>
+    <title>Login Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
     <meta name="description" content="" />
     <link rel="icon" type="image/x-icon" href="~/theme/assets/img/favicon/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,29 +27,24 @@
     <link rel="stylesheet" href="~/theme/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="~/theme/assets/css/demo.css" />
     <link rel="stylesheet" href="~/theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="~/theme/assets/vendor/css/pages/page-auth.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/theme/assets/vendor/js/helpers.js"></script>
     <script src="~/theme/assets/js/config.js"></script>
   </head>
-   
   <body>
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-        @await Html.PartialAsync("_LayoutMenu")
-        <div class="layout-page">
-          @await Html.PartialAsync("_LayoutNavBar")
-          <div class="content-wrapper">
-            <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <div class="card">
+            <div class="card-body">
                 @RenderBody()
             </div>
-            @await Html.PartialAsync("_LayoutFooter")
-            <div class="content-backdrop fade"></div>
-            <div id="alertsModal"></div>
           </div>
         </div>
       </div>
-      <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+    <div id="alertsModal"></div>
     <script src="~/theme/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="~/theme/assets/vendor/libs/popper/popper.js"></script>
     <script src="~/theme/assets/vendor/js/bootstrap.js"></script>
@@ -75,5 +70,5 @@
             }
         });
     </script> 
-</body>
+  </body>
 </html>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InventoryControl.Application.Services
 {
-    public class AcessosService : IAcessosService
+    public class AcessosService : Service, IAcessosService
     {
         private readonly IRepository<Acesso> _acessosRepository;
 
