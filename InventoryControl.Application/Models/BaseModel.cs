@@ -8,5 +8,6 @@ namespace InventoryControl.Application.Models
 {
     public class BaseModel
     {
+        public int? Id { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using InventoryControl.Application.Interfaces;
+﻿using AutoMapper;
+using InventoryControl.Application.Interfaces;
+using InventoryControl.Application.Models;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using System;
@@ -13,13 +15,20 @@ namespace InventoryControl.Application.Services
     {
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IRepository<MapPerfilUsuariosAcessos> _mapPerfilUsuariosAcessos;
+        private readonly IRepository<PerfilUsuario> _perfilUsuarioRepository;
+
+        public IMapper _imapper { get; }
 
         public UsuarioService(
             IUsuarioRepository usuarioRepository,
-            IRepository<MapPerfilUsuariosAcessos> mapPerfilUsuariosAcessos)
+            IRepository<MapPerfilUsuariosAcessos> mapPerfilUsuariosAcessos,
+            IRepository<PerfilUsuario> perfilUsuarioRepository,
+            IMapper imapper)
         {
             _usuarioRepository = usuarioRepository;
             _mapPerfilUsuariosAcessos = mapPerfilUsuariosAcessos;
+            _perfilUsuarioRepository = perfilUsuarioRepository;
+            _imapper = imapper;
         }
 
         /// <summary>
@@ -84,6 +93,49 @@ namespace InventoryControl.Application.Services
                 LogicalException("Password inválido!");
             }
             return user;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<IList<PerfilUsuario>> FindPerfisUsuario()
+        {
+            var perfis = await _perfilUsuarioRepository.FindAll();
+            return perfis.Where(a => a.Situacao == 1).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Usuario> CreateUsuario(UsuarioModel model)
+        {
+            try
+            {
+                var usuario = _imapper.Map<Usuario>(model);
+                if (await this.FindByUsername(usuario.Login) != null)
+                {
+                    LogicalException("Já existe um usuário cadastrado com o username informado.");
+                }
+
+                var itens = await _usuarioRepository.Itens;
+                if (itens.Where(u => u.Email == usuario.Email).Any())
+                {
+                    LogicalException("Já existe um usuário cadastrado com o email informado");
+                }
+
+                usuario = await _usuarioRepository.Insert(usuario);
+                await _usuarioRepository.Save();
+                return usuario;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

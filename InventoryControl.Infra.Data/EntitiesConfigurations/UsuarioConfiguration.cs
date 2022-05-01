@@ -19,7 +19,6 @@ namespace InventoryControl.Infra.Data.EntitiesConfiguration
             builder.Property(u => u.Senha).HasMaxLength(20).IsRequired();
             builder.Property(u => u.CpfCnpj).HasMaxLength(14);
             builder.Property(u => u.Email).HasMaxLength(60).IsRequired();
-            builder.Property(u => u.DataNascimento).IsRequired();
             builder.Property(u => u.Situacao).IsRequired();
             builder.HasOne(u => u.PerfilUsuario).WithMany(e => e.Usuarios).HasForeignKey(a => a.PerfilUsuarioId);
         }

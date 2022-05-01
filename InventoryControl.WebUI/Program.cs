@@ -1,10 +1,11 @@
 using InventoryControl.Infra.IoC;
-using InventoryControl.WebUI.Config;
+using InventoryControl.WebUI.Infrastructure;
 using InventoryControl.WebUI.Identity;
 using InventoryControl.WebUI.Identity.Hasher;
 using InventoryControl.WebUI.Identity.Stores;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using InventoryControl.WebUI.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,15 +34,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddInfraEstructure(builder.Configuration);
 
-builder.Services
-    .AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddRoles<ApplicationRole>()
-    .AddDefaultTokenProviders();
-
-// Identity Services
-builder.Services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
-builder.Services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
-builder.Services.AddScoped<IPasswordHasher<ApplicationUser>, NoPasswordHasher>();
+builder.Services.IncludeWebUIDependencys();
 
 var app = builder.Build();
 

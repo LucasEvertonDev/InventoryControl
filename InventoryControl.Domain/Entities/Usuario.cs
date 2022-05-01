@@ -5,17 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InventoryControl.Domain.Entities
-{
+{                                                                                                                                                                                                                                                                                           
     public class Usuario : Entity
     {
-        public string? Login { get; set; }
-        public string? Senha { get; set; }
-        public string? CpfCnpj { get; set; }
-        public string? Nome { get; set; }
-        public string? Email { get; set; }
-        public DateTime? DataNascimento { get; set; }
-        public int? PerfilUsuarioId { get; set; }
-        public int? Situacao { get; set; }
+        public string? Login { get; private set; }
+        public string? Senha { get; private set; }
+        public string? CpfCnpj { get; private set; }
+        public string? Nome { get; private set; }
+        public string? Email { get; private set; }
+        public int? PerfilUsuarioId { get; private set; }
+        public int? Situacao { get; private set; }
         public PerfilUsuario? PerfilUsuario { get; set; }
     }
 }
