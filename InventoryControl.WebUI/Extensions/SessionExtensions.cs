@@ -11,8 +11,16 @@ namespace InventoryControl.WebUI.Extensions
 
         public static T? Get<T>(this ISession session, string key)
         {
-            var value = session.GetString(key);
-            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+            if (session.Keys.Contains(key))
+            {
+                var value = session.GetString(key);
+                return value == null ? default : JsonSerializer.Deserialize<T>(value);
+            }
+            else
+            {
+                return default(T?);
+            }
+            
         }
     }
 }

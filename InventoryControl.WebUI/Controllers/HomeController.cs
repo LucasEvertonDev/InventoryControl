@@ -1,4 +1,5 @@
 ﻿using InventoryControl.WebUI.Attributes;
+using InventoryControl.WebUI.Identity.Constants;
 using InventoryControl.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,11 @@ namespace InventoryControl.WebUI.Controllers
             _logger = logger;
         }
 
-
-        [SessionExpire]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.CADASTRO_PRODUTOS)]
         public IActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)

@@ -13,9 +13,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-    <title>App Name</title>
+    <title>Inventory Control</title>
     <meta name="description" content="" />
-    <link rel="icon" type="image/x-icon" href="~/theme/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon"  />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,6 +43,7 @@
                 @RenderBody()
             </div>
             @await Html.PartialAsync("_LayoutFooter")
+            @await Html.PartialAsync("_LayoutLoading")
             <div class="content-backdrop fade"></div>
             <div id="alertsModal"></div>
           </div>
@@ -59,6 +60,26 @@
     <script src="~/js/site.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script>
+        $('form').on('submit', function () {
+            new bootstrap.Modal(document.getElementById("modalLoading"), {}).show();
+        });
+
+        $('.action-loading').click(function () {
+            new bootstrap.Modal(document.getElementById("modalLoading"), {}).show();
+        });
+
+        $(document).ready(function () {
+            new bootstrap.Modal(document.getElementById("modalLoading"), {}).hide();
+        });
+
+        window.onunload = function () {
+            new bootstrap.Modal(document.getElementById("modalLoading"), {}).hide();
+        };
+
+        $(document).ajaxComplete(function () {
+            new bootstrap.Modal(document.getElementById("modalLoading"), {}).hide();
+        });
+
         $(function () {
             var alert = '@TempData["warning"]';
             var error = '@TempData["error"]';
