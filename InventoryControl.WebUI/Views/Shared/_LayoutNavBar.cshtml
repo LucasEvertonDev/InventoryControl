@@ -1,4 +1,5 @@
-﻿<nav
+﻿@model InventoryControl.WebUI.ViewModels.LayoutNavBarViewModel
+<nav
 class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
 id="layout-navbar"
 >
@@ -46,8 +47,8 @@ id="layout-navbar"
                 </div>
                 </div>
                 <div class="flex-grow-1">
-                <span class="fw-semibold d-block">John Doe</span>
-                <small class="text-muted">Admin</small>
+                <span class="fw-semibold d-block">@Model.Email</span>
+                <small class="text-muted">@Model.UserName</small>
                 </div>
             </div>
             </a>
@@ -79,8 +80,8 @@ id="layout-navbar"
         <li>
             <div class="dropdown-divider"></div>
         </li>
-        <li>
-            <a class="dropdown-item" href="auth-login-basic.html">
+        <li >
+            <a class="dropdown-item" asp-action="Logout" asp-controller="Account">
             <i class="bx bx-power-off me-2"></i>
             <span class="align-middle">Log Out</span>
             </a>
