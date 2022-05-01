@@ -1,6 +1,11 @@
 ﻿@model InventoryControl.WebUI.ViewModels.LoginViewModel
 @{
     Layout = "_LayoutAccount";
+
+    string GetAutoComplete()
+    {
+        return Model.RememberMe ? "on" : "off";
+    }
 }
 <style>
     .app-brand-text.demo {
@@ -22,7 +27,7 @@
     <input type="hidden" asp-for="ReturnUrl" />
      <div class="mb-3">
         <label asp-for="Username" class="form-label">Username</label>
-        <input  asp-for="Username" placeholder="Enter your username" autofocus class="form-control" />
+        <input  asp-for="Username" placeholder="Enter your username" autocomplete="@GetAutoComplete()" autofocus class="form-control" />
         <span asp-validation-for="Username" class="text-danger"></span>
     </div>
     <div class="mb-3 form-password-toggle">
@@ -33,7 +38,7 @@
             </a>
         </div>
         <div class="input-group input-group-merge">
-            <input asp-for="Password" class="form-control" type="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"/>
+            <input asp-for="Password" class="form-control" autocomplete="@GetAutoComplete()" type="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"/>
             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
         </div>
         <span asp-validation-for="Password" class="text-danger"></span>

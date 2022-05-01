@@ -13,15 +13,18 @@ namespace InventoryControl.WebUI.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         public IUsuarioService _usuarioService { get; }
 
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(SignInManager<ApplicationUser> signInManager,
            UserManager<ApplicationUser> userManager,
-           IUsuarioService usuarioService)
+           IUsuarioService usuarioService,
+           IHttpContextAccessor httpContextAccessor)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _usuarioService = usuarioService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -30,10 +33,14 @@ namespace InventoryControl.WebUI.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            AddSuccess("Sucesso é isso");
-            var loginViewModel = new LoginViewModel();
+            var remember = GetCookie("RememberMe");
+            var loginViewModel = new LoginViewModel()
+            {
+                RememberMe = "True".Equals(remember),
+                ReturnUrl = returnUrl
+            };
             return View(loginViewModel);
         }
 
@@ -60,6 +67,7 @@ namespace InventoryControl.WebUI.Controllers
                            lockoutOnFailure: false);
 
                         HttpContext.Session.Set("UsuarioId", user.Id);
+                        UpdateCookie("RememberMe", loginViewModel.RememberMe.ToString());
 
                         if (result.Succeeded)
                         {
@@ -72,6 +80,7 @@ namespace InventoryControl.WebUI.Controllers
             {
                 TratarException(ex);
             }
+            loginViewModel.RememberMe = false;
             return View(loginViewModel);
         }
     }
