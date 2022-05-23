@@ -15,7 +15,7 @@ namespace InventoryControl.WebUI.Attributes
         {
             ISession session = filterContext.HttpContext.Session;
             // check  sessions here
-            if (string.IsNullOrEmpty(session.Get<int>("UsuarioId").ToString()))
+            if (string.IsNullOrEmpty(session.Get<int>("UserId").ToString()) || session.Get<int>("UserId") == 0)
             {
                 filterContext.Result = new RedirectToActionResult("Login", "Account", new {});
                 return;

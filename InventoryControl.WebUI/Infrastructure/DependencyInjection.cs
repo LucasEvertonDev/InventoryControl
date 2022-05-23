@@ -16,6 +16,8 @@ namespace InventoryControl.WebUI.Infrastructure
                .AddRoles<ApplicationRole>()
                .AddDefaultTokenProviders();
 
+            services.AddRazorPages().AddRazorRuntimeCompilation();
+
             // Identity Services
             services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
             services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();

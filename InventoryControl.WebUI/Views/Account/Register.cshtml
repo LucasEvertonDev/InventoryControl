@@ -21,14 +21,14 @@
     </div>
 <div class="col-12">
     <h4>
-        Registre-se
+        Register
     </h4>
         <form asp-action="Register" asp-controller="Account">
         <div class="form-horizontal">
             <div class="mb-3">
-                <label asp-for="Login" class="col-md-6 control-label">Username</label>
-                <input asp-for="Login" class="form-control" />
-                <span asp-validation-for="Login" class="text-danger"></span>
+                <label asp-for="Username" class="col-md-6 control-label">Username</label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
@@ -38,24 +38,24 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="PerfilUsuarioId" class="col-md-6 control-label">Perfil de Usuário</label>
+                <label asp-for="PerfilUsuarioId" class="col-md-6 control-label">User Profile</label>
                 <select id="drpEmpList" class="form-control" asp-for="PerfilUsuarioId" asp-items="@(new SelectList(Model.Perfis, "Value", "Text"))">  
-                    <option value="">Selecione</option>  
+                    <option value="">Select...</option>  
                 </select>  
                 <input type="hidden" asp-for="PerfilUsuarioId" />  
                 <span asp-validation-for="PerfilUsuarioId" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Senha" class="col-md-6 control-label">Senha</label>
-                <input asp-for="Senha" class="form-control" />
-                <span asp-validation-for="Senha" class="text-danger"></span>
+                <label asp-for="Password" class="col-md-6 control-label">Password</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="ConfirmarSenha" class="col-md-6 control-label">Confirmar senha</label>
-                <input asp-for="ConfirmarSenha" class="form-control" />
-                <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                <label asp-for="ConfirmPassword" class="col-md-6 control-label">Confirm Password</label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
@@ -66,3 +66,5 @@
         </div>
     </form>
 </div>
+
+  @await Html.PartialAsync("_ValidationScriptsPartial")

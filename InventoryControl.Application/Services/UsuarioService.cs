@@ -79,18 +79,17 @@ namespace InventoryControl.Application.Services
         /// 
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task<Usuario> Login(string userName, string password)
         {
             var user = await this.FindByUsername(userName);
             if (user == null || user.Id < 1)
             {
-                LogicalException("Username não cadastrado!");
+                LogicalException("Username not registered!");
             }
 
             if (!user.Senha.Equals(password))
             {
-                LogicalException("Password inválido!");
+                LogicalException("Invalid password!");
             }
             return user;
         }
@@ -119,13 +118,13 @@ namespace InventoryControl.Application.Services
                 var usuario = _imapper.Map<Usuario>(model);
                 if (await this.FindByUsername(usuario.Login) != null)
                 {
-                    LogicalException("Já existe um usuário cadastrado com o username informado.");
+                    LogicalException("There is already a registered user with the entered username.");
                 }
 
                 var itens = await _usuarioRepository.Itens;
                 if (itens.Where(u => u.Email == usuario.Email).Any())
                 {
-                    LogicalException("Já existe um usuário cadastrado com o email informado");
+                    LogicalException("There is already a registered user with the email provided");
                 }
 
                 usuario = await _usuarioRepository.Insert(usuario);

@@ -1,4 +1,5 @@
 ﻿using InventoryControl.Application.Interfaces;
+using InventoryControl.WebUI.Attributes;
 using InventoryControl.WebUI.Extensions;
 using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.Identity;
@@ -6,14 +7,14 @@ using InventoryControl.WebUI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace InventoryControl.WebUI.Controllers
 {
     public class AccountController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        public IUsuarioService _usuarioService { get; }
-
+        private readonly IUsuarioService _usuarioService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUsuarioModelFactory _usuarioModelFactory;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -68,7 +69,7 @@ namespace InventoryControl.WebUI.Controllers
                            loginViewModel.RememberMe,
                            lockoutOnFailure: false);
 
-                        HttpContext.Session.Set("UsuarioId", user.Id);
+                        HttpContext.Session.Set("UserId", user.Id);
                         UpdateCookie("RememberMe", loginViewModel.RememberMe.ToString());
 
                         if (result.Succeeded)
@@ -118,9 +119,9 @@ namespace InventoryControl.WebUI.Controllers
             {
                 viewModel.Perfis = (await _usuarioModelFactory.PrepareRegisterViewModel()).Perfis;
 
-                if (viewModel.Senha != viewModel.ConfirmarSenha)
+                if (viewModel.Password != viewModel.ConfirmPassword)
                 {
-                    ModelState.AddModelError(nameof(viewModel.ConfirmarSenha), "As senhas não conferem.");
+                    ModelState.AddModelError(nameof(viewModel.ConfirmPassword), "Passwords do not match.");
                 }
 
                 if(ModelState.IsValid)
@@ -130,7 +131,7 @@ namespace InventoryControl.WebUI.Controllers
 
                     if (usuario.Id > 0)
                     {
-                        AddSuccess("Usuário cadastrado com sucesso");
+                        AddSuccess("User registered successfully");
                         return RedirectToAction("Login", "Account");
                     }
                 }
@@ -141,5 +142,21 @@ namespace InventoryControl.WebUI.Controllers
             }
             return View(viewModel);
         }
-    }
+
+        [HttpGet, Authorize, SessionExpire]
+        public async Task<IActionResult> EditProfile()
+        {
+            var viewModel = await _usuarioModelFactory.PrepareEditProfileModel(HttpContext.Session.Get<int>("UserId"));
+            return View(viewModel);
+        }
+
+        [HttpPost, Authorize, SessionExpire]
+        public IActionResult EditProfile(EditProfileViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            { 
+            }
+            return View(viewModel);
+        }
+    }   
 }

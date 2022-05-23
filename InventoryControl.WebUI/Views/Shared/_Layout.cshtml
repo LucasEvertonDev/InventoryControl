@@ -59,6 +59,7 @@
     <script src="~/theme/assets/js/main.js"></script>
     <script src="~/js/site.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    @RenderSection("Scripts", required: false)
     <script>
         $('form').on('submit', function () {
             new bootstrap.Modal(document.getElementById("modalLoading"), {}).show();
