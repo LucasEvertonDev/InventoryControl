@@ -5,24 +5,24 @@ using InventoryControl.WebUI.Attributes;
 using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.Identity.Constants;
 using InventoryControl.WebUI.ViewModels.Clientes;
+using InventoryControl.WebUI.ViewModels.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryControl.WebUI.Controllers
 {
-    [SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
-    public class ClientesController : BaseController
+    public class ServicosController : BaseController
     {
-        private readonly IClienteModelFactory _clienteModelFactory;
-        private readonly IClienteService _clienteService;
+        private readonly IServicoModelFactory _servicoModelFactory;
+        private readonly IServicosService _servicoService;
         private readonly IMapper _imapper;
 
-        public ClientesController(IClienteModelFactory clienteModelFactory,
-            IClienteService clienteService,
+        public ServicosController(IServicoModelFactory servicosModelFactory,
+            IServicosService servicoService,
             IMapper imapper)
         {
-            _clienteModelFactory = clienteModelFactory;
-            _clienteService = clienteService;
+            _servicoModelFactory = servicosModelFactory;
+            _servicoService = servicoService;
             _imapper = imapper;
         }
 
@@ -30,11 +30,11 @@ namespace InventoryControl.WebUI.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_SERVICOS)]
         public async Task<IActionResult> Index()
         {
-            var viewModel = await _clienteModelFactory.PrepareConsultaClientesModel(
-                    await _clienteService.SearchClientes(new ClienteModel() { }));
+            var viewModel = await _servicoModelFactory.PrepareConsultaServicosModel(
+                    await _servicoService.SearchServicos(new ServicoModel() { }));
             return View(viewModel);
         }
         /// <summary>
@@ -42,15 +42,15 @@ namespace InventoryControl.WebUI.Controllers
         /// </summary>
         /// <param name="viewModel"></param>
         /// <returns></returns>
-        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
-        public async Task<IActionResult> Index(ConsultarClientesViewModel viewModel)
+        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_SERVICOS)]
+        public async Task<IActionResult> Index(ConsultarServicosViewModel viewModel)
         {
-            var clientes = await _clienteModelFactory.PrepareConsultaClientesModel(
-                await _clienteService.SearchClientes(new ClienteModel
+            var clientes = await _servicoModelFactory.PrepareConsultaServicosModel(
+                await _servicoService.SearchServicos(new ServicoModel
                 {
-                    Cpf = viewModel.Cpf,
-                    Nome = viewModel.Nome
-                })) ;
+                    Nome = viewModel.Nome,
+                    Descricao = viewModel.Descricao
+                }));
             return View(clientes);
         }
 
@@ -58,10 +58,10 @@ namespace InventoryControl.WebUI.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_SERVICOS)]
         public async Task<IActionResult> Create()
         {
-            return View(await _clienteModelFactory.PrepareClienteViewModel());
+            return View(await _servicoModelFactory.PrepareServicoViewModel());
         }
 
         /// <summary>
@@ -69,19 +69,19 @@ namespace InventoryControl.WebUI.Controllers
         /// </summary>
         /// <param name="viewModel"></param>
         /// <returns></returns>
-        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
-        public async Task<IActionResult> Create(ClienteViewModel viewModel)
+        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_SERVICOS)]
+        public async Task<IActionResult> Create(ServicoViewModel viewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var cliente = await _clienteService.CreateCliente(
-                        await _clienteModelFactory.PrepareClienteModelDto(viewModel));
+                    var cliente = await _servicoService.CreateServico(
+                        await _servicoModelFactory.PrepareServicoModelDto(viewModel));
 
                     if (cliente.Id > 0)
                     {
-                        AddSuccess("Cliente cadastrado com sucesso!");
+                        AddSuccess("Servico cadastrado com sucesso!");
                         viewModel.Enabled = false;
                     }
                 }
@@ -98,10 +98,10 @@ namespace InventoryControl.WebUI.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_SERVICOS)]
         public async Task<IActionResult> Edit(int Id)
         {
-            var viewModel = await _clienteModelFactory.PrepareClienteViewModel(await _clienteService.FindById(Id));
+            var viewModel = await _servicoModelFactory.PrepareServicoViewModel(await _servicoService.FindById(Id));
             return View(viewModel);
         }
 
@@ -111,18 +111,18 @@ namespace InventoryControl.WebUI.Controllers
         /// <param name="viewModel"></param>
         /// <returns></returns>
         [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
-        public async Task<IActionResult> Edit(ClienteViewModel viewModel)
+        public async Task<IActionResult> Edit(ServicoViewModel viewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var cliente = await _clienteService.UpdateCliente(
-                        await _clienteModelFactory.PrepareClienteModelDto(viewModel));
+                    var cliente = await _servicoService.UpdateServico(
+                        await _servicoModelFactory.PrepareServicoModelDto(viewModel));
 
                     if (cliente.Id > 0)
                     {
-                        AddSuccess("Cliente atualizado com sucesso!");
+                        AddSuccess("Servico atualizado com sucesso!");
                         viewModel.Enabled = false;
                     }
                 }

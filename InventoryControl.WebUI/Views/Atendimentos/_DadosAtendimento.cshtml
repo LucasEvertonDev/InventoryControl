@@ -1,0 +1,70 @@
+﻿@model AtendimentoViewModel
+
+<div class="row">
+    <input asp-for="Id" hidden/>
+
+    <div class="col-4 col-xs-12 mb-3">
+        <label asp-for="Data" class="control-label">DATA DO ATENDIMENTO</label>
+        <input asp-for="Data" class="form-control" a />
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+
+    <div class="col-8 col-xs-12 mb-3">
+        <label asp-for="ClienteId" class="col-md-6 control-label">CLIENTE</label>
+        <select id="drpEmpList" class="form-control" asp-for="ClienteId" asp-items="@(new SelectList(Model.ComboClientes, "Value", "Text"))">  
+            <option value="">Selecione...</option>  
+        </select>  
+        <input type="hidden" asp-for="ClienteId" />  
+        <span asp-validation-for="ClienteId" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-3" style="text-align: right" >
+        <button type="button" id="btn-add-servico" total-itens="@Model.ServicosAssociados.Count()" class="btn btn-primary">
+            <span class="tf-icons bx bx-plus"></span>&nbsp; AdicionaServiço
+        </button>
+    </div>
+ 
+    <div class="row" id="lista-detalhamentos" >
+
+    </div>
+</div>
+@await Component.InvokeAsync("SaveButtonsViewComponent")
+
+@await Html.PartialAsync("_ValidationScriptsPartial")
+<script type="text/javascript">
+    $(document).ready(function (){
+        if ('@Model.AutoComplete' == 'False') {
+            $('input').attr('autocomplete', 'off');
+        }
+
+        if ('@Model.Enabled' == 'False') {
+            $('input').attr('disabled', 'disabled');
+            $('#button-submit').attr('disabled', 'disabled');
+        }
+    });
+
+    $('#btn-add-servico').click(function (e) {
+        console.log('oi');
+        var btnAdd = $(this);
+        var totalItens = btnAdd.attr('total-itens');
+        btnAdd.attr('total-itens', parseInt(totalItens) + 1);
+
+        var url = '@Url.Action("AddDetalhamento", "Atendimentos")?posicao=' + totalItens;
+        $.ajax({
+            url: url,
+            type: "POST",
+            cache: false,
+            dataType: "html",
+            success: function (result) {
+                console.log(result);
+                $('#lista-detalhamentos').append(result);
+            },
+            error: function(xhr, status, error){
+                var errorMessage = xhr.status + ': ' + xhr.statusText
+                alert('Error - ' + errorMessage);
+                btnAdd.attr('total-itens', parseInt(totalItens) - 1);
+            }
+        });
+    });
+</script>
+

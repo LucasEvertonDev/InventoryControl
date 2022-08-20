@@ -40,7 +40,14 @@ namespace InventoryControl.WebUI.Factories
         /// <returns></returns>
         public Task<ClienteModel> PrepareClienteModelDto(ClienteViewModel clienteViewModel)
         {
-            return Task.FromResult((ClienteModel)clienteViewModel);
+            return Task.FromResult(new ClienteModel 
+            {
+                Cpf = String.Join("", System.Text.RegularExpressions.Regex.Split(clienteViewModel.Cpf, @"[^\d]")),
+                DataNascimento = clienteViewModel.DataNascimento,
+                Id = clienteViewModel.Id,
+                Nome = clienteViewModel.Nome,
+                Telefone = String.Join("", System.Text.RegularExpressions.Regex.Split(clienteViewModel.Telefone, @"[^\d]")),
+            });
         }
 
         /// <summary>

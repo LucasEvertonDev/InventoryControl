@@ -1,20 +1,20 @@
-﻿@model ConsultarClientesViewModel
+﻿@model ConsultarServicosViewModel
 
 <div class="card mb-12">
      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="FormTitle col-12">Consulta de Clientes</h5>
+        <h5 class="FormTitle col-12">Consulta de Serviços</h5>
     </div>
      <div class="card-body">
-        <form asp-action="index" asp-controller="clientes">
+        <form asp-action="index">
             <div class="row form-horizontal">
               <div class="col-4 col-xs-12 mb-3">
-                    <label asp-for="Cpf" class="control-label">CPF</label>
-                    <input asp-for="Cpf" class="form-control" />
+                    <label asp-for="Nome" class="control-label">NOME</label>
+                    <input asp-for="Nome" class="form-control" />
                 </div>
 
                  <div class="col-8 col-xs-12 mb-3">
-                    <label asp-for="Nome" class="control-label">NOME</label>
-                    <input asp-for="Nome" class="form-control" />
+                    <label asp-for="Descricao" class="control-label">DESCRIÇÃO</label>
+                    <input asp-for="Descricao" class="form-control" />
                 </div>
                 <div class="col-12 col-xs-12">
                     <div class="linhaSolida"></div>
@@ -23,7 +23,7 @@
                     <button type="submit" class="btn btn-primary">
                         <span class="tf-icons bx bx-search"></span>&nbsp; Buscar
                     </button>
-                    <a asp-action="create" asp-controller="clientes" class="btn btn-secondary">
+                    <a asp-action="create" class="btn btn-secondary">
                         <span class="tf-icons bx bx-plus"></span>&nbsp; Novo
                     </a>                      
                     <a asp-action="" asp-controller="" class="btn btn-secondary">
@@ -36,43 +36,31 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th>
-                            CPF
-                        </th>
-                        <th>
+                        <th colspan="3">
                             NOME
                         </th>
-                        <th>
-                            DATA NASCIMENTO
+                        <th colspan="8" >
+                            DESCRIÇÃO
                         </th>
-                        <th>
-                            TELEFONE
-                        </th>
-                        <th>
+                        <th colspan="1" style="max-width: 20px">
                             AÇÕES
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.Clientes != null && Model.Clientes.Any())
+                    @if (Model.Servicos != null && Model.Servicos.Any())
                     {
-                        @foreach (var item in Model.Clientes) 
+                        @foreach (var item in Model.Servicos) 
                         {
                             <tr>
-                                <td>
-                                    @(Convert.ToUInt64(@item.Cpf).ToString(@"000\.000\.000\-00"))
-                                </td>
-                                <td>
+                                <td colspan="3">
                                     @Html.DisplayFor(modelItem => item.Nome)
                                 </td>
-                                <td>
-                                    @item.DataNascimento.ToString("dd/MM/yyyy")
+                                <td colspan="8">
+                                    @Html.DisplayFor(modelItem => item.Descricao)
                                 </td>
-                                <td>
-                                   @(Convert.ToUInt64(@item.Telefone).ToString(@"+## (##) #####-####"))
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-controller="clientes" asp-route-id="@item.Id" class="btn btn-default">
+                                <td  colspan="1">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">
                                         <span class="tf-icons bx bx-edit"></span>
                                     </a>     
                                 </td>
@@ -93,16 +81,3 @@
     </div>
 </div>
 
-@section Scripts{
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script type="text/javascript">
-        $(document).ready(function (){
-            $('input[Name="@nameof(Model.Cpf)"]').mask('000.000.000-00');
-            $('input[Name="@nameof(Model.Cpf)"]').attr("maxlenght", "14")
-
-            if ('!@Model.AutoComplete') {
-                $('input').attr('autocomplete', 'off');
-            }
-        });
-    </script>
-}

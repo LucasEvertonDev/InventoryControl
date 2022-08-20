@@ -106,5 +106,4 @@ namespace InventoryControl.WebUI.Controllers
             TempData["error"] = null;
         }
     }
-
 }

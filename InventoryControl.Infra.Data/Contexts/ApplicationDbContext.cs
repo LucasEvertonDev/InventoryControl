@@ -19,6 +19,8 @@ namespace InventoryControl.Infra.Data.Context
         public DbSet<Acesso> Acessos { get; set; }
         public DbSet<MapPerfilUsuariosAcessos> MapPerfilUsuariosAcessos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Servico> Servicos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -27,6 +27,8 @@ namespace InventoryControl.WebUI.Infrastructure
             services.AddScoped<IClienteModelFactory, ClienteModelFactory>();
             services.AddScoped<INavigationPathFactory, NavigationPathFactory>();
             services.AddScoped<ISaveButtonsModelFactory, SaveButtonsModelFactory>();
+            services.AddScoped<IServicoModelFactory, ServicoModelFactory>();
+            services.AddScoped<IAtendimentoModelFactory, AtendimentoModelFactory>();
         }
     }
 }

@@ -4,6 +4,7 @@ using InventoryControl.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryControl.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220820185837_create-table-servicos")]
+    partial class createtableservicos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,44 +50,6 @@ namespace InventoryControl.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Acesso", (string)null);
-                });
-
-            modelBuilder.Entity("InventoryControl.Domain.Entities.Atendimento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("ClienteAtrasado")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ObservacaoAtendimento")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("Situacao")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ValorAtendimento")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ValorPago")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.ToTable("Atendimento");
                 });
 
             modelBuilder.Entity("InventoryControl.Domain.Entities.Cliente", b =>
@@ -143,32 +108,6 @@ namespace InventoryControl.Infra.Data.Migrations
                     b.HasIndex("PerfilUsuarioId");
 
                     b.ToTable("MapPerfilUsuariosAcessos", (string)null);
-                });
-
-            modelBuilder.Entity("InventoryControl.Domain.Entities.MapServicosAtendimento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AtendimentoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServicoId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ValorCobrado")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AtendimentoId");
-
-                    b.HasIndex("ServicoId");
-
-                    b.ToTable("MapServicosAtendimento");
                 });
 
             modelBuilder.Entity("InventoryControl.Domain.Entities.PerfilUsuario", b =>
@@ -260,17 +199,6 @@ namespace InventoryControl.Infra.Data.Migrations
                     b.ToTable("Usuario", (string)null);
                 });
 
-            modelBuilder.Entity("InventoryControl.Domain.Entities.Atendimento", b =>
-                {
-                    b.HasOne("InventoryControl.Domain.Entities.Cliente", "Cliente")
-                        .WithMany("Atendimento")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("InventoryControl.Domain.Entities.MapPerfilUsuariosAcessos", b =>
                 {
                     b.HasOne("InventoryControl.Domain.Entities.Acesso", "Acesso")
@@ -284,25 +212,6 @@ namespace InventoryControl.Infra.Data.Migrations
                     b.Navigation("Acesso");
 
                     b.Navigation("PerfilUsuario");
-                });
-
-            modelBuilder.Entity("InventoryControl.Domain.Entities.MapServicosAtendimento", b =>
-                {
-                    b.HasOne("InventoryControl.Domain.Entities.Atendimento", "Atendimento")
-                        .WithMany("MapServicosAtendimentos")
-                        .HasForeignKey("AtendimentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InventoryControl.Domain.Entities.Servico", "Servico")
-                        .WithMany("MapServicosAtendimentos")
-                        .HasForeignKey("ServicoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Atendimento");
-
-                    b.Navigation("Servico");
                 });
 
             modelBuilder.Entity("InventoryControl.Domain.Entities.Usuario", b =>
@@ -319,26 +228,11 @@ namespace InventoryControl.Infra.Data.Migrations
                     b.Navigation("MapPerfilUsuariosAcessos");
                 });
 
-            modelBuilder.Entity("InventoryControl.Domain.Entities.Atendimento", b =>
-                {
-                    b.Navigation("MapServicosAtendimentos");
-                });
-
-            modelBuilder.Entity("InventoryControl.Domain.Entities.Cliente", b =>
-                {
-                    b.Navigation("Atendimento");
-                });
-
             modelBuilder.Entity("InventoryControl.Domain.Entities.PerfilUsuario", b =>
                 {
                     b.Navigation("MapPerfilUsuariosAcessos");
 
                     b.Navigation("Usuarios");
-                });
-
-            modelBuilder.Entity("InventoryControl.Domain.Entities.Servico", b =>
-                {
-                    b.Navigation("MapServicosAtendimentos");
                 });
 #pragma warning restore 612, 618
         }

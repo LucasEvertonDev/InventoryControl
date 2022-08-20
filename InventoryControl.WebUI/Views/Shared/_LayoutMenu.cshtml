@@ -34,6 +34,16 @@
             </li>
         }
 
+        @if (Context.User.IsInRole(Roles.MANTER_SERVICOS))
+        {
+            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_SERVICOS, false)">
+                   <a asp-controller="servicos" asp-action="index" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div>Consultar Serviços</div>
+                </a>
+            </li>
+        }
+
         @if (Context.User.IsInRole(Roles.MANTER_ATENDIMENTOS))
         {
             <li class="menu-item @VerifyMenuConditions(Roles.MANTER_ATENDIMENTOS, true)">
@@ -49,7 +59,7 @@
                         </a>
                     </li>
                     <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_ATENDIMENTOS, "create")">
-                        <a asp-controller="products" asp-action="create" class="menu-link">
+                        <a asp-controller="atendimentos" asp-action="create" class="menu-link">
                             <div>Cadastrar Atendimentos</div>
                         </a>
                     </li>
@@ -70,17 +80,18 @@
         {
             classe = "active";
         }
-
-        if (menu.Equals(Roles.MANTER_CLIENTES) && (controller.ToLower().Equals("clientes")))
+        else if (menu.Equals(Roles.MANTER_CLIENTES) && (controller.ToLower().Equals("clientes")))
         {
             classe = "active";
         }
-
-        if (menu.Equals(Roles.MANTER_ATENDIMENTOS) && (controller.ToLower().Equals("atendimentos")))
+        else if (menu.Equals(Roles.MANTER_SERVICOS) && (controller.ToLower().Equals("servicos")))
         {
             classe = "active";
         }
-
+        else if (menu.Equals(Roles.MANTER_ATENDIMENTOS) && (controller.ToLower().Equals("atendimentos")))
+        {
+            classe = "active";
+        }
         if (hasParents && !string.IsNullOrEmpty(classe))
         {
             classe += " open";
