@@ -21,7 +21,6 @@
     stroke: #FFC107;
 }
 
-
 .circular circle.path {
     stroke-dasharray: 330;
     stroke-dashoffset: 0;
@@ -323,3 +322,111 @@
 }
 /*Site*/
 
+.breadcrumbLink {
+    color: #b5bdc7
+}
+
+.breadcrumbLink:hover {
+    color: #b5bdc7
+}
+
+.FormTitle {
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+:root {
+    --cortema: #F6B8D0;
+    --border: #e5e5e5;
+    --font-menu: black;
+    --body: black;
+    --tema-escuro: #f985b287;
+    --btn-primary: #ff007f;
+}
+
+
+.linhaSolida {
+    border-top: 1px solid var(--border);
+    height: 1px;
+    width: 100%;
+    margin: 1.5rem 0px 1.5rem 0px;
+}
+
+#layout-menu {
+    background: var(--cortema) !important;
+}
+
+#layout-navbar {
+    background: var(--cortema) !important;
+}
+
+
+.bg-menu-theme .menu-link, .bg-menu-theme .menu-horizontal-prev, .bg-menu-theme .menu-horizontal-next {
+    color: var(--font-menu) !important;
+}
+
+.bg-menu-theme .menu-text {
+    color: var(--font-menu) !important;
+}
+
+.bg-menu-theme .menu-sub > .menu-item > .menu-link:before {
+    background-color: #f2f6fa !important;
+}
+
+.bg-menu-theme .menu-item.active > .menu-link:not(.menu-toggle) {
+    background-color: #fff;
+}
+
+tml:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item.open > .menu-link, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.open > .menu-link, html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-link:not(.active):hover, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item .menu-link:not(.active):hover {
+    background-color: var( --tema-escuro) !important;
+}
+
+html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item.open > .menu-link, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.open > .menu-link, html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-link:not(.active):hover, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item .menu-link:not(.active):hover {
+    background-color: var( --tema-escuro)  !important;
+}
+
+.bg-menu-theme .menu-item.active > .menu-link:not(.menu-toggle) {
+    background-color: var( --cortema) !important;
+}
+
+.bg-menu-theme .menu-inner > .menu-item.open .menu-item.open > .menu-toggle::before, .bg-menu-theme .menu-inner > .menu-item.open .menu-item.active > .menu-link::before {
+    box-shadow: none !important;
+}
+
+.bg-menu-theme .menu-sub > .menu-item.active > .menu-link:not(.menu-toggle):before {
+    background-color: var(--tema-escuro) !important;
+    border: 3px solid #e7e7ff !important;
+}
+
+.dropdown-menu.dropdown-menu-end.show {
+    background: var(--cortema) !important;
+    color:black !important;
+}
+
+div.dropdown-divider {
+    border-top: 1px solid var(--tema-escuro) !important;
+}
+
+.dropdown-item{
+    color: black !important;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var( --tema-escuro) !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var( --btn-primary) !important;
+    border-color: var( --btn-primary) !important;
+    box-shadow: 0 0.125rem 0.25rem 0 #ff679a;
+}
+
+.bg-menu-theme .menu-inner > .menu-item.active:before {
+    background: var( --tema-escuro) !important
+}
+
+
+.layout-wrapper:not(.layout-horizontal) .bg-menu-theme .menu-inner > .menu-item.active:before {
+    height: 2.7rem !important;
+}

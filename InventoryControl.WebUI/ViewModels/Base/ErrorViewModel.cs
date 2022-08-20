@@ -1,4 +1,4 @@
-namespace InventoryControl.WebUI.Models
+namespace InventoryControl.WebUI.ViewModels.Base
 {
     public class ErrorViewModel
     {

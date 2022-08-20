@@ -1,10 +1,12 @@
-﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+﻿@using InventoryControl.WebUI.Identity.Constants
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
     <a href="index.html" class="app-brand-link">
         <span class="app-brand-logo demo">
-            <i class='bx bxs-book-content' style="FONT-SIZE: 28px;color: #566a7f;"></i>
+            <i class='bx bxs-book-content' style="FONT-SIZE: 28px;color: var(--font-menu) !important;"></i>
         </span>
-        <span class="app-brand-text demo menu-text fw-bolder ms-2" style="text-align:center;text-transform:uppercase">IC</span>
+        <span class="app-brand-text demo menu-text fw-bolder ms-2" style="text-align:center;text-transform:uppercase">DN</span>
     </a>
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
         <i class="bx bx-chevron-left bx-sm align-middle"></i>
@@ -12,52 +14,124 @@
     </div>
     <div class="menu-inner-shadow"></div>
     <ul class="menu-inner py-1">
-        <li class="menu-item">
-            <a asp-controller="home" asp-action="index" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div>Home</div>
-            </a>
-        </li>
+        @if (Context.User.IsInRole(Roles.VISUALIZAR_DASHBOARD))
+        {
+            <li class="menu-item @VerifyMenuConditions(Roles.VISUALIZAR_DASHBOARD, false)">
+                <a asp-controller="home" asp-action="index" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div>Painel Gerencial</div>
+                </a>
+            </li>
+        }
+        
+        @if (Context.User.IsInRole(Roles.MANTER_CLIENTES))
+        {
+            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_CLIENTES, true)">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-user-pin"></i>
+                    <div>Clientes</div>
+                </a>
 
-        <!-- Layouts -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div>Categorias</div>
-            </a>
+                <ul class="menu-sub">
+                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "index")" >
+                        <a asp-controller="clientes" asp-action="index" class="menu-link">
+                            <div>Consultar Clientes</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "create")">
+                        <a asp-controller="clientes" asp-action="create" class="menu-link">
+                            <div>Cadastrar Clientes</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
 
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a asp-controller="categories" asp-action="index" class="menu-link">
-                        <div>Consultar Categorias</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a asp-controller="categories" asp-action="create" class="menu-link">
-                        <div>Cadastrar Categorias</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        @if (Context.User.IsInRole(Roles.MANTER_ATENDIMENTOS))
+        {
+            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_ATENDIMENTOS, true)">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div>Atendimentos</div>
+                </a>
 
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div>Produtos</div>
-            </a>
-
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a asp-controller="products" asp-action="index" class="menu-link">
-                        <div>Consultar Produtos</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a asp-controller="products" asp-action="create" class="menu-link">
-                        <div>Cadastrar Produtos</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                <ul class="menu-sub">
+                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "index")">
+                        <a asp-controller="products" asp-action="index" class="menu-link">
+                            <div>Consultar Atendimentos</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "create")">
+                        <a asp-controller="products" asp-action="create" class="menu-link">
+                            <div>Cadastrar Atendimentos</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
     </ul>
 </aside>
+
+@functions {
+    string VerifyMenuConditions(string menu, bool hasParents)
+    {
+        var action = ViewContext.RouteData.Values["Action"].ToString().ToLower();
+        var controller = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+        var classe = "";
+
+        if (menu.Equals(Roles.VISUALIZAR_DASHBOARD) && (controller.ToLower().Equals("home")))
+        {
+            classe = "active";
+        }
+
+        if (menu.Equals(Roles.MANTER_CLIENTES) && (controller.ToLower().Equals("clientes")))
+        {
+            classe = "active";
+        }
+
+        if (menu.Equals(Roles.MANTER_ATENDIMENTOS) && (controller.ToLower().Equals("atendimentos")))
+        {
+            classe = "active";
+        }
+
+        if (hasParents && !string.IsNullOrEmpty(classe))
+        {
+            classe += " open";
+        }
+        return classe;
+    }
+
+    string VerifyMenuItemConditions(string menu, string actionMenu)
+    {
+        var action = ViewContext.RouteData.Values["Action"].ToString().ToLower();
+        var controller = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+        var classe = "";
+
+        if (menu.Equals(Roles.VISUALIZAR_DASHBOARD) && (controller.ToLower().Equals("home")) && action == "")
+        {
+            classe = "active";
+        }
+
+        if (menu.Equals(Roles.MANTER_CLIENTES) && (controller.ToLower().Equals("clientes")))
+        {
+            classe = "active";
+        }
+
+        if (menu.Equals(Roles.MANTER_ATENDIMENTOS) && (controller.ToLower().Equals("atendimentos")))
+        {
+            classe = "active";
+        }
+
+        if (!string.IsNullOrEmpty(classe) && action.ToLower() == actionMenu.ToLower())
+        {
+            return classe;
+        }
+        else
+        {
+            classe = ""; ;
+        }
+
+        return classe;
+    }
+
+}

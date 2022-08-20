@@ -1,5 +1,5 @@
 ﻿using InventoryControl.Application.Models;
-using InventoryControl.WebUI.ViewModels;
+using InventoryControl.WebUI.ViewModels.Account;
 
 namespace InventoryControl.WebUI.Factories.Interfaces
 {

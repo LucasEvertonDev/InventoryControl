@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using InventoryControl.WebUI.ViewModels.Base;
+using System.ComponentModel.DataAnnotations;
 
-namespace InventoryControl.WebUI.ViewModels
+namespace InventoryControl.WebUI.ViewModels.Account
 {
     public class LoginViewModel : BaseViewModel
     {

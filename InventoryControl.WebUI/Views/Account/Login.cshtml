@@ -1,4 +1,4 @@
-﻿@model InventoryControl.WebUI.ViewModels.LoginViewModel
+﻿@model LoginViewModel
 @{
     Layout = "_LayoutAccount";
 
@@ -18,10 +18,10 @@
 <a href="index.html" class="app-brand-link gap-2">
     <span class="app-brand-logo demo">
     </span>
-    <span class="app-brand-text demo text-body fw-bolder">Inventory Control</span>
+    <span class="app-brand-text demo text-body fw-bolder">Daniela Carvalho Nails</span>
 </a>
 </div>
-<h4 class="mb-2">Welcome to Inventory Control! 👋</h4>
+<h4 class="mb-2">Welcome to Daniela Carvalho! 👋</h4>
 <p class="mb-4">Please sign-in to your account and start the adventure</p>
 <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal">
     <input type="hidden" asp-for="ReturnUrl" />

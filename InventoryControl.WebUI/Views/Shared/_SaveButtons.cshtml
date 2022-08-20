@@ -1,0 +1,16 @@
+﻿@model SaveButtonsViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<div class="linhaSolida"></div>
+<div class="row">
+    <div class="col-12 mb-3" style="text-align: right" >
+        <button type="submit" value="create"  class="btn btn-primary">
+                <span class="tf-icons bx bx-save"></span>&nbsp; @Model.BotaoSalvarTexto
+        </button>
+        <a asp-action="index" asp-controller="@Model.Controller" class="btn btn-secondary">
+            <span class="tf-icons bx bx-arrow-back"></span>&nbsp; @Model.BotaoVoltarTexto
+        </a>
+    </div>
+</div>

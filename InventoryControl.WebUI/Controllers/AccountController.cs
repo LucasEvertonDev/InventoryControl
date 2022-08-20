@@ -3,7 +3,7 @@ using InventoryControl.WebUI.Attributes;
 using InventoryControl.WebUI.Extensions;
 using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.Identity;
-using InventoryControl.WebUI.ViewModels;
+using InventoryControl.WebUI.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

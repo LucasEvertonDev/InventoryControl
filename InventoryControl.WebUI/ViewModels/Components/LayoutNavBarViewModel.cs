@@ -1,4 +1,6 @@
-﻿namespace InventoryControl.WebUI.ViewModels
+﻿using InventoryControl.WebUI.ViewModels.Base;
+
+namespace InventoryControl.WebUI.ViewModels.Components
 {
     public class LayoutNavBarViewModel : BaseViewModel, IViewModel
     {

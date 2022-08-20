@@ -24,6 +24,9 @@ namespace InventoryControl.WebUI.Infrastructure
             services.AddScoped<IPasswordHasher<ApplicationUser>, NoPasswordHasher>();
 
             services.AddScoped<IUsuarioModelFactory, UsuarioModelFactory>();
+            services.AddScoped<IClienteModelFactory, ClienteModelFactory>();
+            services.AddScoped<INavigationPathFactory, NavigationPathFactory>();
+            services.AddScoped<ISaveButtonsModelFactory, SaveButtonsModelFactory>();
         }
     }
 }

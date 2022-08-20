@@ -1,0 +1,15 @@
+﻿@model NavigationPathViewModel
+@{
+    Layout = null;
+}
+<h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">
+        <a class="breadcrumbLink" asp-controller="@Model.CurrentController" asp-action="@Model.AcaoAnterior">
+            @Model.ApelidoRotaAnterior
+        </a>
+        /
+    </span> 
+    @Model.ApelidoRotaAtual
+</h4>
+
+

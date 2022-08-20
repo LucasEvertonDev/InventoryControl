@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace InventoryControl.WebUI.ViewModels
+namespace InventoryControl.WebUI.ViewModels.Account
 {
     public class EditProfileViewModel : IValidatableObject
     {

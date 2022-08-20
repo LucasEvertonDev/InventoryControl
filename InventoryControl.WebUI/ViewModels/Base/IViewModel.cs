@@ -1,4 +1,4 @@
-﻿namespace InventoryControl.WebUI.ViewModels
+﻿namespace InventoryControl.WebUI.ViewModels.Base
 {
     public interface IViewModel
     {

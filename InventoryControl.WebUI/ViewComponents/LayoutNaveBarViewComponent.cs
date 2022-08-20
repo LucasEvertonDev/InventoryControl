@@ -1,5 +1,6 @@
 ﻿using InventoryControl.WebUI.Identity;
 using InventoryControl.WebUI.ViewModels;
+using InventoryControl.WebUI.ViewModels.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

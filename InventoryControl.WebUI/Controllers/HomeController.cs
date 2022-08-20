@@ -1,6 +1,6 @@
 ﻿using InventoryControl.WebUI.Attributes;
 using InventoryControl.WebUI.Identity.Constants;
-using InventoryControl.WebUI.Models;
+using InventoryControl.WebUI.ViewModels.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -21,7 +21,7 @@ namespace InventoryControl.WebUI.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet, SessionExpire, Authorize(Roles = Roles.CADASTRO_PRODUTOS)]
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.VISUALIZAR_DASHBOARD)]
         public IActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)

@@ -32,25 +32,8 @@
     <script src="~/theme/assets/js/config.js"></script>
   </head>
    
-  <body>
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-        @await Html.PartialAsync("_LayoutMenu")
-        <div class="layout-page">
-          @await Component.InvokeAsync("LayoutNaveBarViewComponent")
-          <div class="content-wrapper">
-            <div class="container-xxl flex-grow-1 container-p-y">
-                @RenderBody()
-            </div>
-            @await Html.PartialAsync("_LayoutFooter")
-            @await Html.PartialAsync("_LayoutLoading")
-            <div class="content-backdrop fade"></div>
-            <div id="alertsModal"></div>
-          </div>
-        </div>
-      </div>
-      <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
+  <div>
+    @RenderBody()
 
     <script src="~/theme/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="~/theme/assets/vendor/libs/popper/popper.js"></script>
@@ -100,5 +83,5 @@
             }
         });
     </script> 
-</body>
+</div>
 </html>
