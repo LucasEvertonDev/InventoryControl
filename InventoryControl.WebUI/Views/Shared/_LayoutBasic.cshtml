@@ -45,43 +45,4 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     
     @RenderSection("Scripts", required: false)
-
-    <script>
-        $('form').on('submit', function () {
-            new bootstrap.Modal(document.getElementById("modalLoading"), {}).show();
-        });
-
-        $('.action-loading').click(function () {
-            new bootstrap.Modal(document.getElementById("modalLoading"), {}).show();
-        });
-
-        $(document).ready(function () {
-            new bootstrap.Modal(document.getElementById("modalLoading"), {}).hide();
-        });
-
-        window.onunload = function () {
-            new bootstrap.Modal(document.getElementById("modalLoading"), {}).hide();
-        };
-
-        $(document).ajaxComplete(function () {
-            new bootstrap.Modal(document.getElementById("modalLoading"), {}).hide();
-        });
-
-        $(function () {
-            var alert = '@TempData["warning"]';
-            var error = '@TempData["error"]';
-            var sucess = '@TempData["success"]';
-            var err = '';
-            if (sucess != "" && sucess != null) {
-                addSuccess(sucess);
-            }
-            if (alert != "" && alert != null) {
-                addWarning(alert);
-            }
-            if (error != "" && error != null) {
-                addError(error);
-            }
-        });
-    </script> 
-</div>
 </html>
