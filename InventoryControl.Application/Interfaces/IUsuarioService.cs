@@ -1,5 +1,5 @@
-﻿using InventoryControl.Application.Models;
-using InventoryControl.Domain.Entities;
+﻿using InventoryControl.Domain.Entities;
+using InventoryControl.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

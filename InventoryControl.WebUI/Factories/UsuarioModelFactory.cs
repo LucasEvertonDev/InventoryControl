@@ -1,5 +1,5 @@
 ﻿using InventoryControl.Application.Interfaces;
-using InventoryControl.Application.Models;
+using InventoryControl.Models.Entities;
 using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.ViewModels.Account;
 using Microsoft.AspNetCore.Mvc.Rendering;

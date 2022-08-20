@@ -3,5 +3,7 @@
     public interface IViewModel
     {
         bool Enabled { get; set; }
+
+        bool AutoComplete { get; set; }
     }
 }

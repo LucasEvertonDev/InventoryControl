@@ -1,4 +1,4 @@
-﻿using InventoryControl.Application.Models;
+﻿using InventoryControl.Models.Entities;
 using InventoryControl.WebUI.ViewModels.Account;
 
 namespace InventoryControl.WebUI.Factories.Interfaces

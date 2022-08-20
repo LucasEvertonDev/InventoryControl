@@ -35,10 +35,12 @@ namespace InventoryControl.Infra.IoC
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IAcessosService, AcessosService>();
+            services.AddScoped<IClienteService, ClienteService>();
+
             services.AddScoped<IRepository<MapPerfilUsuariosAcessos>, Repository<MapPerfilUsuariosAcessos>>();
             services.AddScoped<IRepository<Acesso>, Repository<Acesso>>();
             services.AddScoped<IRepository<PerfilUsuario>, Repository<PerfilUsuario>>();
-
+            services.AddScoped<IRepository<Cliente>, Repository<Cliente>>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

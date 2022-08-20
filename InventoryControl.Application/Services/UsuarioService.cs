@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InventoryControl.Application.Interfaces;
-using InventoryControl.Application.Models;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
+using InventoryControl.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

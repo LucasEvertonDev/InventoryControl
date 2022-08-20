@@ -1,11 +1,10 @@
-﻿using InventoryControl.Application.Models;
-using InventoryControl.WebUI.ViewModels.Base;
+﻿using InventoryControl.WebUI.ViewModels.Base;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace InventoryControl.WebUI.ViewModels.Account
 {
-    public class RegisterViewModel : BaseViewModel, IViewModel
+    public class RegisterViewModel : BaseViewModel
     {
         [Required]
         public string? Username { get; set; }

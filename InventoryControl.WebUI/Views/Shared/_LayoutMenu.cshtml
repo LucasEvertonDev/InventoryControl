@@ -26,24 +26,11 @@
         
         @if (Context.User.IsInRole(Roles.MANTER_CLIENTES))
         {
-            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_CLIENTES, true)">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_CLIENTES, false)">
+                   <a asp-controller="clientes" asp-action="index" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user-pin"></i>
-                    <div>Clientes</div>
+                    <div>Consultar Clientes</div>
                 </a>
-
-                <ul class="menu-sub">
-                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "index")" >
-                        <a asp-controller="clientes" asp-action="index" class="menu-link">
-                            <div>Consultar Clientes</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "create")">
-                        <a asp-controller="clientes" asp-action="create" class="menu-link">
-                            <div>Cadastrar Clientes</div>
-                        </a>
-                    </li>
-                </ul>
             </li>
         }
 
@@ -56,12 +43,12 @@
                 </a>
 
                 <ul class="menu-sub">
-                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "index")">
+                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_ATENDIMENTOS, "index")">
                         <a asp-controller="products" asp-action="index" class="menu-link">
                             <div>Consultar Atendimentos</div>
                         </a>
                     </li>
-                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_CLIENTES, "create")">
+                    <li class="menu-item @VerifyMenuItemConditions(Roles.MANTER_ATENDIMENTOS, "create")">
                         <a asp-controller="products" asp-action="create" class="menu-link">
                             <div>Cadastrar Atendimentos</div>
                         </a>

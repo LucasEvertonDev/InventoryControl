@@ -1,9 +1,5 @@
 ﻿@model ClienteViewModel
 
-@{
-    ViewData["Title"] = "Home Page";
-}
-
 @await Component.InvokeAsync("NavigationPathViewComponent")
 
 <div class="card mb-12">
@@ -11,11 +7,11 @@
         <h5 class="FormTitle col-12">Cadastro de Clientes</h5>
     </div>
      <div class="card-body">
-        <form asp-action="Clientes" asp-controller="Create">
+        <form asp-action="Create" asp-controller="Clientes">
             <div class="row form-horizontal">
                 <div class="col-4 col-xs-12 mb-3">
                     <label asp-for="Cpf" class="control-label">CPF</label>
-                    <input asp-for="Cpf" class="form-control" />
+                    <input asp-for="Cpf" class="form-control" a />
                     <span asp-validation-for="Cpf" class="text-danger"></span>
                 </div>
 
@@ -41,4 +37,19 @@
         </form>
     </div>
 </div>
- @await Html.PartialAsync("_ValidationScriptsPartial")
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script type="text/javascript">
+        $(document).ready(function (){
+            $('input[Name="@nameof(Model.Cpf)"]').mask('000.000.000-00');
+            $('input[Name="@nameof(Model.Cpf)"]').attr("maxlenght", "14")
+            $('input[Name="@nameof(Model.Telefone)"]').mask('+55 (32) 99999-9999');
+
+            if ('!@Model.AutoComplete') {
+                $('input').attr('autocomplete', 'off');
+            }
+        });
+    </script>
+}
+

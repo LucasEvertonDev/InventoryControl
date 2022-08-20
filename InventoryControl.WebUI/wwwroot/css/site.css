@@ -386,7 +386,7 @@ html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item.open > .m
 }
 
 .bg-menu-theme .menu-item.active > .menu-link:not(.menu-toggle) {
-    background-color: var( --cortema) !important;
+    background-color: var( --tema-escuro) !important;
 }
 
 .bg-menu-theme .menu-inner > .menu-item.open .menu-item.open > .menu-toggle::before, .bg-menu-theme .menu-inner > .menu-item.open .menu-item.active > .menu-link::before {
@@ -429,4 +429,9 @@ div.dropdown-divider {
 
 .layout-wrapper:not(.layout-horizontal) .bg-menu-theme .menu-inner > .menu-item.active:before {
     height: 2.7rem !important;
+}
+
+.table:not(.table-dark) th {
+    background: var(--cortema) !important;
+    color: var(--font-menu) !important;
 }

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InventoryControl.Domain\InventoryControl.Domain.csproj" />
+    <ProjectReference Include="..\InventoryControl.Models\InventoryControl.Models.csproj" />
   </ItemGroup>
 
 </Project>

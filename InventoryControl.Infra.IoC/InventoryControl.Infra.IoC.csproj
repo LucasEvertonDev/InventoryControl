@@ -14,6 +14,7 @@
     <ProjectReference Include="..\InventoryControl.Application\InventoryControl.Application.csproj" />
     <ProjectReference Include="..\InventoryControl.Domain\InventoryControl.Domain.csproj" />
     <ProjectReference Include="..\InventoryControl.Infra.Data\InventoryControl.Infra.Data.csproj" />
+    <ProjectReference Include="..\InventoryControl.Models\InventoryControl.Models.csproj" />
   </ItemGroup>
 
 </Project>
