@@ -4,10 +4,10 @@
 
 <div class="card mb-12">
      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="FormTitle col-12">Cadastro de Clientes</h5>
+        <h5 class="FormTitle col-12">Edição de Clientes</h5>
     </div>
      <div class="card-body">
-        <form asp-action="Create" asp-controller="Clientes">
+        <form asp-action="edit" asp-controller="Clientes">
             <div class="row form-horizontal">
                 @await Html.PartialAsync("_DadosCliente", model: Model)
             </div>

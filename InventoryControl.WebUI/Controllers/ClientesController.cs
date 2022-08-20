@@ -1,4 +1,5 @@
-﻿using InventoryControl.Application.Interfaces;
+﻿using AutoMapper;
+using InventoryControl.Application.Interfaces;
 using InventoryControl.Models.Entities;
 using InventoryControl.WebUI.Attributes;
 using InventoryControl.WebUI.Factories.Interfaces;
@@ -15,12 +16,15 @@ namespace InventoryControl.WebUI.Controllers
     {
         private readonly IClienteModelFactory _clienteModelFactory;
         private readonly IClienteService _clienteService;
+        private readonly IMapper _imapper;
 
         public ClientesController(IClienteModelFactory clienteModelFactory,
-            IClienteService clienteService)
+            IClienteService clienteService,
+            IMapper imapper)
         {
             _clienteModelFactory = clienteModelFactory;
             _clienteService = clienteService;
+            _imapper = imapper;
         }
 
         /// <summary>
@@ -73,13 +77,54 @@ namespace InventoryControl.WebUI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var usuario = await _clienteService.CreateCliente(
+                    var cliente = await _clienteService.CreateCliente(
                         await _clienteModelFactory.PrepareClienteModelDto(viewModel));
 
-                    if (usuario.Id > 0)
+                    if (cliente.Id > 0)
                     {
                         AddSuccess("Cliente cadastrado com sucesso!");
-                        return RedirectToAction("Login", "Account");
+                        viewModel.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                TratarException(e);
+            }
+            return View(viewModel);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            var viewModel = await _clienteModelFactory.PrepareClienteViewModel(await _clienteService.FindById(Id));
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
+        public async Task<IActionResult> Edit(ClienteViewModel viewModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var cliente = await _clienteService.UpdateCliente(
+                        await _clienteModelFactory.PrepareClienteModelDto(viewModel));
+
+                    if (cliente.Id > 0)
+                    {
+                        AddSuccess("Cliente atualizado com sucesso!");
+                        viewModel.Enabled = false;
                     }
                 }
             }

@@ -7,6 +7,8 @@ namespace InventoryControl.WebUI.Factories.Interfaces
     {
         Task<ClienteViewModel> PrepareClienteViewModel();
 
+        Task<ClienteViewModel> PrepareClienteViewModel(ClienteModel usuario);
+
         Task<ClienteModel> PrepareClienteModelDto(ClienteViewModel clienteViewModel);
 
         Task<ConsultarClientesViewModel> PrepareConsultaClientesModel(List<ClienteModel> clientes);

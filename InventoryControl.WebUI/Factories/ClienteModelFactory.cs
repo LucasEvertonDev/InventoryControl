@@ -19,6 +19,24 @@ namespace InventoryControl.WebUI.Factories
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task<ClienteViewModel> PrepareClienteViewModel(ClienteModel clienteModel)
+        {
+            return Task.FromResult(new ClienteViewModel 
+            {
+                Cpf = clienteModel.Cpf,
+                DataNascimento = clienteModel.DataNascimento,
+                Id = clienteModel.Id,
+                Nome = clienteModel.Nome,
+                Telefone = clienteModel.Telefone
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public Task<ClienteModel> PrepareClienteModelDto(ClienteViewModel clienteViewModel)
         {

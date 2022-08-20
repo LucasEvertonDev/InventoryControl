@@ -30,6 +30,17 @@ namespace InventoryControl.Application.Services
             return users.Where(a => a.Cpf == cpf).FirstOrDefault();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public async Task<ClienteModel> FindById(int Id)
+        {
+            var user = await _clienteRepository.FindById(Id);
+            return _imapper.Map<ClienteModel>(user);
+        }
+
 
         /// <summary>
         /// 
@@ -50,7 +61,7 @@ namespace InventoryControl.Application.Services
                 var itens = await _clienteRepository.Itens;
                 if (itens.Where(u => u.Telefone == model.Telefone).Any())
                 {
-                    LogicalException("Já existe um cliente registrado para onúmero de telefone informado");
+                    LogicalException("Já existe um cliente registrado para o número de telefone informado");
                 }
 
                 cliente = await _clienteRepository.Insert(cliente);
@@ -86,6 +97,20 @@ namespace InventoryControl.Application.Services
             {
                 throw;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<ClienteModel> UpdateCliente(ClienteModel model)
+        {
+            var cliente = _imapper.Map<Cliente>(model);
+            cliente = await _clienteRepository.Update(cliente);
+            await _clienteRepository.Save();
+            return _imapper.Map<ClienteModel>(cliente);
         }
     }
 }
