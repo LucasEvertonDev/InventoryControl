@@ -4,7 +4,7 @@
 
 <div class="card mb-12">
      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="FormTitle col-12">Cadastro de Clientes</h5>
+        <h5 class="FormTitle col-12">Cadastro do Atendimento</h5>
     </div>
      <div class="card-body">
         <form asp-action="Create">
@@ -19,7 +19,6 @@
     @await Html.PartialAsync("_ValidationScriptsPartial")
     <script type="text/javascript">
         $(document).ready(function (){
-
             if ('@Model.AutoComplete' == 'False') {
                 $('input').attr('autocomplete', 'off');
             }

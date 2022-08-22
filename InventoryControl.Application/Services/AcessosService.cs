@@ -1,11 +1,7 @@
 ﻿using InventoryControl.Application.Interfaces;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryControl.Application.Services
 {
@@ -36,8 +32,7 @@ namespace InventoryControl.Application.Services
         /// <returns></returns>
         public async Task<Acesso> FindByName(string name)
         {
-            var acessos = await _acessosRepository.FindAll();
-            return acessos.Where(a => a.Nome == name).FirstOrDefault();
+            return await _acessosRepository.Table.Where(a => a.Nome == name).FirstOrDefaultAsync();
         }
     }
 }

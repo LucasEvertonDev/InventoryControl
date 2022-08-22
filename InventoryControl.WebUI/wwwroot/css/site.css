@@ -435,3 +435,19 @@ div.dropdown-divider {
     background: var(--cortema) !important;
     color: var(--font-menu) !important;
 }
+
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu), .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n+3) {
+    border-top-right-radius: 0.325rem !important;
+    border-bottom-right-radius: 0.325rem !important;
+}
+
+
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu), .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n+3) {
+    border-top-right-radius: 0.325rem !important;
+    border-bottom-right-radius: 0.325rem !important;
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-top-left-radius: 0.325rem !important;
+    border-bottom-left-radius: 0.325rem !important;
+}

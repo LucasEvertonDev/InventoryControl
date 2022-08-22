@@ -5,7 +5,7 @@
 
     <div class="col-4 col-xs-12 mb-3">
         <label asp-for="Data" class="control-label">DATA DO ATENDIMENTO</label>
-        <input asp-for="Data" class="form-control" a />
+        <input asp-for="Data" class="form-control"  />
         <span asp-validation-for="Data" class="text-danger"></span>
     </div>
 
@@ -18,14 +18,55 @@
         <span asp-validation-for="ClienteId" class="text-danger"></span>
     </div>
 
-    <div class="col-12 mb-3" style="text-align: right" >
-        <button type="button" id="btn-add-servico" total-itens="@Model.ServicosAssociados.Count()" class="btn btn-primary">
-            <span class="tf-icons bx bx-plus"></span>&nbsp; AdicionaServiço
+    <div class="col-3 col-xs-12 mb-3">
+        <label asp-for="SituacaoAtendimento" class="control-label">SITUAÇÃO ATENDIMENTO</label>
+        <select asp-for="SituacaoAtendimento" class="form-control" onchange="" asp-items="Html.GetEnumSelectList<SituacaoAtendimento>()"></select> 
+        <span asp-validation-for="SituacaoAtendimento" class="text-danger"></span>
+    </div>
+
+    <div class="col-3 col-xs-12 mb-3">
+        <label asp-for="ValorAtendimento" class="control-label">VALOR ATENDIMENTO</label>
+        <input asp-for="ValorAtendimento" class="form-control money" readonly="readonly" />
+        <span asp-validation-for="ValorAtendimento" class="text-danger"></span>
+    </div>
+
+     <div class="col-2 col-xs-12 mb-3 SituacaoAtendimentoConcluida">
+        <label asp-for="ValorPago" class="control-label">VALOR PAGO</label>
+        <input asp-for="ValorPago" class="form-control money" />
+        <span asp-validation-for="ValorPago" class="text-danger"></span>
+    </div>
+
+    <div class="col-2  col-xs-12 mb-3 SituacaoAtendimentoConcluida">
+        <label asp-for="ClienteAtrasou" class="control-label">CLIENTE ATRASOU?</label>
+        <select asp-for="ClienteAtrasou" class="form-control" asp-items="Html.GetEnumSelectList<SimNao>()"></select> 
+        <span asp-validation-for="ClienteAtrasou" class="text-danger"></span>
+    </div>
+
+    <div class="col-2 col-xs-12 mb-3">
+        <label class="control-label">INCLUIR SERVIÇO</label>
+        <button type="button" id="btn-add-servico" total-itens="@Model.ServicosAssociados.Count()" class="btn btn-primary form-control">
+            <span class="tf-icons bx bx-plus"></span>&nbsp;Serviço
         </button>
     </div>
- 
-    <div class="row" id="lista-detalhamentos" >
 
+    <div class="col-12 col-xs-12 mb-3 SituacaoAtendimentoConcluida">
+        <label asp-for="ObservacaoAtendimento" class="control-label">OBSERVAÇÕES</label>
+        <textarea asp-for="ObservacaoAtendimento" class="form-control" rows="3" ></textarea>
+        <span asp-validation-for="ObservacaoAtendimento" class="text-danger"></span>
+    </div>
+
+    <div style="margin-top:15px;@(Model.ServicosAssociados == null || !Model.ServicosAssociados.Any() ? "display:none" : "")" id="title-listagem" >
+        <h5 class="FormTitle col-12">Listagem de Serviços</h5>
+    </div>
+
+    <div class="row" id="lista-detalhamentos" >
+        @if (Model.ServicosAssociados != null && Model.ServicosAssociados.Any())
+        {
+            foreach (var servico in Model.ServicosAssociados)
+            {
+                @await Html.PartialAsync("_ServicoDetalhes", model: servico)
+            }
+        }
     </div>
 </div>
 @await Component.InvokeAsync("SaveButtonsViewComponent")
@@ -33,6 +74,7 @@
 @await Html.PartialAsync("_ValidationScriptsPartial")
 <script type="text/javascript">
     $(document).ready(function (){
+        $('.money').mask('#.##0,00', { reverse: true });
         if ('@Model.AutoComplete' == 'False') {
             $('input').attr('autocomplete', 'off');
         }
@@ -41,30 +83,42 @@
             $('input').attr('disabled', 'disabled');
             $('#button-submit').attr('disabled', 'disabled');
         }
+
+        ValidaSituacao($('select[Name="@nameof(Model.SituacaoAtendimento)"]'));
     });
 
     $('#btn-add-servico').click(function (e) {
-        console.log('oi');
         var btnAdd = $(this);
         var totalItens = btnAdd.attr('total-itens');
         btnAdd.attr('total-itens', parseInt(totalItens) + 1);
 
-        var url = '@Url.Action("AddDetalhamento", "Atendimentos")?posicao=' + totalItens;
         $.ajax({
-            url: url,
+            url: '@Url.Action("AddDetalhamento", "Atendimentos")?posicao=' + totalItens,
             type: "POST",
             cache: false,
             dataType: "html",
             success: function (result) {
-                console.log(result);
                 $('#lista-detalhamentos').append(result);
+                $('#title-listagem').show();
             },
             error: function(xhr, status, error){
-                var errorMessage = xhr.status + ': ' + xhr.statusText
-                alert('Error - ' + errorMessage);
                 btnAdd.attr('total-itens', parseInt(totalItens) - 1);
             }
         });
     });
+
+    $('select[Name="@nameof(Model.SituacaoAtendimento)"]').change(function() {
+        ValidaSituacao($(this));
+    });
+
+    function ValidaSituacao(obj) {
+        var situacao = obj.val();
+        if (situacao == '@((int)SituacaoAtendimento.CONCLUIDO)'){
+            $('.SituacaoAtendimentoConcluida').show();
+        }
+        else { 
+            $('.SituacaoAtendimentoConcluida').hide();
+        }
+    }
 </script>
 

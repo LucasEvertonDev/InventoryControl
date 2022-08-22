@@ -9,11 +9,6 @@ using InventoryControl.Infra.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventoryControl.Infra.IoC
 {
@@ -31,18 +26,20 @@ namespace InventoryControl.Infra.IoC
                 options.UseSqlServer("Data Source=NOTEBOOK\\SQLEXPRESS;Initial Catalog=InventoryControl;User ID=sa;Password=12345;Integrated Security=True;TrustServerCertificate=True",
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IAcessosService, AcessosService>();
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IServicosService, ServicosService>();
+            services.AddScoped<IAtendimentoService, AtendimentoService>();
 
+            services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
             services.AddScoped<IRepository<MapPerfilUsuariosAcessos>, Repository<MapPerfilUsuariosAcessos>>();
             services.AddScoped<IRepository<Acesso>, Repository<Acesso>>();
             services.AddScoped<IRepository<PerfilUsuario>, Repository<PerfilUsuario>>();
             services.AddScoped<IRepository<Cliente>, Repository<Cliente>>();
             services.AddScoped<IRepository<Servico>, Repository<Servico>>();
+            services.AddScoped<IRepository<MapServicosAtendimento>, Repository<MapServicosAtendimento>>();
+            services.AddScoped<IRepository<Atendimento>, Repository<Atendimento>>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

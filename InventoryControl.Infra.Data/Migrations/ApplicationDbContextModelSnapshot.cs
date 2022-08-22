@@ -67,17 +67,16 @@ namespace InventoryControl.Infra.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ObservacaoAtendimento")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Situacao")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("ValorAtendimento")
+                    b.Property<decimal?>("ValorAtendimento")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("ValorPago")
+                    b.Property<decimal?>("ValorPago")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -159,7 +158,8 @@ namespace InventoryControl.Infra.Data.Migrations
                     b.Property<int>("ServicoId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("ValorCobrado")
+                    b.Property<decimal?>("ValorCobrado")
+                        .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

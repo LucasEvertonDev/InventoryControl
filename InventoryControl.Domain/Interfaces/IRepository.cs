@@ -12,20 +12,14 @@ namespace InventoryControl.Domain.Interfaces
         /// <summary>
         /// 
         /// </summary>
-        Task<IQueryable<T>> Itens { get; }
+        IQueryable<T> Table { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Task Save();
+        Task CommitAsync();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<T>> FindAll();
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>

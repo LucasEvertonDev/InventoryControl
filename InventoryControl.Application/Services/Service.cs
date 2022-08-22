@@ -15,7 +15,7 @@ namespace InventoryControl.Application.Services
         /// </summary>
         /// <param name="message"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void LogicalException(string message)
+        public dynamic LogicalException(string message)
         {
             throw new LogicalException(message);
         }

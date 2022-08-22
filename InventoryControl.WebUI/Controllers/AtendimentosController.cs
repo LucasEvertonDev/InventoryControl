@@ -1,5 +1,4 @@
 ﻿using InventoryControl.Application.Interfaces;
-using InventoryControl.Models.Entities;
 using InventoryControl.WebUI.Attributes;
 using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.Identity.Constants;
@@ -7,20 +6,26 @@ using InventoryControl.WebUI.ViewModels.Atendimentos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Globalization;
 
 namespace InventoryControl.WebUI.Controllers
 {
     public class AtendimentosController : BaseController
     {
         private readonly IServicosService _servicosService;
+        private readonly IClienteService _clienteService;
+        private readonly IAtendimentoService _atendimentoService;
         private readonly IAtendimentoModelFactory _atendimentoModelFactory;
 
         public AtendimentosController(IAtendimentoModelFactory atendimentoModelFactory,
-            IServicosService servicosService)
+            IServicosService servicosService,
+            IClienteService clienteService,
+            IAtendimentoService atendimentoService)
         {
             _atendimentoModelFactory = atendimentoModelFactory;
             _servicosService = servicosService;
+            _clienteService = clienteService;
+            _atendimentoService = atendimentoService;
         }
 
         /// <summary>
@@ -34,14 +39,57 @@ namespace InventoryControl.WebUI.Controllers
         }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
-        /// <param name="posicao"></param>
+        /// <param name="viewModel"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult AddDetalhamento(int posicao)
+        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_SERVICOS)]
+        public async Task<IActionResult> Create(AtendimentoViewModel viewModel)
         {
-            return PartialView("../Atendimentos/_ServicoDetalhes", this.NewDetalhamento(posicao));
+            try
+            {
+                viewModel = await _atendimentoModelFactory.PrepareAtendimentoViewModel(viewModel);
+
+                if (ModelState.IsValid)
+                {
+                    if (!viewModel.ServicosAssociados.Any(a => !a.Apagado))
+                    {
+                        AddError("Adicione pelo menos um serviço");
+                        return View(viewModel);
+                    }
+
+                    var atendimento = await _atendimentoService.CreateAtendimento(
+                        await _atendimentoModelFactory.PrepareAtendimentoModelDto(viewModel));
+
+                    if (atendimento.Id > 0)
+                    {
+                        AddSuccess("Atendimento cadastrado com sucesso");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                TratarException(e);
+            }
+
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetEvents(string start, string end)
+        {
+            var inicio = DateTime.Parse(start);
+            var fim = DateTime.Parse(end);
+
+            var events = await _atendimentoModelFactory.PrepareCalendaViewModel(
+                await _atendimentoService.SeachAgendamentos(inicio, fim));
+            return Json(events);
         }
 
         /// <summary>
@@ -49,46 +97,35 @@ namespace InventoryControl.WebUI.Controllers
         /// </summary>
         /// <param name="posicao"></param>
         /// <returns></returns>
-        private AssociacaoServicoAtendimentoViewModel NewDetalhamento(int posicao = 0)
+        [HttpPost]
+        public async Task<IActionResult> AddDetalhamento(int posicao)
         {
-            var servicos = _servicosService.SearchServicos(new Models.Entities.ServicoModel() { });
-            var id = posicao + 1;
-            return new ViewModels.Atendimentos.AssociacaoServicoAtendimentoViewModel
+            return PartialView("../Atendimentos/_ServicoDetalhes", await this.NewDetalhamento(posicao));
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="posicao"></param>
+        /// <returns></returns>
+        private Task<AssociacaoServicoAtendimentoViewModel> NewDetalhamento(int posicao = 0)
+        {
+            return Task.FromResult(new ViewModels.Atendimentos.AssociacaoServicoAtendimentoViewModel
             {
                 PosicaoLista = posicao,
                 Apagado = false,
-                ComboServicos = servicos.Result.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList(),
-            };
+                ComboServicos = RecuperaServicos(),
+            });
         }
-
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="viewModel"></param>
-        ///// <returns></returns>
-        //[HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_SERVICOS)]
-        //public async Task<IActionResult> Create(ServicoViewModel viewModel)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var cliente = await _servicoService.CreateServico(
-        //                await _servicoModelFactory.PrepareServicoModelDto(viewModel));
-
-        //            if (cliente.Id > 0)
-        //            {
-        //                AddSuccess("Servico cadastrado com sucesso!");
-        //                viewModel.Enabled = false;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        TratarException(e);
-        //    }
-        //    return View(viewModel);
-        //}
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private List<SelectListItem> RecuperaServicos()
+        {
+            var servicos = _servicosService.SearchServicos(new Models.Entities.ServicoModel() { });
+            return servicos.Result.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList();
+        }
     }
 }

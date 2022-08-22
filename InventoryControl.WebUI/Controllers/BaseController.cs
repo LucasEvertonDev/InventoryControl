@@ -6,9 +6,9 @@ namespace InventoryControl.WebUI.Controllers
     public class BaseController : Controller
     {
         public BaseController()
-        { 
+        {
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -32,7 +32,7 @@ namespace InventoryControl.WebUI.Controllers
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="expireTime"></param>
-        public void UpdateCookie(string key, string value, int? expireTime = null) 
+        public void UpdateCookie(string key, string value, int? expireTime = null)
         {
             var cookie = GetCookie(key);
             if (!string.IsNullOrEmpty(cookie))
@@ -104,6 +104,85 @@ namespace InventoryControl.WebUI.Controllers
             TempData["success"] = null;
             TempData["warning"] = warning;
             TempData["error"] = null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public IActionResult OnAction(Func<IActionResult> func)
+        {
+            IActionResult actionResult = null;
+            try
+            {
+                actionResult = func();
+            }
+            catch (Exception e)
+            {
+                TratarException(e);
+            }
+            return actionResult;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> OnActionAsync(Func<Task<IActionResult>> func)
+        {
+            IActionResult actionResult = null;
+            try
+            {
+                actionResult = await func();
+            }
+            catch (Exception e)
+            {
+                TratarException(e);
+                actionResult = View();
+            }
+            return actionResult;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> OnActionAsync<T>(Func<Task<IActionResult>> func)
+        {
+            IActionResult actionResult = null;
+            try
+            {
+                actionResult = await func();
+            }
+            catch (Exception e)
+            {
+                TratarException(e);
+                actionResult = View(Activator.CreateInstance<T>());
+            }
+            return actionResult;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> OnActionAsync<T>(Func<T, Task<IActionResult>> func, T viewModel)
+        {
+            IActionResult actionResult = null;
+            try
+            {
+                actionResult = await func(viewModel);
+            }
+            catch (Exception e)
+            {
+                TratarException(e);
+                actionResult = View(viewModel ?? Activator.CreateInstance<T>());
+            }
+            return actionResult;
         }
     }
 }

@@ -8,11 +8,11 @@
 
         public bool ClienteAtrasado { get; set; }
 
-        public decimal ValorAtendimento { get; set; }
+        public decimal? ValorAtendimento { get; set; }
 
-        public decimal ValorPago { get; set; }
+        public decimal? ValorPago { get; set; }
 
-        public string ObservacaoAtendimento { get; set; }
+        public string? ObservacaoAtendimento { get; set; }
 
         public int Situacao { get; set; }
 

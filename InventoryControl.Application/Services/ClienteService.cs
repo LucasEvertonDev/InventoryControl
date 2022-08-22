@@ -3,6 +3,7 @@ using InventoryControl.Application.Interfaces;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using InventoryControl.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryControl.Application.Services
 {
@@ -26,8 +27,7 @@ namespace InventoryControl.Application.Services
         /// <returns></returns>
         public async Task<Cliente> FindByCpf(string cpf)
         {
-            var users = await _clienteRepository.FindAll();
-            return users.Where(a => a.Cpf == cpf).FirstOrDefault();
+            return await _clienteRepository.Table.Where(a => a.Cpf == cpf).FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -41,7 +41,6 @@ namespace InventoryControl.Application.Services
             return _imapper.Map<ClienteModel>(user);
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -50,28 +49,20 @@ namespace InventoryControl.Application.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<ClienteModel> CreateCliente(ClienteModel model)
         {
-            try
+            var cliente = _imapper.Map<Cliente>(model);
+            if (await this.FindByCpf(model.Cpf) != null)
             {
-                var cliente = _imapper.Map<Cliente>(model);
-                if (await this.FindByCpf(model.Cpf) != null)
-                {
-                    LogicalException("Já existe um cadastro de cliente com o cpf informado");
-                }
-
-                var itens = await _clienteRepository.Itens;
-                if (itens.Where(u => u.Telefone == model.Telefone).Any())
-                {
-                    LogicalException("Já existe um cliente registrado para o número de telefone informado");
-                }
-
-                cliente = await _clienteRepository.Insert(cliente);
-                await _clienteRepository.Save();
-                return _imapper.Map<ClienteModel>(cliente);
+                LogicalException("Já existe um cadastro de cliente com o cpf informado");
             }
-            catch
+
+            if (await _clienteRepository.Table.Where(u => u.Telefone == model.Telefone).AnyAsync())
             {
-                throw;
+                LogicalException("Já existe um cliente registrado para o número de telefone informado");
             }
+
+            cliente = await _clienteRepository.Insert(cliente);
+            await _clienteRepository.CommitAsync();
+            return _imapper.Map<ClienteModel>(cliente);
         }
 
 
@@ -83,20 +74,9 @@ namespace InventoryControl.Application.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<List<ClienteModel>> SearchClientes(ClienteModel model)
         {
-            try
-            {
-                var clientes = await _clienteRepository.FindAll();
-                clientes = clientes
-                    .Where(a => (string.IsNullOrEmpty(model.Cpf) || a.Cpf == model.Cpf)
-                        && (string.IsNullOrEmpty(model.Nome) || a.Nome.ToLower().Contains(model.Nome.ToLower())))
-                    .ToList();
-
-                return _imapper.Map<List<ClienteModel>>(clientes);
-            }
-            catch
-            {
-                throw;
-            }
+            var clientes = await _clienteRepository.Table.Where(a => (string.IsNullOrEmpty(model.Cpf) || a.Cpf == model.Cpf)
+                && (string.IsNullOrEmpty(model.Nome) || a.Nome.ToLower().Contains(model.Nome.ToLower()))).ToListAsync();
+            return _imapper.Map<List<ClienteModel>>(clientes);
         }
 
         /// <summary>
@@ -109,7 +89,7 @@ namespace InventoryControl.Application.Services
         {
             var cliente = _imapper.Map<Cliente>(model);
             cliente = await _clienteRepository.Update(cliente);
-            await _clienteRepository.Save();
+            await _clienteRepository.CommitAsync();
             return _imapper.Map<ClienteModel>(cliente);
         }
     }

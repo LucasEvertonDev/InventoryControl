@@ -1,24 +1,54 @@
 ﻿@model AssociacaoServicoAtendimentoViewModel; 
 
-@{
-    var name = string.Concat("ServicosAssociados", Model.PosicaoLista);
-}
+<div class="col-6 col-xs-12 mb-6" id="div-datalhe-@Model.PosicaoLista" >
+    <input type="hidden" asp-for="Id" name="@Model.GetPropName(nameof(Model.Id))" id="@Model.GetPropName(nameof(Model.Id))" />  
+    <input type="hidden" asp-for="Apagado" name="@Model.GetPropName(nameof(Model.Apagado))" id="@Model.GetPropName(nameof(Model.Apagado))" />  
 
-<div class="col-6 col-xs-12 mb-3">
-    <div class="row">
-        <div class="col-6 col-xs-12 mb-3">
-            <label asp-for="ServicoId" class="col-md-6 control-label">Serviço</label>
-            <select id="drpEmpList" class="form-control" asp-for="ServicoId" asp-items="@(new SelectList(Model.ComboServicos, "Value", "Text"))">  
+    <div class="row col-xs-12">
+        <div class="col-7 col-xs-12 mb-3">
+            <label for="@Model.GetPropName(nameof(Model.ServicoId))" class="col-md-6 control-label">SERVIÇO</label>
+            <select class="form-control" asp-for="ServicoId" name="@Model.GetPropName(nameof(Model.ServicoId))" asp-items="@(new SelectList(Model.ComboServicos, "Value", "Text"))" id="@Model.GetPropName(nameof(Model.ServicoId))">  
                 <option value="">Selecione...</option>  
             </select>  
-            <input type="hidden" asp-for="ServicoId" />  
-            <span asp-validation-for="ServicoId" class="text-danger"></span>
+            <input type="hidden" asp-for="ServicoId" name="@Model.GetPropName(nameof(Model.ServicoId))" id="@Model.GetPropName(nameof(Model.ServicoId))" />  
+            <span class="text-danger field-validation-valid" data-valmsg-for="@Model.GetPropName(nameof(Model.ServicoId))" data-valmsg-replace="true"></span>
         </div>
 
-        <div class="col-4 col-xs-12 mb-3">
-            <label asp-for="ValorCobrado" class="control-label">VALOR COBRADO</label>
-            <input asp-for="ValorCobrado" class="form-control" a />
-            <span asp-validation-for="ValorCobrado" class="text-danger"></span>
+        <div class="col-5 col-xs-12 mb-3">
+             <label name="@Model.GetPropName(nameof(Model.ValorCobrado))" class="control-label">VALOR(R$)</label>
+            <div class="input-group">
+                <input asp-for="ValorCobrado" name="@Model.GetPropName(nameof(Model.ValorCobrado))" class="form-control money ValorCobrado" autocomplete="off" aria-describedby="" id="@Model.GetPropName(nameof(Model.ServicoId))" />
+                <button class="btn btn-primary button-remove-linha" type="button" id="button-remove-linha-@Model.PosicaoLista"  div-datalhe="div-datalhe-@Model.PosicaoLista" detalhamento="@Model.GetPropName("")" style="margin-left: 10px">
+                     <span class="tf-icons bx bx-minus"></span>
+                </button>
+            </div>
+            <span class="text-danger field-validation-valid" data-valmsg-for="@Model.GetPropName(nameof(Model.ValorCobrado))" data-valmsg-replace="true"></span>
         </div>
     </div>
 </div>
+@await Html.PartialAsync("_ValidationScriptsPartial")
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.money').mask('#.##0,00', { reverse: true });
+    });
+    
+    $('input[Name="@(Model.GetPropName(nameof(Model.ValorCobrado)))"]').change(function() {
+        var inputs = $(".ValorCobrado");
+        var valor = 0;
+        for(var i = 0; i < inputs.length; i++){
+           valor += parseFloat($(inputs[i]).val().replace(",", "$").replace(".", ",").replace("$", "."));
+        }
+        $('input[Name="ValorAtendimento"]').val(valor.toLocaleString("pt-Br"));
+    });
+
+    $(".button-remove-linha").click(function() {
+        var btn = $(this);
+        var rowDetalheName = btn.attr('detalhamento');
+        var divDetalheId = btn.attr('div-datalhe');
+        $("#" + divDetalheId).hide();
+        $("#" + rowDetalheName + "." + '@nameof(AssociacaoServicoAtendimentoViewModel.Apagado)').val(true);
+
+        var btnAdd = $('#btn-add-servico');
+        var totalItens = btnAdd.attr('total-itens');
+    });
+</script>
