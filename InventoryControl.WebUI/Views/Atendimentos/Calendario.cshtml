@@ -2,12 +2,12 @@
     Layout = "~/Views/Shared/_LayoutBasic.cshtml";
 }
 <head> 
-    
-
     <link rel="stylesheet" href="~/lib/fullcalendar/main.css" />
     <script src="~/js/moment.js"></script>
     <script src="~/lib/fullcalendar/main.min.js"></script>
     <script src="~/lib/fullcalendar//locales-all.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
     <style>
         .fc-scrollgrid-sync-table > tbody > tr{
             height: 160px;
@@ -16,44 +16,33 @@
         .fc-view-harness-active{
             height: 1000px !important;
         }
+
+        .fc-toolbar-title{
+            text-transform:uppercase;
+        }
+
+        .fc-col-header-cell-cushion {
+            color:black !important;
+            text-transform:uppercase;
+        }
+
+        .fc-col-header > thead > tr{
+            background-color: #F6B8D0;
+        }
+
+        .fc .fc-daygrid-day.fc-day-today{
+            background-color: #f6b8d0b3
+        }
+
+        .fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
+            color:black !important;
+        }
+
+       /* .fc-daygrid-day.fc-day-past{
+            opacity: 0.7;
+        }*/
     </style>
     <script type="text/javascript">
-        //$(document).ready(function () {
-        //    $('#calendar').fullCalendar({
-        //            header: {
-        //                left: 'title',
-        //                center: 'prev,next today',
-        //                right: 'month,listWeek',
-        //            },
-
-        //            defaultDate:new Date(),
-        //            navLinks: true, // can click day/week names to navigate views
-        //            editable: false,
-        //            eventLimit: true, // allow "more" link when too many events
-        //            events: "Atendimentos/GetEvents",
-
-        //            eventRender: function(eventObj, $el) {
-        //                $el.popover({
-        //                    title: eventObj.tooltip,
-        //                    content: eventObj.descricao,
-        //                    trigger: 'hover',
-        //                    placement: 'top',
-        //                    container: 'body'
-        //                });
-        //            },
-
-        //            eventClick: function (calEvent, jsEvent, view) {
-
-        //                //var id = calEvent.id;
-        //                //var consultaTarefa = "false";
-        //                //var url = '@Url.Action("RecuperarItemEventoProtocolo", "EventoProtocolo", new { id = "_id_", consultaTarefa = "_c_" })';
-        //                //url = url.replace('_id_', id);
-        //                //window.location.href = url.replace('_c_', consultaTarefa);
-
-        //            },
-        //        });
-        //});
-
          document.addEventListener('DOMContentLoaded', function() {
               var calendarEl = document.getElementById('calendar');
 
@@ -67,7 +56,7 @@
                 headerToolbar: {
                     center: 'title',
                     left: 'prev,next today',
-                    right: 'dayGridMonth,timeGridWeek'
+                    right: 'dayGridMonth,timeGridWeek,timeGridDayz'
 
                 },
                 dayMaxEvents: 4, // allow "more" link when too many events
@@ -76,15 +65,36 @@
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
-                }
-              });
+                },
+                eventDidMount: function(info) {
+                    //var tooltip = new Tooltip(info.el, {
+                    //  title: info.event.extendedProps.descricao,//you can give data for tooltip
+                    //  placement: 'top',
+                    //  trigger: 'hover',
+                    //  container: 'body'
+                    //});
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    var id = calEvent.id;
+                    var consultaTarefa = "false";
+                    var url = '@Url.Action("Edit", "Atendimento", new { id = "_id_"})';
+                    url = url.replace('_id_', id);
+                    window.location.href = url;
+                },
+            });
 
-              calendar.render();
+            calendar.render();
         });
     </script>
 
 </head>
-<div class="x_panel">
-    <div id='calendar' class="col-lg-12 col-xs-12"></div>
+
+<div class="card mb-12">
+     <div class="card-body">
+        <div class="x_panel">
+            <div id='calendar' class="col-lg-12 col-xs-12"></div>
+        </div>
+    </div>
 </div>
+
 

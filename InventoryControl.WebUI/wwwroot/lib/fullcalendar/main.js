@@ -8367,8 +8367,10 @@ var FullCalendar = (function (exports) {
             return (createElement(RenderHook, { hookProps: hookProps, classNames: options.dayHeaderClassNames, content: options.dayHeaderContent, defaultContent: renderInner$1, didMount: options.dayHeaderDidMount, willUnmount: options.dayHeaderWillUnmount }, function (rootElRef, customClassNames, innerElRef, innerContent) { return (createElement("th", __assign({ ref: rootElRef, role: "columnheader", className: classNames.concat(customClassNames).join(' '), "data-date": !dayMeta.isDisabled ? formatDayString(date) : undefined, colSpan: props.colSpan }, props.extraDataAttrs),
                 createElement("div", { className: "fc-scrollgrid-sync-inner" }, !dayMeta.isDisabled && (createElement("a", __assign({ ref: innerElRef, className: [
                         'fc-col-header-cell-cushion',
-                        props.isSticky ? 'fc-sticky' : '',
-                    ].join(' ') }, navLinkAttrs), innerContent))))); }));
+                    props.isSticky ? 'fc-sticky' : '',
+                ].join(' ')
+                }, navLinkAttrs), innerContent.toUpperCase())))));
+            }));
         };
         return TableDateCell;
     }(BaseComponent));

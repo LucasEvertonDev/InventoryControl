@@ -1,0 +1,136 @@
+﻿@model ConsultarAtendimentoViewModel
+<div class="card mb-12">
+     <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="FormTitle col-12">Consulta de Atendimentos</h5>
+    </div>
+     <div class="card-body">
+        <form asp-action="index" asp-controller="Atendimentos">
+            <div class="row form-horizontal">
+                <div class="col-3 col-xs-12 mb-3">
+                    <label asp-for="Data" class="control-label">DATA DO ATENDIMENTO</label>
+                    <input asp-for="Data" type="date" class="form-control"  />
+                    <span asp-validation-for="Data" class="text-danger"></span>
+                </div>
+
+                <div class="col-6 col-xs-12 mb-3">
+                    <label asp-for="ClienteId" class="col-md-6 control-label">CLIENTE</label>
+                    <select id="drpEmpList" class="form-control" asp-for="ClienteId" asp-items="@(new SelectList(Model.ComboClientes, "Value", "Text"))">  
+                        <option value="">Selecione...</option>  
+                    </select>  
+                    <input type="hidden" asp-for="ClienteId" />  
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+
+                <div class="col-3 col-xs-12 mb-3">
+                    <label asp-for="SituacaoAtendimento" class="control-label">SITUAÇÃO ATENDIMENTO</label>
+                    <select asp-for="SituacaoAtendimento" class="form-control" onchange="" asp-items="Html.GetEnumSelectList<SituacaoAtendimento>()"></select> 
+                    <span asp-validation-for="SituacaoAtendimento" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-xs-12">
+                    <div class="linhaSolida"></div>
+                </div>
+                <div class="col-12 mb-3" style="text-align: right" >
+                    <button type="submit" class="btn btn-primary">
+                        <span class="tf-icons bx bx-search"></span>&nbsp; Buscar
+                    </button>
+                    <a asp-action="create" asp-controller="atendimentos" class="btn btn-secondary">
+                        <span class="tf-icons bx bx-plus"></span>&nbsp; Novo
+                    </a>                      
+                    <a asp-action="" asp-controller="" class="btn btn-secondary">
+                        <span class="tf-icons bx bx-arrow-back"></span>&nbsp; Voltar
+                    </a>
+                </div>
+            </div>
+        </form >
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            DATA
+                        </th>
+                        <th>
+                            CLIENTE
+                        </th>
+                        <th>
+                            SITUAÇÃO
+                        </th>
+                        <th>
+                            VALOR ATENDIMENTO
+                        </th>
+                        <th>
+                            VALOR PAGO
+                        </th>
+                        <th>
+                            AÇÕES
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Atendimentos != null && Model.Atendimentos.Any())
+                    {
+                        @foreach (var item in Model.Atendimentos) 
+                        {
+                            <tr>
+                                <td>
+                                    @(item.Data.ToString("dd/MM/yyyy"))
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cliente)
+                                </td>
+                                @if(item.SituacaoAtendimento == SituacaoAtendimento.AGENDADO)
+                                {
+                                    <td>
+                                        AGENDADO
+                                    </td>
+                                }
+                                else if(item.SituacaoAtendimento == SituacaoAtendimento.CANCELADO)
+                                {
+                                    <td>
+                                        CANCELADO
+                                    </td>
+                                }
+                                else
+                                {
+                                     <td>
+                                        CONCLUÍDO
+                                    </td>
+                                }
+                                <td>
+                                    @item.ValorAtendimento
+                                </td>
+                                <td>
+                                    @item.ValorPago
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-controller="atendimentos" asp-route-id="@item.Id" class="btn btn-default">
+                                        <span class="tf-icons bx bx-edit"></span>
+                                    </a>     
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" style="text-align:center">
+                                Nenhum resultado encontrado
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script type="text/javascript">
+        $(document).ready(function (){
+            if ('!@Model.AutoComplete') {
+                $('input').attr('autocomplete', 'off');
+            }
+        });
+    </script>
+}

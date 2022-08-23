@@ -3,20 +3,20 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:60361",
+      "applicationUrl": "http://localhost:60364",
       "sslPort": 44391
     }
   },
-  "profiles": {
-    "InventoryControl.WebUI": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:7275;http://localhost:5275",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
+  //"profiles": {
+  //  "InventoryControl.WebUI": {
+  //    "commandName": "Project",
+  //    "dotnetRunMessages": true,
+  //    "launchBrowser": true,
+  //    "applicationUrl": "https://localhost:7275;http://localhost:5275",
+  //    "environmentVariables": {
+  //      "ASPNETCORE_ENVIRONMENT": "Development"
+  //    }
+  //  },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,

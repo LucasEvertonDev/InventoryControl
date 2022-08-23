@@ -20,6 +20,8 @@ namespace InventoryControl.WebUI.ViewModels.Atendimentos
         [RequiredCustom]
         public SimNao ClienteAtrasou { get; set; }
 
+        public string? Cliente { get; set; }
+
         public string? ValorAtendimento { get; set; }
 
         public string? ValorPago { get; set; }

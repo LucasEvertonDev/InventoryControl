@@ -1,4 +1,5 @@
 ﻿using InventoryControl.Application.Interfaces;
+using InventoryControl.Models.Entities;
 using InventoryControl.WebUI.Attributes;
 using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.Identity.Constants;
@@ -27,6 +28,36 @@ namespace InventoryControl.WebUI.Controllers
             _clienteService = clienteService;
             _atendimentoService = atendimentoService;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_ATENDIMENTOS)]
+        public async Task<IActionResult> Index()
+        {
+            var viewModel = await _atendimentoModelFactory.PrepareConsultaAtendimentoViewModel(
+                    await _atendimentoService.SeachAgendamentos(new AtendimentoModel() { }));
+            return View(viewModel);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_ATENDIMENTOS)]
+        public async Task<IActionResult> Index(ConsultarAtendimentoViewModel viewModel)
+        {
+            var clientes = await _atendimentoModelFactory.PrepareConsultaAtendimentoViewModel(
+                await _atendimentoService.SeachAgendamentos(new AtendimentoModel
+                {
+                    ClienteId = string.IsNullOrEmpty(viewModel.ClienteId) ? -1 : int.Parse(viewModel.ClienteId),
+                    Data = viewModel.Data,
+                    Situacao = (int)viewModel.SituacaoAtendimento
+                }));
+            return View(clientes);
+        }
+
 
         /// <summary>
         /// 
@@ -72,6 +103,53 @@ namespace InventoryControl.WebUI.Controllers
                 TratarException(e);
             }
 
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.MANTER_ATENDIMENTOS)]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            return View(await _atendimentoModelFactory.PrepareAtendimentoViewModel(
+                await _atendimentoService.FindById(Id)));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        [HttpPost, SessionExpire, Authorize(Roles = Roles.MANTER_CLIENTES)]
+        public async Task<IActionResult> Edit(AtendimentoViewModel viewModel)
+        {
+            try
+            {
+                viewModel = await _atendimentoModelFactory.PrepareAtendimentoViewModel(viewModel);
+
+                if (ModelState.IsValid)
+                {
+                    if (!viewModel.ServicosAssociados.Any(a => !a.Apagado))
+                    {
+                        AddError("Adicione pelo menos um serviço");
+                        return View(viewModel);
+                    }
+
+                    var atendimento = await _atendimentoService.UpdateAtendimento(
+                        await _atendimentoModelFactory.PrepareAtendimentoModelDto(viewModel));
+
+                    if (atendimento.Id > 0)
+                    {
+                        AddSuccess("Atendimento atualizado com sucesso");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                TratarException(e);
+            }
             return View(viewModel);
         }
 

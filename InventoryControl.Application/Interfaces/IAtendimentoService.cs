@@ -7,6 +7,12 @@ namespace InventoryControl.Application.Interfaces
     {
         Task<Atendimento> CreateAtendimento(AtendimentoModel model);
 
+        Task<Atendimento> UpdateAtendimento(AtendimentoModel model);
+
         Task<List<AtendimentoModel>> SeachAgendamentos(DateTime dataInicio, DateTime dataFim);
+
+        Task<List<AtendimentoModel>> SeachAgendamentos(AtendimentoModel model);
+
+        Task<AtendimentoModel> FindById(int id);
     }
 }

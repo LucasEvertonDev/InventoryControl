@@ -12,5 +12,9 @@ namespace InventoryControl.WebUI.Factories.Interfaces
         Task<AtendimentoModel> PrepareAtendimentoModelDto(AtendimentoViewModel viewModel);
 
         Task<List<CalendarioViewModel>> PrepareCalendaViewModel(List<AtendimentoModel> listModel);
+
+        Task<AtendimentoViewModel> PrepareAtendimentoViewModel(AtendimentoModel model);
+
+        Task<ConsultarAtendimentoViewModel> PrepareConsultaAtendimentoViewModel(List<AtendimentoModel> model);
     }
 }

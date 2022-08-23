@@ -1,5 +1,6 @@
 ﻿using InventoryControl.Application.Interfaces;
 using InventoryControl.Models.Entities;
+using InventoryControl.WebUI.Enuns;
 using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.ViewModels.Atendimentos;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -47,6 +48,39 @@ namespace InventoryControl.WebUI.Factories
         /// 
         /// </summary>
         /// <returns></returns>
+        public async Task<AtendimentoViewModel> PrepareAtendimentoViewModel(AtendimentoModel model)
+        {
+            var servicos = await _servicosService.SearchServicos(new Models.Entities.ServicoModel() { });
+            var clientes = await _clienteService.SearchClientes(new Models.Entities.ClienteModel() { });
+
+            return new AtendimentoViewModel
+            {
+                ClienteAtrasou = model.ClienteAtrasado ? Enuns.SimNao.SIM : Enuns.SimNao.NAO,
+                Id = model.Id,
+                ClienteId = model.ClienteId,
+                Data = model.Data.Value,
+                ObservacaoAtendimento = model.ObservacaoAtendimento,
+                SituacaoAtendimento = (SituacaoAtendimento)model.Situacao,
+                ValorAtendimento = model.ValorAtendimento.ToString(),
+                ValorPago = model.ValorPago?.ToString(),
+                ComboClientes = clientes.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList(),
+                ServicosAssociados = model.ServicosAssociados.Select(servico => 
+                    new AssociacaoServicoAtendimentoViewModel 
+                    {
+                        AtendimentoId = model.Id,
+                        PosicaoLista = model.ServicosAssociados.ToList().FindIndex(a => a.Id == servico.Id),
+                        Id = servico.Id,
+                        ServicoId = servico.ServicoId,
+                        ValorCobrado = servico.ValorCobrado.ToString(),
+                        ComboServicos = servicos.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList(),
+                    }).ToList()
+            };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<AtendimentoViewModel> PrepareAtendimentoViewModel(AtendimentoViewModel atendimentoViewModel)
         {
             var servicos = await _servicosService.SearchServicos(new Models.Entities.ServicoModel() { });
@@ -78,7 +112,7 @@ namespace InventoryControl.WebUI.Factories
                 ServicosAssociados = viewModel.ServicosAssociados.Where(a => !a.Apagado).Select(a => 
                     new AssociacaoServicosAtendimentoModel
                     {
-                        AtendimentoId = viewModel.Id.GetValueOrDefault(),
+                        AtendimentoId = a.Id.GetValueOrDefault(),
                         ServicoId = a.ServicoId,
                         ValorCobrado = string.IsNullOrEmpty(a.ValorCobrado) ? null : decimal.Parse(a.ValorCobrado),
                         Id = a.Id,
@@ -100,13 +134,44 @@ namespace InventoryControl.WebUI.Factories
                 {
                     id = a.Id.ToString(),
                     title = " - " + a.Cliente.Nome.Split(" ")[0],
-                    color = a.Data < DateTime.Now.Date ? "#FF7F50" : "#66CDAA",
+                    color = a.Data < DateTime.Now.Date ? "red" : "#66CDAA",
                     descricao = "Atendimento para a cliente j",
-                    tooltip = "Ás " + a.Data.Hour.ToString() + " horas",
-                    start = a.Data.ToString("yyyy-MM-ddTHH:mm"),
+                    tooltip = "Ás " + a.Data.Value.Hour.ToString() + " horas",
+                    start = a.Data.Value.ToString("yyyy-MM-ddTHH:mm"),
+                    url = "/Atendimentos/Edit/" + a.Id
                 });
             }
             return Task.FromResult(atendimentos);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<ConsultarAtendimentoViewModel> PrepareConsultaAtendimentoViewModel(List<AtendimentoModel> model)
+        {
+            var clientes = await _clienteService.SearchClientes(new Models.Entities.ClienteModel() { });
+            var viewModel = new ConsultarAtendimentoViewModel()
+            {
+                ComboClientes = clientes.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList(),
+                Data = DateTime.Now,
+                Atendimentos = model.ToList().Select(a => new AtendimentoViewModel
+                {
+                    Data = a.Data.Value,
+                    ClienteAtrasou = a.ClienteAtrasado ? SimNao.SIM : SimNao.NAO,
+                    ClienteId = a.ClienteId,
+                    Cliente = a.Cliente.Nome,
+                    SituacaoAtendimento = (SituacaoAtendimento)a.Situacao,
+                    Id = a.Id,
+                    ObservacaoAtendimento = a.ObservacaoAtendimento,
+                    ValorAtendimento = a.ValorAtendimento.ToString("N2"),
+                    ValorPago = a.ValorPago?.ToString("N2")
+                }).ToList()
+            };
+
+            return viewModel;
         }
     }
 }
