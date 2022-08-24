@@ -1,5 +1,6 @@
 ﻿using InventoryControl.Application.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace InventoryControl.WebUI.Controllers
 {
@@ -72,7 +73,7 @@ namespace InventoryControl.WebUI.Controllers
             }
             else
             {
-                AddError("Ocorreu um erro inesperado.");
+                AddError(JsonConvert.SerializeObject(ex));
             }
         }
 

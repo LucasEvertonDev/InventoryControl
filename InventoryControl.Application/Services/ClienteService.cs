@@ -55,11 +55,6 @@ namespace InventoryControl.Application.Services
                 LogicalException("Já existe um cadastro de cliente com o cpf informado");
             }
 
-            if (await _clienteRepository.Table.Where(u => u.Telefone == model.Telefone).AnyAsync())
-            {
-                LogicalException("Já existe um cliente registrado para o número de telefone informado");
-            }
-
             cliente = await _clienteRepository.Insert(cliente);
             await _clienteRepository.CommitAsync();
             return _imapper.Map<ClienteModel>(cliente);

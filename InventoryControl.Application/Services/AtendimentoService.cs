@@ -126,16 +126,18 @@ namespace InventoryControl.Application.Services
 
             foreach (var associacao in model.ServicosAssociados)
             {
+                var atend = await _mapServicosAtendimentoRepository.FindById(associacao.Id);
+                atend = await _mapServicosAtendimentoRepository.Delete(atend);
+               
                 var servico = await _servicoRepository.Table.Where(s => s.Id == associacao.ServicoId).FirstOrDefaultAsync();
                 var map = new MapServicosAtendimento
                 {
-                    Id = associacao.Id.Value,
                     Atendimento = atendimento,
                     ValorCobrado = associacao.ValorCobrado,
                     Servico = servico ?? LogicalException("Não foi possível recuperar o servico"),
                 };
 
-                await _mapServicosAtendimentoRepository.Update(map);
+                await _mapServicosAtendimentoRepository.Insert(map);
             }
 
             await _atendimentoRepository.CommitAsync();
