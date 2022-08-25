@@ -4,6 +4,7 @@ using InventoryControl.WebUI.ViewModels.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WhatsApp.SimpleCRM.Domain.Contracts.Service.Core;
 
 namespace InventoryControl.WebUI.Controllers
 {
@@ -11,10 +12,13 @@ namespace InventoryControl.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IStartupService _startupService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            IStartupService startupService)
         {
             _logger = logger;
+            _startupService = startupService;
         }
 
         /// <summary>
@@ -40,6 +44,13 @@ namespace InventoryControl.WebUI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult SendMessage()
+        {
+            _startupService.SendMessage("message", "Pedro Fiven");
+            return Json("");
         }
     }
 }

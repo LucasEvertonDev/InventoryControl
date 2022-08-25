@@ -108,6 +108,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InventoryControl.Infra.IoC\InventoryControl.Infra.IoC.csproj" />
+    <ProjectReference Include="..\Outros\WhatsApp.SimpleCRM.Domain\WhatsApp.SimpleCRM.Domain.csproj" />
   </ItemGroup>
 
 </Project>

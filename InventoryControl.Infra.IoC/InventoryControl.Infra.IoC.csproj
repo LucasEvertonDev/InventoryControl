@@ -15,6 +15,7 @@
     <ProjectReference Include="..\InventoryControl.Domain\InventoryControl.Domain.csproj" />
     <ProjectReference Include="..\InventoryControl.Infra.Data\InventoryControl.Infra.Data.csproj" />
     <ProjectReference Include="..\InventoryControl.Models\InventoryControl.Models.csproj" />
+    <ProjectReference Include="..\Outros\WhatsApp.SimpleCRM.Infra.CrossCutting\WhatsApp.SimpleCRM.Infra.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

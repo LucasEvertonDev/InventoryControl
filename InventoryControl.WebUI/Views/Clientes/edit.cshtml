@@ -21,7 +21,7 @@
         $(document).ready(function (){
             $('input[Name="@nameof(Model.Cpf)"]').mask('000.000.000-00');
             $('input[Name="@nameof(Model.Cpf)"]').attr("maxlenght", "14")
-            $('input[Name="@nameof(Model.Telefone)"]').mask('+55 (32) 99999-9999');
+            $('input[Name="@nameof(Model.Telefone)"]').mask('+55 (99) 99999-9999');
 
             if ('@Model.AutoComplete' == 'False') {
                 $('input').attr('autocomplete', 'off');

@@ -1,0 +1,47 @@
+﻿@model WhatsAppViewModel
+
+@await Component.InvokeAsync("NavigationPathViewComponent")
+
+<div class="card mb-12">
+     <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="FormTitle col-12">Enviar WhatsApp</h5>
+    </div>
+     <div class="card-body">
+        <form asp-action="Send" asp-controller="WhatsApp">
+            <div class="row form-horizontal">
+                <div class="col-12 col-xs-12 mb-3">
+                    <label asp-for="Numero" class="control-label">TELEFONE</label>
+                    <input asp-for="Numero" class="form-control" />
+                    <span asp-validation-for="Numero" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-xs-12 mb-3 SituacaoAtendimentoConcluida">
+                    <label asp-for="Message" class="control-label">MESSAGE</label>
+                    <textarea asp-for="Message" class="form-control" rows="3" ></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+
+                <div class="linhaSolida"></div>
+                <div class="row">
+                    <div class="col-12 mb-3" style="text-align: right" >
+                        <button type="submit" id="button-submit" value="send"  class="btn btn-primary">
+                                <span class="tf-icons bx bx-save"></span>&nbsp; Enviar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script type="text/javascript">
+        $(document).ready(function (){
+            $('input[Name="@nameof(Model.Numero)"]').mask('+5599999999999');
+
+            
+        });
+    </script>
+}
+

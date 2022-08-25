@@ -53,7 +53,18 @@
                 </a>
             </li>
         }
-    </ul>
+
+
+        @if (Context.User.IsInRole(Roles.MANTER_ATENDIMENTOS))
+        {
+            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_ATENDIMENTOS, false)">
+                   <a asp-controller="whatsapp" asp-action="send" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div>Enviar mensagem</div>
+                </a>
+            </li>
+        }    
+        </ul>
 </aside>
 
 @functions {

@@ -6,9 +6,11 @@ using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using InventoryControl.Infra.Data.Context;
 using InventoryControl.Infra.Data.Repository;
+using InventoryControl.Infra.IoC.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WhatsApp.SimpleCRM.Infra.CrossCutting.InversionOfControl;
 
 namespace InventoryControl.Infra.IoC
 {
@@ -45,6 +47,10 @@ namespace InventoryControl.Infra.IoC
             {
                 mc.AddProfile(new DomainToDTOMappingProfile());
             });
+
+            services.AddRange(new ServiceCollection().AddInfraDependecies()
+                                                    .AddRepositoryDependencies()
+                                                    .AddServiceDependencies());
 
             services.AddSingleton(mapperConfig.CreateMapper());
 
