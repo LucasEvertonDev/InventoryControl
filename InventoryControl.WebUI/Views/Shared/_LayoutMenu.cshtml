@@ -29,7 +29,7 @@
             <li class="menu-item @VerifyMenuConditions(Roles.MANTER_CLIENTES, false)">
                    <a asp-controller="clientes" asp-action="index" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user-pin"></i>
-                    <div>Consultar Clientes</div>
+                    <div>Clientes</div>
                 </a>
             </li>
         }
@@ -39,7 +39,7 @@
             <li class="menu-item @VerifyMenuConditions(Roles.MANTER_SERVICOS, false)">
                    <a asp-controller="servicos" asp-action="index" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div>Consultar Serviços</div>
+                    <div>Serviços</div>
                 </a>
             </li>
         }
@@ -48,21 +48,21 @@
         {
             <li class="menu-item @VerifyMenuConditions(Roles.MANTER_ATENDIMENTOS, false)">
                    <a asp-controller="atendimentos" asp-action="index" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div>Consultar Atendimentos</div>
+                    <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
+                    <div>Atendimentos</div>
                 </a>
             </li>
         }
 
-  @*      @if (Context.User.IsInRole(Roles.MANTER_ATENDIMENTOS))
+        @if (Context.User.IsInRole(Roles.MANTER_CUSTOS))
         {
-            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_ATENDIMENTOS, false)">
-                   <a asp-controller="whatsapp" asp-action="send" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div>Enviar mensagem</div>
+            <li class="menu-item @VerifyMenuConditions(Roles.MANTER_CUSTOS, false)">
+                   <a asp-controller="custos" asp-action="index" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-money"></i>
+                    <div>Custos</div>
                 </a>
             </li>
-        }    *@
+        }    
         </ul>
 </aside>
 

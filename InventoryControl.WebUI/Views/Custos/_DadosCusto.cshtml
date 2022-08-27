@@ -1,0 +1,28 @@
+﻿@model CustosViewModel
+
+<div class="row">
+    <input asp-for="Id" hidden/>
+      <div class="col-2 col-xs-12 mb-3">
+        <label asp-for="Data" class="control-label">DATA DO CUSTO</label>
+        <input asp-for="Data" type="date" class="form-control"  />
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+    <div class="col-2 col-xs-12 mb-3">
+        <label asp-for="Valor" class="control-label">VALOR(R$)</label>
+        <input asp-for="Valor" class="form-control money" />
+        <span asp-validation-for="Valor" class="text-danger"></span>
+    </div>
+    <div class="col-8 col-xs-12 mb-3">
+        <label asp-for="Descricao" class="control-label">DESCRIÇÃO</label>
+        <input asp-for="Descricao" class="form-control" />
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+</div>
+@await Component.InvokeAsync("SaveButtonsViewComponent")
+@await Html.PartialAsync("_ValidationScriptsPartial")
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.money').mask('#.##0,00', { reverse: true });
+    });
+</script>
+

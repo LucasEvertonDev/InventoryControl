@@ -1,0 +1,90 @@
+﻿@model ConsultarCustosViewModel
+
+<div class="card mb-12">
+     <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="FormTitle col-12">Consulta de Custos</h5>
+    </div>
+     <div class="card-body">
+        <form asp-action="index">
+            <div class="row form-horizontal">
+                <div class="col-3 col-xs-12 mb-3">
+                    <label asp-for="DataInicio" class="control-label">DATA INÍCIO</label>
+                    <input asp-for="DataInicio" type="date" class="form-control"  />
+                    <span asp-validation-for="DataInicio" class="text-danger"></span>
+                </div>
+                <div class="col-3 col-xs-12 mb-3">
+                    <label asp-for="DataFim" class="control-label">DATA FINAL</label>
+                    <input asp-for="DataFim" type="date" class="form-control"  />
+                    <span asp-validation-for="DataFim" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-xs-12">
+                    <div class="linhaSolida"></div>
+                </div>
+                <div class="col-12 mb-3" style="text-align: right" >
+                    <button type="submit" class="btn btn-primary">
+                        <span class="tf-icons bx bx-search"></span>&nbsp; Buscar
+                    </button>
+                    <a asp-action="create" class="btn btn-secondary">
+                        <span class="tf-icons bx bx-plus"></span>&nbsp; Novo
+                    </a>                      
+                    <a asp-action="" asp-controller="" class="btn btn-secondary">
+                        <span class="tf-icons bx bx-arrow-back"></span>&nbsp; Voltar
+                    </a>
+                </div>
+            </div>
+        </form >
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th colspan="3">
+                            DATA
+                        </th>
+                        <th colspan="2" >
+                            VALOR
+                        </th>
+                        <th colspan="6" >
+                            DESCRIÇÃO
+                        </th>
+                        <th colspan="1" style="max-width: 20px">
+                            AÇÕES
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Custos != null && Model.Custos.Any())
+                    {
+                        @foreach (var item in Model.Custos) 
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    @item.Data.ToString("dd/MM/yyyy")
+                                </td>
+                                <td colspan="2">
+                                    @item.Valor.ToString("N2")
+                                </td>
+                                <td colspan="6">
+                                    @Html.DisplayFor(modelItem => item.Descricao)
+                                </td>
+                                <td  colspan="1">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">
+                                        <span class="tf-icons bx bx-edit"></span>
+                                    </a>     
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="12" style="text-align:center">
+                                Nenhum resultado encontrado
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
