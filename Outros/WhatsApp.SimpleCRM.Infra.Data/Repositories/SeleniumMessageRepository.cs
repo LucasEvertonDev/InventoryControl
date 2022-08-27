@@ -4,8 +4,10 @@ using OpenQA.Selenium.Support.UI;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using WhatsApp.SimpleCRM.Domain.Contracts.Infra.Data;
 
@@ -35,6 +37,12 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
             _logger = logger;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recipient"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task Send(string recipient, string message)
         {
             if (!IsValid(recipient, message))
@@ -53,9 +61,15 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
             catch (Exception e)
             {
                 _logger.Error(e, "Erro ao tentar enviar mensagem");
+                throw e;
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="communications"></param>
+        /// <returns></returns>
         public async Task SendBatch(IEnumerable<Tuple<string, string>> communications)
         {
             if (!IsValid(communications))
@@ -82,6 +96,7 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
             catch (Exception e)
             {
                 _logger.Error(e, "Erro ao tentar enviar mensagens");
+                throw e;
             }
         }
 
@@ -127,8 +142,8 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
         /// </summary>
         private void OpenBrowser()
         {
-            if (_webDriver == null)
-            {
+            if (_webDriver == null || !System.Diagnostics.Process.GetProcessesByName("chromedriver").Any())
+            { 
                 _webDriver = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory);
             }
            
@@ -170,7 +185,6 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
         {
             try
             {
-
                 await NavigateToRecipientChat(recipient);
 
                 await Task.Delay(500);
@@ -186,6 +200,7 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
             catch (Exception e)
             {
                 _logger.Error(e, "Erro ao enviar a mensagem {0} para {1}", message, recipient);
+                throw e;
             }
         }
 
@@ -195,26 +210,32 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
         /// <param name="recipient">Nome do detinatário no WhatsApp</param>
         private async Task NavigateToRecipientChat(string recipient)
         {
-
             _webDriver.Url = "https://wa.me/" + recipient;
-
+            //Task.Run(() =>
+            //{
+            //    //IWebElement qrCode = new WebDriverWait(_webDriver, TimeSpan.FromDays(1)).Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@data-testid='qrcode']")));
+            //    //if (qrCode.Displayed)
+            //    //{
+            //    //    IWebElement sidePane = new WebDriverWait(_webDriver, TimeSpan.FromDays(1)).Until(ExpectedConditions.ElementIsVisible(By.XPath("//a[@title='Compartilhe no WhatsApp']")));
+            //    //    if (sidePane.Displayed)
+            //    //    {
+            //    //        _webDriver.Manage().Window.Minimize();
+            //    //    }
+            //    //}
+            //});
 
             IWebElement sidePane = new WebDriverWait(_webDriver, TimeSpan.FromDays(1)).Until(ExpectedConditions.ElementIsVisible(By.XPath("//a[@title='Compartilhe no WhatsApp']")));
 
             IWebElement targetChat = sidePane.FindElement(By.XPath("//a[@title='Compartilhe no WhatsApp']"));
             targetChat.Click();
 
-
             IWebElement sidePane2 = new WebDriverWait(_webDriver, TimeSpan.FromDays(1)).Until(ExpectedConditions.ElementIsVisible(By.XPath("//span[contains(text(),'use o WhatsApp Web')]")));
-
 
             var pai = sidePane2.FindElement(By.XPath("//span[contains(text(),'use o WhatsApp Web')]"));
             var element = pai.FindElement(By.XPath("./.."));
             element.Click();
 
-
             IWebElement sidePane4 = new WebDriverWait(_webDriver, TimeSpan.FromDays(1)).Until(ExpectedConditions.ElementIsVisible(By.Id("pane-side")));
-
         }
 
         /// <summary>
@@ -233,5 +254,27 @@ namespace WhatsApp.SimpleCRM.Infra.Data.Repositories
         {
             _webDriver.FindElement(By.TagName("footer")).FindElement(By.XPath("//span[@data-icon='send']")).Click();
         }
+
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Task OpenWhatsApp()
+        {
+            OpenBrowser();
+
+            IWebElement sidePane = new WebDriverWait(_webDriver, TimeSpan.FromDays(1)).Until(ExpectedConditions.ElementIsVisible(By.Id("pane-side")));
+
+            if (sidePane.Displayed)
+            {
+                _webDriver.Manage().Window.Minimize();
+            }
+
+            return Task.CompletedTask;
+        }
     }
 }
+

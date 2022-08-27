@@ -2,7 +2,7 @@
 {
     public class AtendimentoModel : BaseModel
     {
-        public DateTime? Data { get; set; }
+        public DateTime Data { get; set; }
 
         public int ClienteId { get; set; }
 

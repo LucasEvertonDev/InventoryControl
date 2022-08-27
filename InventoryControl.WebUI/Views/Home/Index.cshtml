@@ -1,1 +1,41 @@
-﻿@await Html.PartialAsync("../Atendimentos/Calendario")
+﻿@model HomeViewModel
+
+<div class="row">
+    <div class="col-lg-3 col-3 mb-4">
+        <div class="card">
+             <div class="card-body text-center">
+                <label>LUCRO: @($"{DateTime.Now.Month.ToString("00")}/{DateTime.Now.Year}")</label>
+                <strong>R$ @Model.Lucro.ToString("N2")</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-3 mb-4">
+        <div class="card">
+             <div class="card-body text-center">
+                <label>P/ RECEBER: @($"{DateTime.Now.Month.ToString("00")}/{DateTime.Now.Year}")</label>
+                <strong>R$ @Model.Receber.ToString("N2")</strong>
+            </div>
+        </div>
+    </div>
+     <div class="col-lg-3 col-3 mb-4">
+        <div class="card">
+             <div class="card-body text-center">
+                <label>CONCLUÍDOS: @($"{DateTime.Now.Month.ToString("00")}/{DateTime.Now.Year}")</label>
+                <strong>@Model.Concluidos</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-3 mb-4">
+        <div class="card">
+             <div class="card-body text-center">
+                <label>AGENDADOS: @($"{DateTime.Now.Month.ToString("00")}/{DateTime.Now.Year}")</label>
+                 <strong>@Model.Agendados</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-12">
+     <div class="card-body">
+        @await Html.PartialAsync("../Atendimentos/Calendario")
+    </div>
+</div>

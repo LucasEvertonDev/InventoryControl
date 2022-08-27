@@ -26,3 +26,6 @@ dotnet_diagnostic.CS8600.severity = none
 
 # CS8601: Possível atribuição de referência nula.
 dotnet_diagnostic.CS8601.severity = none
+
+# CS4014: Como esta chamada não é esperada, a execução do método atual continua antes de a chamada ser concluída
+dotnet_diagnostic.CS4014.severity = none

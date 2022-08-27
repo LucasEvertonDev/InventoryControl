@@ -18,6 +18,12 @@ namespace WhatsApp.SimpleCRM.Domain.Contracts.Infra.Data
         public Task Send(string recipient, string message);
 
         /// <summary>
+        /// Envia uma mensagem para um destinatário
+        /// </summary>
+        /// <returns>Operação assíncrona</returns>
+        public Task OpenWhatsApp();
+
+        /// <summary>
         /// Envia um conjunto de mensagens em lote
         /// </summary>
         /// <param name="communications">Conjunto de tuplas contendo destinatário e mensagem</param>

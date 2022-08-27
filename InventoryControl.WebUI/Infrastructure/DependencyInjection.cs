@@ -29,6 +29,7 @@ namespace InventoryControl.WebUI.Infrastructure
             services.AddScoped<ISaveButtonsModelFactory, SaveButtonsModelFactory>();
             services.AddScoped<IServicoModelFactory, ServicoModelFactory>();
             services.AddScoped<IAtendimentoModelFactory, AtendimentoModelFactory>();
+            services.AddScoped<IHomeModelFactory, HomeModelFactory>();
         }
     }
 }

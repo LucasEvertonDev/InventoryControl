@@ -15,7 +15,7 @@ namespace InventoryControl.Infra.Data.EntitiesConfigurations
         {
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Nome).HasMaxLength(30).IsRequired();
-            builder.Property(u => u.Descricao).HasMaxLength(100).IsRequired();
+            builder.Property(u => u.Descricao).HasMaxLength(200).IsRequired();
         }
     }
 }

@@ -58,7 +58,7 @@ namespace InventoryControl.WebUI.Factories
                 ClienteAtrasou = model.ClienteAtrasado ? Enuns.SimNao.SIM : Enuns.SimNao.NAO,
                 Id = model.Id,
                 ClienteId = model.ClienteId,
-                Data = model.Data.Value,
+                Data = model.Data,
                 ObservacaoAtendimento = model.ObservacaoAtendimento,
                 SituacaoAtendimento = (SituacaoAtendimento)model.Situacao,
                 ValorAtendimento = model.ValorAtendimento.ToString(),
@@ -134,10 +134,10 @@ namespace InventoryControl.WebUI.Factories
                 {
                     id = a.Id.ToString(),
                     title = " - " + a.Cliente.Nome.Split(" ")[0],
-                    color = a.Data < DateTime.Now.Date ? "red" : "#66CDAA",
+                    color = a.ValorAtendimento > a.ValorPago.GetValueOrDefault() && a.Situacao == (int)SituacaoAtendimento.CONCLUIDO ? "red" : a.Data < DateTime.Now.Date ? "#66CDAA" : "#ff007f",
                     descricao = "Atendimento para a cliente j",
-                    tooltip = "Ás " + a.Data.Value.Hour.ToString() + " horas",
-                    start = a.Data.Value.ToString("yyyy-MM-ddTHH:mm"),
+                    tooltip = "Ás " + a.Data.Hour.ToString() + " horas",
+                    start = a.Data.ToString("yyyy-MM-ddTHH:mm"),
                     url = "/Atendimentos/Edit/" + a.Id
                 });
             }
@@ -156,10 +156,12 @@ namespace InventoryControl.WebUI.Factories
             var viewModel = new ConsultarAtendimentoViewModel()
             {
                 ComboClientes = clientes.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList(),
-                Data = DateTime.Now,
+                DataInicio = DateTime.Now.AddMonths(-1),
+                DataFim = DateTime.Now,
+                SituacaoAtendimento = SituacaoAtendimentoconsulta.TODOS,
                 Atendimentos = model.ToList().Select(a => new AtendimentoViewModel
                 {
-                    Data = a.Data.Value,
+                    Data = a.Data,
                     ClienteAtrasou = a.ClienteAtrasado ? SimNao.SIM : SimNao.NAO,
                     ClienteId = a.ClienteId,
                     Cliente = a.Cliente.Nome,

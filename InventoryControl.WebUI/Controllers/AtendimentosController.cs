@@ -37,7 +37,11 @@ namespace InventoryControl.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var viewModel = await _atendimentoModelFactory.PrepareConsultaAtendimentoViewModel(
-                    await _atendimentoService.SeachAgendamentos(new AtendimentoModel() { }));
+                    await _atendimentoService.SeachAgendamentos(new AtendimentoModel() 
+                    {
+                        Situacao = -1, 
+                        ClienteId = -1,
+                    }, DateTime.Now.AddMonths(-1).Date, DateTime.Now.Date));
             return View(viewModel);
         }
         /// <summary>
@@ -52,9 +56,10 @@ namespace InventoryControl.WebUI.Controllers
                 await _atendimentoService.SeachAgendamentos(new AtendimentoModel
                 {
                     ClienteId = string.IsNullOrEmpty(viewModel.ClienteId) ? -1 : int.Parse(viewModel.ClienteId),
-                    Data = viewModel.Data,
                     Situacao = (int)viewModel.SituacaoAtendimento
-                }));
+                },
+                viewModel.DataInicio.Value,
+                viewModel.DataFim.Value));
             return View(clientes);
         }
 

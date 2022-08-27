@@ -77,7 +77,7 @@ namespace InventoryControl.Application.Services
         public async Task<AtendimentoModel> FindById(int id)
         {
             var atendimento = await _atendimentoRepository.Table.Where(a => a.Id == id)?.Include(a => a.MapServicosAtendimentos).FirstOrDefaultAsync();
-            var atendimentoModel = _imapper.Map<AtendimentoModel>(await _atendimentoRepository.Table.Where(a => a.Id == id)?.Include(a => a.MapServicosAtendimentos).FirstOrDefaultAsync());
+            var atendimentoModel = _imapper.Map<AtendimentoModel>(atendimento);
             atendimentoModel.ServicosAssociados = _imapper.Map<List<AssociacaoServicosAtendimentoModel>>(atendimento.MapServicosAtendimentos);
 
             return atendimentoModel;
@@ -91,7 +91,13 @@ namespace InventoryControl.Application.Services
         /// <returns></returns>
         public async Task<List<AtendimentoModel>> SeachAgendamentos(DateTime dataInicio, DateTime dataFim)
         {
-            return _imapper.Map<List<AtendimentoModel>>(await _atendimentoRepository.Table.Where(a => a.Data.Date >= dataInicio.Date && a.Data.Date <= dataFim.Date).Include(c => c.Cliente).ToListAsync());
+            var atendimentos = await _atendimentoRepository.Table.Where(a => a.Data.Date >= dataInicio.Date && a.Data.Date <= dataFim.Date && a.Situacao != 1)?.Include(a => a.MapServicosAtendimentos).Include(c => c.Cliente).ToListAsync();
+            var atendimentosModel = _imapper.Map<List<AtendimentoModel>>(atendimentos);
+            atendimentosModel.ForEach(a =>
+            {
+                a.ServicosAssociados = _imapper.Map<List<AssociacaoServicosAtendimentoModel>>(atendimentos.Where(at => at.Id == a.Id).First().MapServicosAtendimentos);
+            });
+            return atendimentosModel;
         }
 
         /// <summary>
@@ -99,15 +105,16 @@ namespace InventoryControl.Application.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<List<AtendimentoModel>> SeachAgendamentos(AtendimentoModel model)
+        public async Task<List<AtendimentoModel>> SeachAgendamentos(AtendimentoModel model, DateTime dataInicio, DateTime datFim)
         {
             return _imapper.Map<List<AtendimentoModel>>(
                 await _atendimentoRepository.Table
-                    //.Where(a => !model.Data.HasValue && a.Data.Date == model.Data.Value.Date
-                    //    && model.ClienteId == -1 || model.ClienteId == a.ClienteId
-                    //    && model.Situacao == -1 || model.Situacao == a.Situacao
-                    //)
-                    .Include(c => c.Cliente).ToListAsync());
+                    .Where(a => dataInicio <= a.Data.Date
+                        && datFim >= a.Data.Date
+                        && (model.ClienteId == -1 || model.ClienteId == a.ClienteId)
+                        && (model.Situacao == -1 || model.Situacao == a.Situacao)
+                    )
+                    .Include(c => c.Cliente).ToListAsync()).OrderByDescending(a => a.Data).ToList();
         }
 
         /// <summary>

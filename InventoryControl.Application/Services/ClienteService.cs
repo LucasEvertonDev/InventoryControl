@@ -71,7 +71,7 @@ namespace InventoryControl.Application.Services
         {
             var clientes = await _clienteRepository.Table.Where(a => (string.IsNullOrEmpty(model.Cpf) || a.Cpf == model.Cpf)
                 && (string.IsNullOrEmpty(model.Nome) || a.Nome.ToLower().Contains(model.Nome.ToLower()))).ToListAsync();
-            return _imapper.Map<List<ClienteModel>>(clientes);
+            return _imapper.Map<List<ClienteModel>>(clientes).OrderBy(a => a.Nome).ToList();
         }
 
         /// <summary>

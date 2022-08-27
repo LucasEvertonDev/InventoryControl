@@ -36,10 +36,16 @@ namespace InventoryControl.WebUI.Controllers
         /// <returns></returns>
         public IActionResult Send(WhatsAppViewModel whatsAppViewModel)
         {
-            _startupService.SendMessage( whatsAppViewModel.Message, whatsAppViewModel.Numero);
+            try
+            {
+                _startupService.SendMessage(whatsAppViewModel.Message, whatsAppViewModel.Numero);
 
-            AddSuccess("Mensagem enviada com sucesso");
-
+                AddSuccess("Mensagem enviada com sucesso");
+            }
+            catch
+            {
+                AddError("Não foi possível enviar a mensagem");
+            }
             return View(new WhatsAppViewModel());
         }
     }

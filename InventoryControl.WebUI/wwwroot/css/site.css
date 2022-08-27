@@ -451,3 +451,12 @@ div.dropdown-divider {
     border-top-left-radius: 0.325rem !important;
     border-bottom-left-radius: 0.325rem !important;
 }
+
+.card-body > label {
+    font-size: 15px !important;
+    width: 100%;
+}
+
+.card-body > strong {
+    font-size: 30px !important;
+}

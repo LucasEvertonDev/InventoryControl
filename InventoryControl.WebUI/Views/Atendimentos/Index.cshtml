@@ -6,13 +6,18 @@
      <div class="card-body">
         <form asp-action="index" asp-controller="Atendimentos">
             <div class="row form-horizontal">
-                <div class="col-3 col-xs-12 mb-3">
-                    <label asp-for="Data" class="control-label">DATA DO ATENDIMENTO</label>
-                    <input asp-for="Data" type="date" class="form-control"  />
-                    <span asp-validation-for="Data" class="text-danger"></span>
+                <div class="col-2 col-xs-12 mb-3">
+                    <label asp-for="DataInicio" class="control-label">DATA INÍCIO</label>
+                    <input asp-for="DataInicio" type="date" class="form-control"  />
+                    <span asp-validation-for="DataInicio" class="text-danger"></span>
+                </div>
+                <div class="col-2 col-xs-12 mb-3">
+                    <label asp-for="DataFim" class="control-label">DATA FINAL</label>
+                    <input asp-for="DataFim" type="date" class="form-control"  />
+                    <span asp-validation-for="DataFim" class="text-danger"></span>
                 </div>
 
-                <div class="col-6 col-xs-12 mb-3">
+                <div class="col-5 col-xs-12 mb-3">
                     <label asp-for="ClienteId" class="col-md-6 control-label">CLIENTE</label>
                     <select id="drpEmpList" class="form-control" asp-for="ClienteId" asp-items="@(new SelectList(Model.ComboClientes, "Value", "Text"))">  
                         <option value="">Selecione...</option>  
@@ -23,7 +28,7 @@
 
                 <div class="col-3 col-xs-12 mb-3">
                     <label asp-for="SituacaoAtendimento" class="control-label">SITUAÇÃO ATENDIMENTO</label>
-                    <select asp-for="SituacaoAtendimento" class="form-control" onchange="" asp-items="Html.GetEnumSelectList<SituacaoAtendimento>()"></select> 
+                    <select asp-for="SituacaoAtendimento" class="form-control" onchange="" asp-items="Html.GetEnumSelectList<SituacaoAtendimentoconsulta>()"></select> 
                     <span asp-validation-for="SituacaoAtendimento" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-xs-12">

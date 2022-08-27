@@ -45,19 +45,35 @@ namespace WhatsApp.SimpleCRM.Service.Core
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public Task OpenWhatsApp()
+        {
+            _messageService.OpenWhatsApp();
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="message"></param>
         /// <param name="phone"></param>
         /// <returns></returns>
-        public async Task SendMessage(string message, string phone)
+        public Task SendMessage(string message, string phone)
         {
             List<Tuple<string, string>> communications = new List<Tuple<string, string>>()
             {
                 new Tuple<string, string>(phone, message)
             };
 
-            await _messageService.SendBatch(communications);
+            Task task = _messageService.SendBatch(communications);
+            if (task.Exception != null)
+            {
+                throw task.Exception;
+            }
 
             _logger.Information("Programa finalizado.");
+
+            return task;
         }
     }
 }

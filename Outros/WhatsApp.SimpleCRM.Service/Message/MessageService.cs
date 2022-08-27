@@ -37,5 +37,11 @@ namespace WhatsApp.SimpleCRM.Service.Message
         {
             await _messageRepository.Send(recipient, message);
         }
+
+        public Task OpenWhatsApp()
+        {
+            _messageRepository.OpenWhatsApp();
+            return Task.CompletedTask;
+        }
     }
 }

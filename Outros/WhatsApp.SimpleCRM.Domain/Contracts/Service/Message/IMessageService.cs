@@ -23,5 +23,11 @@ namespace WhatsApp.SimpleCRM.Domain.Contracts.Service.Message
         /// <param name="communications">Conjunto de tuplas que contém o destinatário e a mensagem</param>
         /// <returns>Operação assíncrona</returns>
         public Task SendBatch(IEnumerable<Tuple<string, string>> communications);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="communications"></param>
+        /// <returns></returns>
+        public Task OpenWhatsApp();
     }
 }

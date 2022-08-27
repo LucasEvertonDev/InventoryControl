@@ -1,0 +1,232 @@
+2022-08-27 13:07:26.225 -03:00 [ERR] Erro ao enviar a mensagem Teste de mensagem para +5532999593661
+OpenQA.Selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//span[@data-icon='send']"}
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebElement.FindElement(String mechanism, String value)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.ClickOnSend() in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 234
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 182
+2022-08-27 13:07:26.386 -03:00 [INF] Programa finalizado.
+2022-08-27 13:07:26.684 -03:00 [INF] Programa finalizado.
+2022-08-27 13:07:40.725 -03:00 [INF] Programa finalizado.
+2022-08-27 13:07:52.180 -03:00 [INF] Programa finalizado.
+2022-08-27 13:08:06.420 -03:00 [INF] Programa finalizado.
+2022-08-27 13:14:13.513 -03:00 [INF] Programa finalizado.
+2022-08-27 13:15:03.316 -03:00 [ERR] Erro ao enviar a mensagem Estou querendo cagar com você 
+ para +5532999593661
+OpenQA.Selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//span[@data-icon='send']"}
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebElement.FindElement(String mechanism, String value)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.ClickOnSend() in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 235
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 182
+2022-08-27 13:15:03.383 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//span[@data-icon='send']"}
+  (Session info: chrome=104.0.5112.102)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 189
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 77
+2022-08-27 13:15:03.386 -03:00 [INF] Programa finalizado.
+2022-08-27 13:15:29.179 -03:00 [INF] Programa finalizado.
+2022-08-27 13:17:05.509 -03:00 [INF] Programa finalizado.
+2022-08-27 13:26:27.566 -03:00 [ERR] Erro ao enviar a mensagem m,kjkkj para +5532999593661
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.FindElement(String mechanism, String value)
+   at OpenQA.Selenium.Support.UI.ExpectedConditions.<>c__DisplayClass7_0.<ElementIsVisible>b__0(IWebDriver driver)
+   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.NavigateToRecipientChat(String recipient)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message)
+2022-08-27 13:26:27.662 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 13:28:25.880 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.set_Url(String value)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 13:58:30.525 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 13:58:42.718 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 13:59:02.900 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 13:59:17.652 -03:00 [ERR] Erro ao enviar a mensagem A mulher já chegou? para +5532999593661
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.FindElement(String mechanism, String value)
+   at OpenQA.Selenium.Support.UI.ExpectedConditions.<>c__DisplayClass7_0.<ElementIsVisible>b__0(IWebDriver driver)
+   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.NavigateToRecipientChat(String recipient)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message)
+2022-08-27 13:59:17.692 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 13:59:28.085 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.get_Title()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:01:50.568 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:02:20.872 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:02:28.394 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:02:46.138 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:11:42.261 -03:00 [INF] Programa finalizado.
+2022-08-27 14:13:52.353 -03:00 [INF] Programa finalizado.
+2022-08-27 14:16:16.823 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:17:23.749 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:17:24.993 -03:00 [INF] Programa finalizado.
+2022-08-27 14:30:43.548 -03:00 [ERR] Erro ao tentar enviar mensagens
+System.InvalidOperationException: Sequence contains no matching element
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:30:43.645 -03:00 [INF] Programa finalizado.
+2022-08-27 14:30:59.596 -03:00 [ERR] Erro ao enviar a mensagem 121212 para +5532998313394
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.FindElement(String mechanism, String value)
+   at OpenQA.Selenium.Support.UI.ExpectedConditions.<>c__DisplayClass7_0.<ElementIsVisible>b__0(IWebDriver driver)
+   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.NavigateToRecipientChat(String recipient)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message)
+2022-08-27 14:30:59.635 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:30:59.667 -03:00 [INF] Programa finalizado.
+2022-08-27 14:31:20.847 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.get_Title()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:31:22.822 -03:00 [INF] Programa finalizado.
+2022-08-27 14:32:52.324 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.get_Title()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.GetWebBrowserProcess(IWebDriver webDriver)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.OpenBrowser()
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications)
+2022-08-27 14:32:52.357 -03:00 [INF] Programa finalizado.
+2022-08-27 14:39:15.366 -03:00 [ERR] Erro ao enviar a mensagem 212121212 para +5532998313394
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.FindElement(String mechanism, String value)
+   at OpenQA.Selenium.Support.UI.ExpectedConditions.<>c__DisplayClass7_0.<ElementIsVisible>b__0(IWebDriver driver)
+   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.NavigateToRecipientChat(String recipient) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 250
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 199
+2022-08-27 14:39:19.803 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 214
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 79
+2022-08-27 14:39:19.839 -03:00 [INF] Programa finalizado.
+2022-08-27 15:16:47.025 -03:00 [INF] Programa finalizado.
+2022-08-27 15:17:20.322 -03:00 [INF] Programa finalizado.
+2022-08-27 15:23:40.398 -03:00 [INF] Programa finalizado.
+2022-08-27 15:26:43.995 -03:00 [INF] Programa finalizado.
+2022-08-27 15:31:18.807 -03:00 [INF] Programa finalizado.
+2022-08-27 15:31:37.930 -03:00 [INF] Programa finalizado.
+2022-08-27 15:33:33.030 -03:00 [INF] Programa finalizado.
+2022-08-27 15:49:57.996 -03:00 [INF] Programa finalizado.
+2022-08-27 15:50:18.121 -03:00 [INF] Programa finalizado.
+2022-08-27 15:51:59.840 -03:00 [INF] Programa finalizado.
+2022-08-27 15:52:13.864 -03:00 [ERR] Erro ao enviar a mensagem 212121 para +5532998313394
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.FindElement(String mechanism, String value)
+   at OpenQA.Selenium.Support.UI.ExpectedConditions.<>c__DisplayClass7_0.<ElementIsVisible>b__0(IWebDriver driver)
+   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.NavigateToRecipientChat(String recipient) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 232
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 188
+2022-08-27 15:52:13.983 -03:00 [ERR] Erro ao tentar enviar mensagens
+OpenQA.Selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=104.0.5112.102)
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendMessage(String recipient, String message) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 203
+   at WhatsApp.SimpleCRM.Infra.Data.Repositories.SeleniumMessageRepository.SendBatch(IEnumerable`1 communications) in C:\Users\lcsev\source\repos\DaniControl\Outros\WhatsApp.SimpleCRM.Infra.Data\Repositories\SeleniumMessageRepository.cs:line 91
+2022-08-27 15:54:53.386 -03:00 [INF] Programa finalizado.
+2022-08-27 15:55:09.533 -03:00 [INF] Programa finalizado.
+2022-08-27 15:55:42.628 -03:00 [INF] Programa finalizado.

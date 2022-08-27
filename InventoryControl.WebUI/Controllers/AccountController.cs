@@ -45,6 +45,17 @@ namespace InventoryControl.WebUI.Controllers
                 RememberMe = "True".Equals(remember),
                 ReturnUrl = returnUrl
             };
+
+            System.Diagnostics.Process.GetProcessesByName("chromedriver").ToList().ForEach(px =>
+            {
+                px.Kill();
+            });
+
+            System.Diagnostics.Process.GetProcessesByName("chrome").ToList().ForEach(px =>
+            {
+                px.Kill();
+            });
+
             return View(loginViewModel);
         }
 

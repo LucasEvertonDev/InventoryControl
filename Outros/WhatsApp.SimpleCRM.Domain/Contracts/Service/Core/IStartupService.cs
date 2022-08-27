@@ -12,5 +12,11 @@ namespace WhatsApp.SimpleCRM.Domain.Contracts.Service.Core
         /// </summary>
         /// <param name="filepath">Caminho do arquivo contendo o os destinatários e suas respectivas mensagens</param>
         Task SendMessage(string message, string phone);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task OpenWhatsApp();
     }
 }

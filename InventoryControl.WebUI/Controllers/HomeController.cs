@@ -1,4 +1,5 @@
 ﻿using InventoryControl.WebUI.Attributes;
+using InventoryControl.WebUI.Factories.Interfaces;
 using InventoryControl.WebUI.Identity.Constants;
 using InventoryControl.WebUI.ViewModels.Base;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +14,15 @@ namespace InventoryControl.WebUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStartupService _startupService;
+        private readonly IHomeModelFactory _homeModelFactory;
 
         public HomeController(ILogger<HomeController> logger,
-            IStartupService startupService)
+            IStartupService startupService,
+            IHomeModelFactory homeModelFactory)
         {
             _logger = logger;
             _startupService = startupService;
+            _homeModelFactory = homeModelFactory;
         }
 
         /// <summary>
@@ -26,13 +30,13 @@ namespace InventoryControl.WebUI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, SessionExpire, Authorize(Roles = Roles.VISUALIZAR_DASHBOARD)]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account", new { });
             }
-            return View();
+            return View(await _homeModelFactory.PrepareHomeViewModel());
         }
 
         public IActionResult Privacy()
