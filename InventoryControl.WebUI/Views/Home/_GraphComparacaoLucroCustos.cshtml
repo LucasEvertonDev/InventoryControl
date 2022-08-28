@@ -1,0 +1,65 @@
+﻿<div style="margin-left:0px !important;padding:20px; padding-top:40px" class="row">
+    <h5 class="card-title">Gastos X Ganhos</h5>
+    <canvas height="380" id="mychart"></canvas>
+</div>
+@await Html.PartialAsync("_ValidationScriptsPartial")
+<script>
+    var x = $.getValues("@Url.Action("GetGraphGanhoXCustos", "Home")");
+    var tData = $.parseJSON(x);
+    if (tData != null && tData != undefined) {
+        var ctx = document.getElementById('mychart').getContext("2d");
+        var barChartData = {
+            labels: tData.Serie1.Labels,
+            datasets: [{
+                type: 'bar',
+                label: tData.Serie1.SerieName,
+                backgroundColor: "#C71585",
+                data: tData.Serie1.Dados,
+            }
+              , {
+                type: 'bar',
+                label: tData.Serie2.SerieName,
+                backgroundColor: "#ff1493",
+                data: tData.Serie2.Dados
+            },
+            {
+                type: 'bar',
+                label: tData.Serie3.SerieName,
+                backgroundColor: "#ff69b4",
+                data: tData.Serie3.Dados
+            },
+            ]
+        };
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                animation: {
+                    duration: 0 // general animation time
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Porcentagem',
+                        },
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
+            }
+        });
+    }
+</script>
+

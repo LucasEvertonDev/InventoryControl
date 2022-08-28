@@ -4,6 +4,7 @@ using InventoryControl.WebUI.Identity.Constants;
 using InventoryControl.WebUI.ViewModels.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using WhatsApp.SimpleCRM.Domain.Contracts.Service.Core;
 
@@ -37,6 +38,20 @@ namespace InventoryControl.WebUI.Controllers
                 return RedirectToAction("Login", "Account", new { });
             }
             return View(await _homeModelFactory.PrepareHomeViewModel());
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [HttpGet, SessionExpire, Authorize(Roles = Roles.VISUALIZAR_DASHBOARD)]
+        public async Task<IActionResult> GetGraphGanhoXCustos()
+        {
+            var events = await _homeModelFactory.PrepareGraphViewModel();
+            return Json(JsonConvert.SerializeObject(events));
         }
 
         public IActionResult Privacy()

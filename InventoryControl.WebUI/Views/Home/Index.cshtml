@@ -34,8 +34,17 @@
         </div>
     </div>
 </div>
-<div class="card mb-12">
-     <div class="card-body">
-        @await Html.PartialAsync("../Atendimentos/Calendario")
+<div class="row">
+     <div class="col-lg-12 col-12 mb-4">
+         <div class="card mb-12">
+             <div class="card-body">
+                @await Html.PartialAsync("../Atendimentos/Calendario")
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 mb-4">
+    <div class="card" style="">
+        @await Html.PartialAsync("_GraphComparacaoLucroCustos")
     </div>
 </div>
