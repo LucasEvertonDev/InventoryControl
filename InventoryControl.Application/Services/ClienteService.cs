@@ -50,7 +50,7 @@ namespace InventoryControl.Application.Services
         public async Task<ClienteModel> CreateCliente(ClienteModel model)
         {
             var cliente = _imapper.Map<Cliente>(model);
-            if (await this.FindByCpf(model.Cpf) != null)
+            if (!string.IsNullOrEmpty(cliente.Cpf) && await this.FindByCpf(model.Cpf) != null)
             {
                 LogicalException("Já existe um cadastro de cliente com o cpf informado");
             }

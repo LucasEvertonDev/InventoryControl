@@ -42,11 +42,11 @@ namespace InventoryControl.WebUI.Factories
         {
             return Task.FromResult(new ClienteModel 
             {
-                Cpf = String.Join("", System.Text.RegularExpressions.Regex.Split(clienteViewModel.Cpf, @"[^\d]")),
+                Cpf = String.IsNullOrEmpty(clienteViewModel.Cpf) ? "" :  String.Join("", System.Text.RegularExpressions.Regex.Split(clienteViewModel.Cpf, @"[^\d]")),
                 DataNascimento = clienteViewModel.DataNascimento,
                 Id = clienteViewModel.Id,
                 Nome = clienteViewModel.Nome,
-                Telefone = String.Join("", System.Text.RegularExpressions.Regex.Split(clienteViewModel.Telefone, @"[^\d]")),
+                Telefone = String.IsNullOrEmpty(clienteViewModel.Telefone) ? "" : String.Join("", System.Text.RegularExpressions.Regex.Split(clienteViewModel.Telefone, @"[^\d]")),
             });
         }
 

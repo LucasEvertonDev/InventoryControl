@@ -60,7 +60,7 @@
                         {
                             <tr>
                                 <td>
-                                    @(Convert.ToUInt64(@item.Cpf).ToString(@"000\.000\.000\-00"))
+                                    @(string.IsNullOrEmpty(@item.Cpf) ? "" : Convert.ToUInt64(@item.Cpf).ToString(@"000\.000\.000\-00"))
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nome)
@@ -69,7 +69,7 @@
                                     @item.DataNascimento.ToString("dd/MM/yyyy")
                                 </td>
                                 <td>
-                                   @(Convert.ToUInt64(@item.Telefone).ToString(@"+## (##) #####-####"))
+                                   @(string.IsNullOrEmpty(@item.Telefone) ? "" : Convert.ToUInt64(@item.Telefone).ToString(@"+## (##) #####-####"))
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-controller="clientes" asp-route-id="@item.Id" class="btn btn-default">
