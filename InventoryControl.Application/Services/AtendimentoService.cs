@@ -131,11 +131,14 @@ namespace InventoryControl.Application.Services
             atendimento.Cliente = cliente ?? LogicalException("Não foi possível recuperar o cliente");
             atendimento = await _atendimentoRepository.Update(atendimento);
 
+            var toDelete = await _mapServicosAtendimentoRepository.Table.Where(a => a.AtendimentoId == model.Id).ToListAsync();
+            foreach (var atend in toDelete)
+            {
+                await _mapServicosAtendimentoRepository.Delete(atend);
+            }
+
             foreach (var associacao in model.ServicosAssociados)
             {
-                var atend = await _mapServicosAtendimentoRepository.FindById(associacao.Id);
-                atend = await _mapServicosAtendimentoRepository.Delete(atend);
-               
                 var servico = await _servicoRepository.Table.Where(s => s.Id == associacao.ServicoId).FirstOrDefaultAsync();
                 var map = new MapServicosAtendimento
                 {

@@ -9,13 +9,11 @@ namespace InventoryControl.Models.Entities
 {
     public class ClienteModel : BaseModel
     {
-        [Required]
-        public string Cpf { get; set; }
+        public string? Cpf { get; set; }
         [Required]
         public string Nome { get; set; }
         [Required]
         public DateTime DataNascimento { get; set; }
-        [Required]
-        public string Telefone { get; set; }
+        public string? Telefone { get; set; }
     }
 }

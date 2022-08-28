@@ -46,8 +46,8 @@
         var rowDetalheName = btn.attr('detalhamento');
         var divDetalheId = btn.attr('div-datalhe');
         $("#" + divDetalheId).hide();
-        $("#" + rowDetalheName + "." + '@nameof(AssociacaoServicoAtendimentoViewModel.Apagado)').val(true);
-
+        $("input[Name='" + rowDetalheName + '.' + '@nameof(AssociacaoServicoAtendimentoViewModel.ValorCobrado)' + "']").val("0");
+        $("input[Name='" + rowDetalheName + '.' + '@nameof(AssociacaoServicoAtendimentoViewModel.Apagado)' + "']").val(true);
         var btnAdd = $('#btn-add-servico');
         var totalItens = btnAdd.attr('total-itens');
     });

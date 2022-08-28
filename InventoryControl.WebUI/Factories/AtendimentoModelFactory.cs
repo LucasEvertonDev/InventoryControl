@@ -88,6 +88,7 @@ namespace InventoryControl.WebUI.Factories
 
             atendimentoViewModel.ComboClientes = clientes.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList();
             atendimentoViewModel.ServicosAssociados.ForEach(a => a.ComboServicos = servicos.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList());
+            atendimentoViewModel.ServicosAssociados = atendimentoViewModel.ServicosAssociados.Where(a => !a.Apagado).ToList();
 
             return atendimentoViewModel;
         }

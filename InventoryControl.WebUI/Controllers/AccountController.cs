@@ -51,10 +51,10 @@ namespace InventoryControl.WebUI.Controllers
                 px.Kill();
             });
 
-            System.Diagnostics.Process.GetProcessesByName("chrome").ToList().ForEach(px =>
-            {
-                px.Kill();
-            });
+            ////System.Diagnostics.Process.GetProcessesByName("chrome").ToList().ForEach(px =>
+            ////{
+            ////    px.Kill();
+            ////});
 
             return View(loginViewModel);
         }
