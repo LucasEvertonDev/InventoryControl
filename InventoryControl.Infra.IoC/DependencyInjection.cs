@@ -25,7 +25,7 @@ namespace InventoryControl.Infra.IoC
         public static IServiceCollection AddInfraEstructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Data Source=NOTEBOOK\\SQLEXPRESS;Initial Catalog=InventoryControlProd;User ID=sa;Password=12345;Integrated Security=True;TrustServerCertificate=True",
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IUsuarioService, UsuarioService>();
@@ -34,6 +34,8 @@ namespace InventoryControl.Infra.IoC
             services.AddScoped<IServicosService, ServicosService>();
             services.AddScoped<IAtendimentoService, AtendimentoService>();
             services.AddScoped<ICustosService, CustosService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPasswordHashService, PasswordHashService>();
 
             services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
             services.AddScoped<IRepository<MapPerfilUsuariosAcessos>, Repository<MapPerfilUsuariosAcessos>>();
