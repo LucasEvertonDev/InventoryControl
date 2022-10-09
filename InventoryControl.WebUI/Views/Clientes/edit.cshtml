@@ -28,6 +28,7 @@
             }
 
             if ('@Model.Enabled' == 'False') {
+                $('select').attr('disabled', 'disabled');
                 $('input').attr('disabled', 'disabled');
                 $('#button-submit').attr('disabled', 'disabled');
             }

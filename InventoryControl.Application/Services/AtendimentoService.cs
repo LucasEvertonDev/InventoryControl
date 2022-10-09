@@ -36,7 +36,7 @@ namespace InventoryControl.Application.Services
         public async Task<Atendimento> CreateAtendimento(AtendimentoModel model)
         {
             Atendimento atendimento = _imapper.Map<Atendimento>(model);
-            var itens = await _atendimentoRepository.Table.Where(a => a.Data.Date == atendimento.Data.Date).ToListAsync();
+            var itens = await _atendimentoRepository.Table.Where(a => a.Data.Date == atendimento.Data.Date && a.Situacao != 0).ToListAsync();
 
             itens = itens.Where(a => Math.Abs((a.Data - atendimento.Data).TotalMinutes) < 60).ToList();
 
@@ -97,7 +97,7 @@ namespace InventoryControl.Application.Services
             {
                 a.ServicosAssociados = _imapper.Map<List<AssociacaoServicosAtendimentoModel>>(atendimentos.Where(at => at.Id == a.Id).First().MapServicosAtendimentos);
             });
-            return atendimentosModel;
+            return atendimentosModel.Distinct().ToList();
         }
 
         /// <summary>

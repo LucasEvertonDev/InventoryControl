@@ -99,6 +99,7 @@ namespace InventoryControl.WebUI.Controllers
 
                     if (atendimento.Id > 0)
                     {
+                        viewModel.Enabled = false;
                         AddSuccess("Atendimento cadastrado com sucesso");
                     }
                 }
@@ -147,6 +148,7 @@ namespace InventoryControl.WebUI.Controllers
 
                     if (atendimento.Id > 0)
                     {
+                        viewModel.Enabled = false;
                         AddSuccess("Atendimento atualizado com sucesso");
                     }
                 }
