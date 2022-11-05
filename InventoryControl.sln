@@ -34,6 +34,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsApp.SimpleCRM.Infra.Cr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhatsApp.SimpleCRM.Domain", "Outros\WhatsApp.SimpleCRM.Domain\WhatsApp.SimpleCRM.Domain.csproj", "{BD236EB2-6080-426C-AACC-5072913A385F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InventoryControl.Api", "InventoryControl.Api", "{0EB9F86F-D341-438B-8EF2-66A3DB1FC494}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryControl.Api", "InventoryControl.Api\InventoryControl.Api.csproj", "{8571ED4F-C325-417C-AB65-FC8C4CF059A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +84,10 @@ Global
 		{BD236EB2-6080-426C-AACC-5072913A385F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD236EB2-6080-426C-AACC-5072913A385F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD236EB2-6080-426C-AACC-5072913A385F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8571ED4F-C325-417C-AB65-FC8C4CF059A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8571ED4F-C325-417C-AB65-FC8C4CF059A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8571ED4F-C325-417C-AB65-FC8C4CF059A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8571ED4F-C325-417C-AB65-FC8C4CF059A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +102,7 @@ Global
 		{DDB411E6-D7BA-4FB6-B11D-4464DF270C2C} = {3F4D0C7B-8ECC-4082-9B9F-27CE5DEE747B}
 		{858CB3B8-499F-40A2-9652-D73747F7EDED} = {3F4D0C7B-8ECC-4082-9B9F-27CE5DEE747B}
 		{BD236EB2-6080-426C-AACC-5072913A385F} = {3F4D0C7B-8ECC-4082-9B9F-27CE5DEE747B}
+		{8571ED4F-C325-417C-AB65-FC8C4CF059A5} = {0EB9F86F-D341-438B-8EF2-66A3DB1FC494}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94F35CB6-03F8-464B-AF26-DFA6440D709A}
