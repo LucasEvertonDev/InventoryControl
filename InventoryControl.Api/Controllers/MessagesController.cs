@@ -53,7 +53,7 @@ namespace InventoryControl.Api.Controllers
         /// </summary>
         /// <param name="situacao"></param>
         /// <returns></returns>
-        [HttpGet(Name = "GetMessages/{situacao?}")]
+        [HttpGet(Name = "GetMessages")]
         public async Task<ResponseDto<MessageModel>> GetMessages(int? situacao)
         {
             try
