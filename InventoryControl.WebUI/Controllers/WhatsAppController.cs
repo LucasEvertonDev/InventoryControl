@@ -1,52 +1,31 @@
 ﻿using InventoryControl.WebUI.Attributes;
-using InventoryControl.WebUI.Identity.Constants;
-using InventoryControl.WebUI.ViewModels.Atendimentos;
-using Microsoft.AspNetCore.Authorization;
+using InventoryControl.WebUI.Factories.Interfaces;
+using InventoryControl.WebUI.ViewModels.Servicos;
 using Microsoft.AspNetCore.Mvc;
-using WhatsApp.SimpleCRM.Domain.Contracts.Service.Core;
 
 namespace InventoryControl.WebUI.Controllers
 {
     public class WhatsAppController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IStartupService _startupService;
+        private readonly IWhatsAppModelFactory _whatsAppModelFactory;
 
-        public WhatsAppController(ILogger<HomeController> logger,
-            IStartupService startupService)
+        public WhatsAppController(IWhatsAppModelFactory whatsAppModelFactory)
         {
-            _logger = logger;
-            _startupService = startupService;
+            _whatsAppModelFactory = whatsAppModelFactory;
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet, SessionExpire, Authorize(Roles = Roles.VISUALIZAR_DASHBOARD)]
-        public IActionResult Send()
+        [HttpGet, SessionExpire]
+        public async Task<IActionResult> Send()
         {
-            return View(new WhatsAppViewModel());
+            var viewModel = await _whatsAppModelFactory.WhatsAppViewModel();
+            return View(viewModel);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Send(WhatsAppViewModel whatsAppViewModel)
+        [HttpPost, SessionExpire]
+        public async Task<IActionResult> Send(WhatsAppViewModel viewModel)
         {
-            try
-            {
-                _startupService.SendMessage(whatsAppViewModel.Message, whatsAppViewModel.Numero);
-
-                AddSuccess("Mensagem enviada com sucesso");
-            }
-            catch
-            {
-                AddError("Não foi possível enviar a mensagem");
-            }
-            return View(new WhatsAppViewModel());
+            
+            return View(viewModel);
         }
     }
 }

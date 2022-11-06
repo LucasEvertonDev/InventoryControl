@@ -49,15 +49,15 @@ namespace InventoryControl.Application.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<ServicoModel> CreateServico(ServicoModel model)
         {
-            var cliente = _imapper.Map<Servico>(model);
+            var servico = _imapper.Map<Servico>(model);
             if (await this.FindByName(model.Nome) != null)
             {
                 LogicalException("Já existe um servico cadastrado com esse nome");
             }
 
-            cliente = await _servicoRepository.Insert(cliente);
+            servico = await _servicoRepository.Insert(servico);
             await _servicoRepository.CommitAsync();
-            return _imapper.Map<ServicoModel>(cliente);
+            return _imapper.Map<ServicoModel>(servico);
         }
 
         /// <summary>

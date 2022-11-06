@@ -1,0 +1,58 @@
+﻿@model ProdutoViewModel
+
+@await Component.InvokeAsync("NavigationPathViewComponent")
+
+<div class="card mb-12">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="FormTitle col-12">Cadastro de Produtos</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="create" asp-controller="Produto">
+            <div class="row form-horizontal">
+                <div class="col-6 col-xs-12 mb-3">
+                    <label asp-for="Nome" class="control-label">NOME</label>
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="col-6 col-xs-12 mb-3">
+                    <label asp-for="Categoria" class="control-label">CATEGORIA</label>
+                    <input asp-for="Categoria" class="form-control" />
+                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                </div>
+                <div class="col-4 col-xs-12 mb-3">
+                    <label asp-for="preco" class="control-label">VALOR</label>
+                    <input asp-for="preco" class="form-control money" />
+                    <span asp-validation-for="preco" class="text-danger"></span>
+                </div>
+                <div class="col-8 col-xs-12 mb-3">
+                    <label asp-for="Descricao" class="control-label">DESCRIÇÃO</label>
+                    <input asp-for="Descricao" class="form-control" />
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+                
+            </div>
+        
+            @await Component.InvokeAsync("SaveButtonsViewComponent")
+        </form>
+
+
+    </div>
+</div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script type="text/javascript">
+        $(document).ready(function (){
+            $('.money').mask('#.##0,00', { reverse: true });
+        });
+        if ('@Model.Nome' == 'False') {
+            $('input').attr('autocomplete', 'off');
+        }
+
+        if ('@Model.Enabled' == 'False') {
+            $('input').attr('disabled', 'disabled');
+            $('#button-submit').attr('disabled', 'disabled');
+        }
+    </script>
+}
