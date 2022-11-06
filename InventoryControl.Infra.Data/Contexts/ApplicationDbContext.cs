@@ -20,6 +20,7 @@ namespace InventoryControl.Infra.Data.Context
         public DbSet<MapPerfilUsuariosAcessos> MapPerfilUsuariosAcessos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Servico> Servicos { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

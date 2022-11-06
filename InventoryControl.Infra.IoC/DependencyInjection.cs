@@ -34,6 +34,8 @@ namespace InventoryControl.Infra.IoC
             services.AddScoped<IServicosService, ServicosService>();
             services.AddScoped<IAtendimentoService, AtendimentoService>();
             services.AddScoped<ICustosService, CustosService>();
+            services.AddScoped<IMessageService, MessageService>();
+
 
             services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
             services.AddScoped<IRepository<MapPerfilUsuariosAcessos>, Repository<MapPerfilUsuariosAcessos>>();
@@ -44,7 +46,7 @@ namespace InventoryControl.Infra.IoC
             services.AddScoped<IRepository<MapServicosAtendimento>, Repository<MapServicosAtendimento>>();
             services.AddScoped<IRepository<Atendimento>, Repository<Atendimento>>();
             services.AddScoped<IRepository<Custo>, Repository<Custo>>();
-
+            services.AddScoped<IRepository<Message>, Repository<Message>>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

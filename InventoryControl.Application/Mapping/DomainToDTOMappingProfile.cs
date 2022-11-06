@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventoryControl.Application.Mapping
 {
@@ -19,6 +14,7 @@ namespace InventoryControl.Application.Mapping
             CreateMap<Atendimento, AtendimentoModel>().ReverseMap();
             CreateMap<AssociacaoServicosAtendimentoModel, MapServicosAtendimento>().ReverseMap();
             CreateMap<Custo, CustosModel>().ReverseMap();
+            CreateMap<Message, MessageModel>().ReverseMap();
         }
     }
 }
