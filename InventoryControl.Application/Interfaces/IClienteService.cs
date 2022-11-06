@@ -10,5 +10,6 @@ namespace InventoryControl.Application.Interfaces
         Task<Cliente> FindByCpf(string cpf);
         Task<ClienteModel> FindById(int Id);
         Task<List<ClienteModel>> SearchClientes(ClienteModel model);
+        Task UpdateCarga();
     }
 }

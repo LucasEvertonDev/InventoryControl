@@ -15,5 +15,6 @@ namespace InventoryControl.Models.Entities
         [Required]
         public DateTime DataNascimento { get; set; }
         public string? Telefone { get; set; }
+        public string? IdExterno { get; set; }
     }
 }

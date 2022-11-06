@@ -3,7 +3,9 @@ using InventoryControl.Application.Interfaces;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using InventoryControl.Models.Entities;
+using InventoryControl.Models.Enums;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace InventoryControl.Application.Services
 {
@@ -11,13 +13,16 @@ namespace InventoryControl.Application.Services
     {
         private readonly IRepository<Cliente> _clienteRepository;
         public readonly IMapper _imapper;
+        private readonly IRepository<Message> _messageRepository;
 
         public ClienteService(
             IRepository<Cliente> clienteRepository,
-            IMapper imapper)
+            IMapper imapper,
+            IRepository<Message> messageRepository)
         {
             _clienteRepository = clienteRepository;
             _imapper = imapper;
+            _messageRepository = messageRepository;
         }
 
         /// <summary>
@@ -86,6 +91,38 @@ namespace InventoryControl.Application.Services
             cliente = await _clienteRepository.Update(cliente);
             await _clienteRepository.CommitAsync();
             return _imapper.Map<ClienteModel>(cliente);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task UpdateCarga()
+        {
+            try
+            {
+                var clientes = await _clienteRepository.Table.ToListAsync();
+                foreach (var cliente in clientes)
+                {
+                    cliente.IdExterno = Guid.NewGuid().ToString();
+                    _clienteRepository.Update(cliente);
+
+                    _messageRepository.Insert(new Message
+                    {
+                        JsonMessage = JsonConvert.SerializeObject(cliente),
+                        Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                        TypeMessage = (int)TypeMessage.Cliente
+                    });
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                await _clienteRepository.CommitAsync();
+            }
         }
     }
 }

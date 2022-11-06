@@ -11,12 +11,15 @@ namespace InventoryControl.Api.Controllers
     {
         private readonly ILogger<MessagesController> _logger;
         private readonly IMessageService _messageService;
+        private readonly IClienteService _clienteService;
 
         public MessagesController(ILogger<MessagesController> logger,
-            IMessageService messageService)
+            IMessageService messageService,
+            IClienteService clienteService)
         {
             _logger = logger;
             this._messageService = messageService;
+            this._clienteService = clienteService;
         }
 
         /// <summary>
@@ -36,11 +39,11 @@ namespace InventoryControl.Api.Controllers
                     Sucess = true,
                 };
             }
-            catch
+            catch (Exception ex)
             {
                 return new ResponseDto<MessageModel>
                 {
-                    Message = "Não foi possivel concluir a operação."
+                    Message = ex.Message
                 };
             }
         }
@@ -50,15 +53,18 @@ namespace InventoryControl.Api.Controllers
         /// </summary>
         /// <param name="situacao"></param>
         /// <returns></returns>
-        [HttpGet(Name = "GetMessages")]
+        [HttpGet(Name = "GetMessages/{situacao?}")]
         public async Task<ResponseDto<MessageModel>> GetMessages(int? situacao)
         {
             try
             {
+                var items = await _messageService.Find(situacao: situacao);
+
                 return new ResponseDto<MessageModel>
                 {
                     Sucess = true,
-                    Items = await _messageService.Find(situacao: situacao)
+                    Items = items,
+                    Message = situacao.ToString()
                 };
             }
             catch
