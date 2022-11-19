@@ -19,7 +19,7 @@ namespace InventoryControl.Application.Services
         public ServicosService(
             IRepository<Servico> servicoRepository,
             IRepository<Message> messageRepository,
-            IMessageService messageService
+            IMessageService messageService,
             IMapper imapper)
         {
             _servicoRepository = servicoRepository;
