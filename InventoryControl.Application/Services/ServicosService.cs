@@ -65,7 +65,7 @@ namespace InventoryControl.Application.Services
             servico.IdExterno = Guid.NewGuid().ToString();
             servico = await _servicoRepository.Insert(servico);
 
-            _messageService.CreateMessage(new MessageModel
+            _messageRepository.Insert(new Message
             {
                 JsonMessage = JsonConvert.SerializeObject(servico),
                 Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,

@@ -6,6 +6,6 @@
 
         public string Descricao { get; set; }
 
-        public string IdExterno { get; set; }
+        public string? IdExterno { get; set; }
     }
 }
