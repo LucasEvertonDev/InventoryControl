@@ -9,6 +9,7 @@ namespace InventoryControl.Application.Interfaces
         Task<ServicoModel> FindById(int Id);
         Task<Servico> FindByName(string name);
         Task<List<ServicoModel>> SearchServicos(ServicoModel model);
+        Task UpdateCarga();
         Task<ServicoModel> UpdateServico(ServicoModel model);
     }
 }

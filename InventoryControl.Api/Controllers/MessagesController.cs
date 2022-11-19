@@ -6,20 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 namespace InventoryControl.Api.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]/[action]")]
     public class MessagesController : ControllerBase
     {
         private readonly ILogger<MessagesController> _logger;
         private readonly IMessageService _messageService;
         private readonly IClienteService _clienteService;
+        private readonly IServicosService _servicosService;
 
         public MessagesController(ILogger<MessagesController> logger,
             IMessageService messageService,
-            IClienteService clienteService)
+            IClienteService clienteService,
+            IServicosService servicosService)
         {
             _logger = logger;
             this._messageService = messageService;
             this._clienteService = clienteService;
+            this._servicosService = servicosService;
         }
 
         /// <summary>
@@ -74,6 +77,18 @@ namespace InventoryControl.Api.Controllers
                     Message = "Não foi possivel concluir a operação."
                 };
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <retuwrns></returns>
+        [HttpGet(Name = "/GenerateCargaMessages")]
+        public async Task<ResponseDto<MessageModel>> GenerateCargaMessages()
+        {
+            await _clienteService.UpdateCarga();
+            await _servicosService.UpdateCarga();
+            return new ResponseDto<MessageModel>();
         }
     }
 }

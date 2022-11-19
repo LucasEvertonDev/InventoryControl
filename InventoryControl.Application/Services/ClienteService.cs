@@ -14,15 +14,18 @@ namespace InventoryControl.Application.Services
         private readonly IRepository<Cliente> _clienteRepository;
         public readonly IMapper _imapper;
         private readonly IRepository<Message> _messageRepository;
+        private readonly IMessageService _messageService;
 
         public ClienteService(
             IRepository<Cliente> clienteRepository,
             IMapper imapper,
-            IRepository<Message> messageRepository)
+            IRepository<Message> messageRepository,
+            IMessageService messageService)
         {
             _clienteRepository = clienteRepository;
             _imapper = imapper;
             _messageRepository = messageRepository;
+            this._messageService = messageService;
         }
 
         /// <summary>
@@ -59,8 +62,16 @@ namespace InventoryControl.Application.Services
             {
                 LogicalException("Já existe um cadastro de cliente com o cpf informado");
             }
-
+            cliente.IdExterno = Guid.NewGuid().ToString();
             cliente = await _clienteRepository.Insert(cliente);
+
+            _messageService.CreateMessage(new MessageModel
+            {
+                JsonMessage = JsonConvert.SerializeObject(cliente),
+                Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                TypeMessage = (int)TypeMessage.Cliente
+            });
+
             await _clienteRepository.CommitAsync();
             return _imapper.Map<ClienteModel>(cliente);
         }
@@ -106,7 +117,6 @@ namespace InventoryControl.Application.Services
                 {
                     cliente.IdExterno = Guid.NewGuid().ToString();
                     _clienteRepository.Update(cliente);
-
                     _messageRepository.Insert(new Message
                     {
                         JsonMessage = JsonConvert.SerializeObject(cliente),

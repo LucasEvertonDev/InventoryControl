@@ -6,6 +6,8 @@
 
         public string Descricao { get; set; }
 
+        public string IdExterno { get; set; }
+
         public ICollection<MapServicosAtendimento> MapServicosAtendimentos { get; set; }
     }
 }

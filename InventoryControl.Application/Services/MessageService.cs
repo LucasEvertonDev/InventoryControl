@@ -3,6 +3,7 @@ using InventoryControl.Application.Interfaces;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using InventoryControl.Models.Entities;
+using InventoryControl.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryControl.Application.Services
@@ -46,6 +47,14 @@ namespace InventoryControl.Application.Services
             var messages = await _messageRepository.Table
                 .Where(a => !situacao.HasValue || a.Situacao == situacao.Value)
                 .ToListAsync();
+
+            foreach (var msg in messages)
+            {
+                msg.Situacao = (int)SituacaoMessage.PROCESSADA;
+                _messageRepository.Update(msg);
+            }
+
+            await _messageRepository.CommitAsync();
 
             return _mapper.Map<List<MessageModel>>(messages);
         }
