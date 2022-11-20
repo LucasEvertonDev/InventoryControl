@@ -13,7 +13,7 @@ namespace InventoryControl.WebUI.Factories
         /// <returns></returns>
         public Task<ClienteViewModel> PrepareClienteViewModel()
         {
-            return Task.FromResult(new ClienteViewModel { DataNascimento = DateTime.Now.Date });
+            return Task.FromResult(new ClienteViewModel { DataNascimento = null });
         }
 
         /// <summary>

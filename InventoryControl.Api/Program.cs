@@ -11,6 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfraEstructure(builder.Configuration);
 
+builder.Services.AddHostedService<MessagePersonConsumer>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

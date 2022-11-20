@@ -7,5 +7,6 @@ namespace InventoryControl.Application.Interfaces
         Task<MessageModel> CreateMessage(MessageModel model);
         Task<List<MessageModel>> Find(int? situacao);
         Task ImportMessages(List<MessageModel> messages);
+        Task IntegrateMessage(MessageModel messageModel);
     }
 }

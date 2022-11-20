@@ -102,6 +102,14 @@ namespace InventoryControl.Application.Services
             var servico = _imapper.Map<Servico>(model);
 
             servico = await _servicoRepository.Update(servico);
+
+            _messageRepository.Insert(new Message
+            {
+                JsonMessage = JsonConvert.SerializeObject(servico),
+                Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                TypeMessage = (int)TypeMessage.Cliente
+            });
+
             await _servicoRepository.CommitAsync();
 
             return _imapper.Map<ServicoModel>(servico);

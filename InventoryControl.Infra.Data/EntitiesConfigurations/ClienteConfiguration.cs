@@ -12,7 +12,7 @@ namespace InventoryControl.Infra.Data.EntitiesConfigurations
             builder.ToTable("Cliente");
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Nome).HasMaxLength(200).IsRequired();
-            builder.Property(u => u.DataNascimento).IsRequired();
+            builder.Property(u => u.DataNascimento);
             builder.Property(u => u.Telefone);
             builder.Property(u => u.IdExterno);
         }

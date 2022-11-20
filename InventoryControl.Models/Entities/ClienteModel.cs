@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace InventoryControl.Models.Entities
 {
@@ -12,8 +7,7 @@ namespace InventoryControl.Models.Entities
         public string? Cpf { get; set; }
         [Required]
         public string Nome { get; set; }
-        [Required]
-        public DateTime DataNascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
         public string? Telefone { get; set; }
         public string? IdExterno { get; set; }
     }

@@ -100,6 +100,14 @@ namespace InventoryControl.Application.Services
         {
             var cliente = _imapper.Map<Cliente>(model);
             cliente = await _clienteRepository.Update(cliente);
+
+            _messageRepository.Insert(new Message
+            {
+                JsonMessage = JsonConvert.SerializeObject(cliente),
+                Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                TypeMessage = (int)TypeMessage.Cliente
+            });
+
             await _clienteRepository.CommitAsync();
             return _imapper.Map<ClienteModel>(cliente);
         }
@@ -115,6 +123,12 @@ namespace InventoryControl.Application.Services
                 var clientes = await _clienteRepository.Table.ToListAsync();
                 foreach (var cliente in clientes)
                 {
+                    if(cliente.DataNascimento < DateTime.Parse("1900-01-01"))
+                    {
+                        cliente.DataNascimento = null;
+                        _clienteRepository.Update(cliente);
+                    }
+
                     cliente.IdExterno = Guid.NewGuid().ToString();
                     _clienteRepository.Update(cliente);
                     _messageRepository.Insert(new Message
@@ -123,6 +137,8 @@ namespace InventoryControl.Application.Services
                         Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
                         TypeMessage = (int)TypeMessage.Cliente
                     });
+
+                    await _clienteRepository.CommitAsync();
                 }
             }
             catch
