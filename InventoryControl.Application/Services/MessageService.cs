@@ -112,6 +112,7 @@ namespace InventoryControl.Application.Services
                     }
                     else
                     {
+                        cliente.Id = 0;
                         _clienteRepository.Insert(cliente);
                     }
                 }
@@ -132,6 +133,7 @@ namespace InventoryControl.Application.Services
                     }
                     else
                     {
+                        servico.Id = 0;
                         _servicoRepository.Insert(servico);
                     }
                 }
