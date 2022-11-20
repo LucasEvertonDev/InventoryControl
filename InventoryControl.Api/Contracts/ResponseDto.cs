@@ -1,8 +1,9 @@
 ﻿using InventoryControl.Models;
+using InventoryControl.Models.DTOs;
 
 namespace InventoryControl.Api.Contracts
 {
-    public class ResponseDto<TDto> where TDto : BaseModel
+    public class ResponseDto<TDto> where TDto : BaseDTO
     {
         public ResponseDto()
         {

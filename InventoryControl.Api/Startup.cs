@@ -1,4 +1,6 @@
 ﻿using InventoryControl.Api.BackService;
+using InventoryControl.Api.Factorys;
+using InventoryControl.Api.Factorys.Interfaces;
 using InventoryControl.Infra.IoC;
 
 public class Startup
@@ -22,6 +24,10 @@ public class Startup
         services.AddSwaggerGen();
 
         services.AddInfraEstructure(Configuration);
+
+        services.AddScoped<IMessageModelFactory, MessageModelFactory>();
+        services.AddScoped<IServicoModelFactory, ServicoModelFactory>();
+        services.AddScoped<IClienteModelFactory, ClienteModelFactory>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
