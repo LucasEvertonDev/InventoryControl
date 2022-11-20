@@ -99,20 +99,21 @@ namespace InventoryControl.Application.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<ServicoModel> UpdateServico(ServicoModel model)
         {
-            var servico = _imapper.Map<Servico>(model);
-
-            servico = await _servicoRepository.Update(servico);
+            var servicoDb = await _servicoRepository.FindById(model.Id);
+            servicoDb.Nome = model.Nome;
+            servicoDb.Descricao = model.Descricao;
+            servicoDb = await _servicoRepository.Update(servicoDb);
 
             _messageRepository.Insert(new Message
             {
-                JsonMessage = JsonConvert.SerializeObject(servico),
+                JsonMessage = JsonConvert.SerializeObject(servicoDb),
                 Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
-                TypeMessage = (int)TypeMessage.Cliente
+                TypeMessage = (int)TypeMessage.Servico
             });
 
             await _servicoRepository.CommitAsync();
 
-            return _imapper.Map<ServicoModel>(servico);
+            return _imapper.Map<ServicoModel>(servicoDb);
         }
 
         /// <summary>
