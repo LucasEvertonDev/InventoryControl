@@ -3,11 +3,11 @@ using InventoryControl.Models.Enums;
 
 namespace InventoryControl.Api.BackService
 {
-    public class MessageService : BackgroundService
+    public class MessageBackgroundService : BackgroundService
     {
         private readonly IMessageService _messageService;
 
-        public MessageService(IMessageService messageService) 
+        public MessageBackgroundService(IMessageService messageService) 
         {
             this._messageService = messageService;
         }

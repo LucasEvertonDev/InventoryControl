@@ -1,3 +1,4 @@
+using InventoryControl.Api.BackService;
 using InventoryControl.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfraEstructure(builder.Configuration);
 
-builder.Services.AddHostedService<MessagePersonConsumer>();
+builder.Services.AddHostedService<MessageBackgroundService>();
 
 var app = builder.Build();
 
