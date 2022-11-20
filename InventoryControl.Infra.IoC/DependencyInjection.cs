@@ -34,7 +34,7 @@ namespace InventoryControl.Infra.IoC
             services.AddScoped<IServicosService, ServicosService>();
             services.AddScoped<IAtendimentoService, AtendimentoService>();
             services.AddScoped<ICustosService, CustosService>();
-            services.AddScoped<IMessageService, MessageService>();
+            services.AddTransient<IMessageService, MessageService>();
 
 
             services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();

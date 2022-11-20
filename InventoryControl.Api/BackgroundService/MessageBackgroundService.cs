@@ -7,9 +7,9 @@ namespace InventoryControl.Api.BackService
     {
         private readonly IMessageService _messageService;
 
-        public MessageBackgroundService(IMessageService messageService) 
+        public MessageBackgroundService(IServiceScopeFactory factory)
         {
-            this._messageService = messageService;
+            _messageService = factory.CreateScope().ServiceProvider.GetRequiredService<IMessageService>();
         }
 
         /// <summary>
