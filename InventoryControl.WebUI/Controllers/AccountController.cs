@@ -1,15 +1,14 @@
-﻿using InventoryControl.Application.Interfaces;
-using InventoryControl.WebUI.Attributes;
-using InventoryControl.WebUI.Extensions;
-using InventoryControl.WebUI.Factories.Interfaces;
-using InventoryControl.WebUI.Identity;
-using InventoryControl.WebUI.ViewModels;
+﻿using AWASP.WebUI.Attributes;
+using AWASP.WebUI.Services.Interfaces;
+using AWASP.WebUI.Extensions;
+using AWASP.WebUI.Factories.Interfaces;
+using AWASP.WebUI.Identity;
+using AWASP.WebUI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace InventoryControl.WebUI.Controllers
+namespace AWASP.WebUI.Controllers
 {
     public class AccountController : BaseController
     {
@@ -56,7 +55,7 @@ namespace InventoryControl.WebUI.Controllers
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            try 
+            try
             {
                 if (ModelState.IsValid)
                 {
@@ -124,7 +123,7 @@ namespace InventoryControl.WebUI.Controllers
                     ModelState.AddModelError(nameof(viewModel.ConfirmPassword), "Passwords do not match.");
                 }
 
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var usuario = await _usuarioService.CreateUsuario(
                         await _usuarioModelFactory.PrepareUsuarioModel(viewModel));
@@ -154,9 +153,9 @@ namespace InventoryControl.WebUI.Controllers
         public IActionResult EditProfile(EditProfileViewModel viewModel)
         {
             if (ModelState.IsValid)
-            { 
+            {
             }
             return View(viewModel);
         }
-    }   
+    }
 }

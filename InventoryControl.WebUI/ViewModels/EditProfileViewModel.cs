@@ -1,8 +1,8 @@
-﻿using InventoryControl.WebUI.Enuns;
+﻿using AWASP.WebUI.Enuns;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace InventoryControl.WebUI.ViewModels
+namespace AWASP.WebUI.ViewModels
 {
     public class EditProfileViewModel : IValidatableObject
     {

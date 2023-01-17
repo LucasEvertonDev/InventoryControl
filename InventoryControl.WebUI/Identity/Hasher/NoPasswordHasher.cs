@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace InventoryControl.WebUI.Identity.Hasher
+namespace AWASP.WebUI.Identity.Hasher
 {
     public class NoPasswordHasher : IPasswordHasher<ApplicationUser>
     {

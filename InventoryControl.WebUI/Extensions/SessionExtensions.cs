@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace InventoryControl.WebUI.Extensions
+namespace AWASP.WebUI.Extensions
 {
     public static class SessionExtensions
     {

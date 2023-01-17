@@ -1,4 +1,4 @@
-﻿namespace InventoryControl.WebUI.ViewModels
+﻿namespace AWASP.WebUI.ViewModels
 {
     public class LayoutNavBarViewModel : BaseViewModel, IViewModel
     {

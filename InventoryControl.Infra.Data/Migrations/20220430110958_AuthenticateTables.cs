@@ -101,7 +101,7 @@ namespace InventoryControl.Infra.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_PerfilUsuarioId",
-                table: "Users",
+                table: "Usuario",
                 column: "PerfilUsuarioId");
         }
 
@@ -112,7 +112,7 @@ namespace InventoryControl.Infra.Data.Migrations
                 name: "MapPerfilUsuariosAcessos");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Acesso");

@@ -1,10 +1,10 @@
-﻿using InventoryControl.Application.Interfaces;
-using InventoryControl.Application.Models;
-using InventoryControl.WebUI.Factories.Interfaces;
-using InventoryControl.WebUI.ViewModels;
+﻿using AWASP.WebUI.Factories.Interfaces;
+using AWASP.WebUI.Services.Interfaces;
+using AWASP.WebUI.ViewModels;
+using AWASP.WebUI.Factories.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace InventoryControl.WebUI.Factories
+namespace AWASP.WebUI.Factories
 {
     public class UsuarioModelFactory : IUsuarioModelFactory
     {
@@ -37,10 +37,10 @@ namespace InventoryControl.WebUI.Factories
         /// 
         /// </summary>
         /// <returns></returns>
-        public Task<UsuarioModel> PrepareUsuarioModel(RegisterViewModel viewModel)
+        public Task<UsuarioViewModel> PrepareUsuarioModel(RegisterViewModel viewModel)
         {
-            return Task.FromResult(new UsuarioModel
-            { 
+            return Task.FromResult(new UsuarioViewModel
+            {
                 Email = viewModel.Email,
                 Login = viewModel.Username,
                 Nome = viewModel.Email,
@@ -55,12 +55,12 @@ namespace InventoryControl.WebUI.Factories
         /// </summary>
         /// <returns></returns>
         public async Task<EditProfileViewModel> PrepareEditProfileModel(int userId)
-        { 
+        {
             var user = await _usuarioService.FindById(userId);
             var perfis = await _usuarioService.FindPerfisUsuario();
-          
+
             var viewModel = new EditProfileViewModel()
-            { 
+            {
                 Email = user.Email,
                 Username = user.Login,
                 PerfilUsuarioId = user.PerfilUsuarioId,

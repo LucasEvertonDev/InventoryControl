@@ -1,4 +1,4 @@
-namespace InventoryControl.WebUI.Models
+namespace AWASP.WebUI.Models
 {
     public class ErrorViewModel
     {

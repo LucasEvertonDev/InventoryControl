@@ -1,7 +1,6 @@
-﻿using InventoryControl.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace InventoryControl.WebUI.Identity
+namespace AWASP.WebUI.Identity
 {
     public class ApplicationUser : IdentityUser<int>
     {

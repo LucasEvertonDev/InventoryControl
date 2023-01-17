@@ -1,11 +1,6 @@
-using InventoryControl.Infra.IoC;
-using InventoryControl.WebUI.Infrastructure;
-using InventoryControl.WebUI.Identity;
-using InventoryControl.WebUI.Identity.Hasher;
-using InventoryControl.WebUI.Identity.Stores;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
-using InventoryControl.WebUI.Config;
+using AWASP.WebUI.Config;
+using AWASP.WebUI.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,9 +27,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-builder.Services.AddInfraEstructure(builder.Configuration);
-
-builder.Services.IncludeWebUIDependencys();
+builder.Services.IncludeWebUIDependencys(builder.Configuration);
 
 var app = builder.Build();
 

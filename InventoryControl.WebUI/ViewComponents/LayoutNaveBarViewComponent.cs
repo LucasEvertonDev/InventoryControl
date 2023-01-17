@@ -1,9 +1,9 @@
-﻿using InventoryControl.WebUI.Identity;
-using InventoryControl.WebUI.ViewModels;
+﻿using AWASP.WebUI.Identity;
+using AWASP.WebUI.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InventoryControl.WebUI
+namespace AWASP.WebUI
 {
     [ViewComponent(Name = "LayoutNaveBarViewComponent")]
     public class LayoutNaveBarViewComponent : ViewComponent

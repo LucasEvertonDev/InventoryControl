@@ -1,9 +1,8 @@
-﻿using InventoryControl.WebUI.Extensions;
-using Microsoft.AspNetCore.Http;
+﻿using AWASP.WebUI.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace InventoryControl.WebUI.Attributes
+namespace AWASP.WebUI.Attributes
 {
     public class SessionExpireAttribute : ActionFilterAttribute
     {
@@ -17,7 +16,7 @@ namespace InventoryControl.WebUI.Attributes
             // check  sessions here
             if (string.IsNullOrEmpty(session.Get<int>("UserId").ToString()) || session.Get<int>("UserId") == 0)
             {
-                filterContext.Result = new RedirectToActionResult("Login", "Account", new {});
+                filterContext.Result = new RedirectToActionResult("Login", "Account", new { });
                 return;
             }
             base.OnActionExecuting(filterContext);

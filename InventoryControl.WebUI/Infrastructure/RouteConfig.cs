@@ -1,4 +1,4 @@
-﻿namespace InventoryControl.WebUI.Config
+﻿namespace AWASP.WebUI.Config
 {
     public static class RouteConfig
     {

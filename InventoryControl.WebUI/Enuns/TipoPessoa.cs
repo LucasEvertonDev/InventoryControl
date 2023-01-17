@@ -1,4 +1,4 @@
-﻿namespace InventoryControl.WebUI.Enuns
+﻿namespace AWASP.WebUI.Enuns
 {
     public enum TipoPessoa
     {

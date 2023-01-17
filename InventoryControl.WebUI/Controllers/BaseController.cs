@@ -1,14 +1,14 @@
-﻿using InventoryControl.Application.Utils;
+﻿using AWASP.WebUI.Utils;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InventoryControl.WebUI.Controllers
+namespace AWASP.WebUI.Controllers
 {
     public class BaseController : Controller
     {
         public BaseController()
-        { 
+        {
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -32,7 +32,7 @@ namespace InventoryControl.WebUI.Controllers
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="expireTime"></param>
-        public void UpdateCookie(string key, string value, int? expireTime = null) 
+        public void UpdateCookie(string key, string value, int? expireTime = null)
         {
             var cookie = GetCookie(key);
             if (!string.IsNullOrEmpty(cookie))

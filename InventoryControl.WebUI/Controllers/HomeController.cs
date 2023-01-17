@@ -1,11 +1,11 @@
-﻿using InventoryControl.WebUI.Attributes;
-using InventoryControl.WebUI.Identity.Constants;
-using InventoryControl.WebUI.Models;
+﻿using AWASP.WebUI.Attributes;
+using AWASP.WebUI.Identity.Constants;
+using AWASP.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace InventoryControl.WebUI.Controllers
+namespace AWASP.WebUI.Controllers
 {
     [Authorize]
     public class HomeController : Controller

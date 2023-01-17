@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace InventoryControl.Infra.IoC
 {
-    public static class DependencyInjection
+    public static class DependencyInjection2
     {
         /// <summary>
         /// 

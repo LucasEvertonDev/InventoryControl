@@ -1,7 +1,7 @@
-﻿using InventoryControl.Application.Interfaces;
+﻿using AWASP.WebUI.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace InventoryControl.WebUI.Identity.Stores
+namespace AWASP.WebUI.Identity.Stores
 {
     public class UserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IUserRoleStore<ApplicationUser>
     {

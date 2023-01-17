@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InventoryControl.WebUI.ViewModels
+namespace AWASP.WebUI.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
