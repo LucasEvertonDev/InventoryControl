@@ -82,6 +82,12 @@ namespace InventoryControl.Application.Services
             await _messageRepository.CommitAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clienteModel"></param>
+        /// <param name="idMessage"></param>
+        /// <returns></returns>
         public async Task IntegrateMessageCliente(ClienteModel clienteModel, int idMessage)
         {
             var cliente = _mapper.Map<Cliente>(clienteModel);
@@ -140,9 +146,27 @@ namespace InventoryControl.Application.Services
         /// </summary>
         /// <param name="messages"></param>
         /// <returns></returns>
-        public Task IntegrateMessage(MessageModel messageModel)
+        public async Task IntegrateMessage(MessageModel messageModel)
         {
-            return Task.CompletedTask;
+            try
+            {
+                if (messageModel.TypeMessage == (int)TypeMessage.Cliente)
+                {
+                    var cliente = JsonConvert.DeserializeObject<ClienteModel>(messageModel.JsonMessage);
+
+                    await IntegrateMessageCliente(cliente, messageModel.Id.GetValueOrDefault());
+                }
+                else if(messageModel.TypeMessage == (int)TypeMessage.Servico)
+                {
+                    var servico = JsonConvert.DeserializeObject<ServicoModel>(messageModel.JsonMessage);
+
+                    await IntegrateMessageServico(servico, messageModel.Id.GetValueOrDefault());
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public async Task UpdateMessageProcessada(int MessageId)

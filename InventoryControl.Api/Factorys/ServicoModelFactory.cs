@@ -43,7 +43,7 @@ namespace InventoryControl.Api.Factorys
         /// </summary>
         /// <param name="servicoDtos"></param>
         /// <returns></returns>
-        public List<ServicoModel> ConvertListDtoToListModel(List<ServicoDto> servicoDtos)
+        public List<ServicoModel> ConvertListDtoToListModel(List<ServicoDTO> servicoDtos)
         {
             var servicoModels = new List<ServicoModel>();
             if (servicoDtos != null && servicoDtos.Count > 0)

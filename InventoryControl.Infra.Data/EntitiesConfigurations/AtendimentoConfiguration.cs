@@ -13,6 +13,8 @@ namespace InventoryControl.Infra.Data.EntitiesConfigurations
             builder.Property(u => u.Data).IsRequired();
             builder.Property(u => u.Situacao).IsRequired();
             builder.Property(u => u.ObservacaoAtendimento).HasMaxLength(200);
+            builder.Property(u => u.IdExterno);
+            builder.Property(u => u.ClienteIdExterno);
             builder.HasOne(u => u.Cliente).WithMany(e => e.Atendimento).HasForeignKey(a => a.ClienteId);
         }
     }

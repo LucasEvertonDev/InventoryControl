@@ -16,6 +16,10 @@
 
         public int Situacao { get; set; }
 
+        public string IdExterno { get; set; }
+
+        public string ClienteIdExterno { get; set; }
+
         public Cliente Cliente { get; set; }
 
         public ICollection<MapServicosAtendimento> MapServicosAtendimentos { get; set; }

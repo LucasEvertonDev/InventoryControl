@@ -4,7 +4,9 @@ using InventoryControl.Application.Utils;
 using InventoryControl.Domain.Entities;
 using InventoryControl.Domain.Interfaces;
 using InventoryControl.Models.Entities;
+using InventoryControl.Models.Enums;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace InventoryControl.Application.Services
 {
@@ -14,18 +16,21 @@ namespace InventoryControl.Application.Services
         private readonly IRepository<Cliente> _clientRepository;
         private readonly IRepository<MapServicosAtendimento> _mapServicosAtendimentoRepository;
         private readonly IRepository<Servico> _servicoRepository;
+        private readonly IRepository<Message> _messageRepository;
         private readonly IMapper _imapper;
 
         public AtendimentoService(IRepository<Atendimento> atendimentoRepository,
             IRepository<Cliente> repositoryClient,
             IRepository<MapServicosAtendimento> repositoryMapServicosAtendimento,
             IRepository<Servico> repositoryServico,
+            IRepository<Message> messageRepository,
             IMapper mapper)
         {
             _atendimentoRepository = atendimentoRepository;
             _clientRepository = repositoryClient;
             _mapServicosAtendimentoRepository = repositoryMapServicosAtendimento;
             _servicoRepository = repositoryServico;
+            _messageRepository = messageRepository;
             _imapper = mapper;
         }
 
@@ -48,6 +53,8 @@ namespace InventoryControl.Application.Services
             Cliente cliente = await _clientRepository.Table.Where(c => c.Id == atendimento.ClienteId).FirstOrDefaultAsync();
 
             atendimento.Cliente = cliente ?? LogicalException("Não foi possível recuperar o cliente");
+            atendimento.IdExterno = Guid.NewGuid().ToString();
+            atendimento.ClienteIdExterno = cliente.IdExterno;
             atendimento = await _atendimentoRepository.Insert(atendimento);
 
             foreach (var associacao in model.ServicosAssociados)
@@ -58,10 +65,24 @@ namespace InventoryControl.Application.Services
                     Atendimento = atendimento,
                     ValorCobrado = associacao.ValorCobrado,
                     Servico = servico ?? LogicalException("Não foi possível recuperar o servico"),
+                    IdExterno = Guid.NewGuid().ToString(),
+                    AtendimentoIdExterno = atendimento.IdExterno,
+                    ServicoIdExterno = servico.IdExterno,
                 };
 
                 await _mapServicosAtendimentoRepository.Insert(map);
             }
+
+            await _atendimentoRepository.CommitAsync();
+
+            var atendimentoFinal = await FindById(atendimento.Id);
+
+            await _messageRepository.Insert(new Message
+            {
+                JsonMessage = JsonConvert.SerializeObject(atendimentoFinal),
+                Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                TypeMessage = (int)TypeMessage.Atendimento
+            });
 
             await _atendimentoRepository.CommitAsync();
 
@@ -129,10 +150,11 @@ namespace InventoryControl.Application.Services
             Cliente cliente = await _clientRepository.Table.Where(c => c.Id == atendimento.ClienteId).FirstOrDefaultAsync();
 
             atendimento.Cliente = cliente ?? LogicalException("Não foi possível recuperar o cliente");
+            atendimento.ClienteIdExterno = cliente.IdExterno;
             atendimento = await _atendimentoRepository.Update(atendimento);
 
-            var toDelete = await _mapServicosAtendimentoRepository.Table.Where(a => a.AtendimentoId == model.Id).ToListAsync();
-            foreach (var atend in toDelete)
+            var toUpdate = await _mapServicosAtendimentoRepository.Table.Where(a => a.AtendimentoId == model.Id).ToListAsync();
+            foreach (var atend in toUpdate)
             {
                 await _mapServicosAtendimentoRepository.Delete(atend);
             }
@@ -145,10 +167,24 @@ namespace InventoryControl.Application.Services
                     Atendimento = atendimento,
                     ValorCobrado = associacao.ValorCobrado,
                     Servico = servico ?? LogicalException("Não foi possível recuperar o servico"),
+                    IdExterno = Guid.NewGuid().ToString(),
+                    AtendimentoIdExterno = atendimento.IdExterno,
+                    ServicoIdExterno = servico.IdExterno,
                 };
 
                 await _mapServicosAtendimentoRepository.Insert(map);
             }
+
+            await _atendimentoRepository.CommitAsync();
+
+            var atendimentoFinal = await FindById(atendimento.Id);
+
+            await _messageRepository.Insert(new Message
+            {
+                JsonMessage = JsonConvert.SerializeObject(atendimentoFinal),
+                Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                TypeMessage = (int)TypeMessage.Atendimento
+            });
 
             await _atendimentoRepository.CommitAsync();
 

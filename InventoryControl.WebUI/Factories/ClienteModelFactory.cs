@@ -30,7 +30,8 @@ namespace InventoryControl.WebUI.Factories
                 DataNascimento = clienteModel.DataNascimento,
                 Id = clienteModel.Id,
                 Nome = clienteModel.Nome,
-                Telefone = clienteModel.Telefone
+                Telefone = clienteModel.Telefone,
+                IdExterno =clienteModel.IdExterno
             });
         }
 
@@ -47,6 +48,7 @@ namespace InventoryControl.WebUI.Factories
                 Id = clienteViewModel.Id,
                 Nome = clienteViewModel.Nome,
                 Telefone = String.IsNullOrEmpty(clienteViewModel.Telefone) ? "" : String.Join("", System.Text.RegularExpressions.Regex.Split(clienteViewModel.Telefone, @"[^\d]")),
+                IdExterno = clienteViewModel.IdExterno
             });
         }
 

@@ -37,6 +37,8 @@ namespace InventoryControl.WebUI.ViewModels.Atendimentos
         public List<SelectListItem>? ComboClientes { get; set; }
 
         public List<AssociacaoServicoAtendimentoViewModel> ServicosAssociados { get; set; }
+        public string? IdExterno { get; set; }
+        public string? ClienteIdExterno { get; set; }
 
         public AtendimentoViewModel()
         { 

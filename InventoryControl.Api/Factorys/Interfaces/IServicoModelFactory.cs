@@ -6,7 +6,7 @@ namespace InventoryControl.Api.Factorys.Interfaces
     public interface IServicoModelFactory
     {
         ServicoModel ConvertDtoToModel(ServicoDTO servicoDTO);
-        List<ServicoModel> ConvertListDtoToListModel(List<ServicoDto> servicoDtos);
+        List<ServicoModel> ConvertListDtoToListModel(List<ServicoDTO> servicoDtos);
         List<ServicoDTO> ConvertListModelToListDto(List<ServicoModel> servicoModels);
         ServicoDTO ConvertModelToDto(ServicoModel servicoModel);
     }

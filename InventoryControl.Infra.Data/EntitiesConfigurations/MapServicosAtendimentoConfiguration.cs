@@ -10,6 +10,9 @@ namespace InventoryControl.Infra.Data.EntitiesConfigurations
         {
             builder.HasKey(u => u.Id);
             builder.Property(u => u.ValorCobrado).IsRequired();
+            builder.Property(u => u.IdExterno);
+            builder.Property(u => u.ServicoIdExterno);
+            builder.Property(u => u.AtendimentoIdExterno);
             builder.HasOne(m => m.Atendimento)
                 .WithMany(aten => aten.MapServicosAtendimentos)
                 .HasForeignKey(m => m.AtendimentoId);

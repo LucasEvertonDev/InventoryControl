@@ -26,7 +26,7 @@ namespace InventoryControl.Api.BackService
             _logger.LogInformation("Timed Hosted Service running.");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromMinutes(2));
+                TimeSpan.FromMinutes(1));
 
             return Task.CompletedTask;
         }
@@ -42,7 +42,12 @@ namespace InventoryControl.Api.BackService
             {
                 foreach (var message in messages)
                 {
-                    _messageService.IntegrateMessage(message);
+                    Task.WaitAll(
+                        Task.Run(async () =>
+                        {
+                            await _messageService.IntegrateMessage(message);
+                        })
+                    );
                 }
             }
         }
