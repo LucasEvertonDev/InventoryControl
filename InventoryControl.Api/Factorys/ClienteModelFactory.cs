@@ -35,7 +35,7 @@ namespace InventoryControl.Api.Factorys
             return new ClienteDTO()
             {
                 Id = clienteModel.Id,
-                DataNascimento = clienteModel.DataNascimento.HasValue ? clienteModel.DataNascimento.Value.ToString("yyyy-MM-dd hh:mm:ss").Replace("", "T") : "",
+                DataNascimento = clienteModel.DataNascimento.HasValue ? clienteModel.DataNascimento.GetValueOrDefault().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") :"",
                 Cpf = clienteModel.Cpf,
                 IdExterno = clienteModel.IdExterno,
                 Nome = clienteModel.Nome,

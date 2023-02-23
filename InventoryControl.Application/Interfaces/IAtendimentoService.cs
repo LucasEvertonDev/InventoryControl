@@ -14,5 +14,8 @@ namespace InventoryControl.Application.Interfaces
         Task<List<AtendimentoModel>> SeachAgendamentos(AtendimentoModel model, DateTime dataInicio, DateTime datFim);
 
         Task<AtendimentoModel> FindById(int id);
+
+        Task<List<AtendimentoModel>> GetAtendimentos();
+        Task UpdateCarga();
     }
 }

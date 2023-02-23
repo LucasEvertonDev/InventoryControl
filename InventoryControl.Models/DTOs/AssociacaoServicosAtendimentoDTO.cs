@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using InventoryControl.Models.DTOs;
 using Newtonsoft.Json;
 
 namespace InventoryControl.Models.Entities
 {
-    public class AssociacaoServicosAtendimentoModel : BaseModel
+    public class AssociacaoServicosAtendimentoDTO : BaseDTO
     {
         public int ServicoId { get; set; }
         public int AtendimentoId { get; set; }

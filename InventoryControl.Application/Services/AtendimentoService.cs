@@ -57,7 +57,7 @@ namespace InventoryControl.Application.Services
             atendimento.ClienteIdExterno = cliente.IdExterno;
             atendimento = await _atendimentoRepository.Insert(atendimento);
 
-            foreach (var associacao in model.ServicosAssociados)
+            foreach (var associacao in model.MapServicosAtendimen)
             {
                 var servico = await _servicoRepository.Table.Where(s => s.Id == associacao.ServicoId).FirstOrDefaultAsync();
                 var map = new MapServicosAtendimento
@@ -99,7 +99,7 @@ namespace InventoryControl.Application.Services
         {
             var atendimento = await _atendimentoRepository.Table.Where(a => a.Id == id)?.Include(a => a.MapServicosAtendimentos).FirstOrDefaultAsync();
             var atendimentoModel = _imapper.Map<AtendimentoModel>(atendimento);
-            atendimentoModel.ServicosAssociados = _imapper.Map<List<AssociacaoServicosAtendimentoModel>>(atendimento.MapServicosAtendimentos);
+            atendimentoModel.MapServicosAtendimen = _imapper.Map<List<AssociacaoServicosAtendimentoModel>>(atendimento.MapServicosAtendimentos);
 
             return atendimentoModel;
         }
@@ -116,7 +116,7 @@ namespace InventoryControl.Application.Services
             var atendimentosModel = _imapper.Map<List<AtendimentoModel>>(atendimentos);
             atendimentosModel.ForEach(a =>
             {
-                a.ServicosAssociados = _imapper.Map<List<AssociacaoServicosAtendimentoModel>>(atendimentos.Where(at => at.Id == a.Id).First().MapServicosAtendimentos);
+                a.MapServicosAtendimen = _imapper.Map<List<AssociacaoServicosAtendimentoModel>>(atendimentos.Where(at => at.Id == a.Id).First().MapServicosAtendimentos);
             });
             return atendimentosModel.Distinct().ToList();
         }
@@ -143,6 +143,56 @@ namespace InventoryControl.Application.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        public async Task<List<AtendimentoModel>> GetAtendimentos()
+        {
+            var list = (
+                await _atendimentoRepository.Table
+                    .Where(a => a.Situacao == 0)
+                    .Include(c => c.MapServicosAtendimentos).ToListAsync()).OrderByDescending(a => a.Data).ToList();
+
+            var atendimentos = new List<AtendimentoModel>();
+
+            try 
+            { 
+                foreach(var atend in list)
+                {
+                    var atendimentoModel = _imapper.Map<AtendimentoModel>(atend);
+
+                    atend.MapServicosAtendimentos.ToList().ForEach(servico =>
+                    {
+                        var servicoModel = new AssociacaoServicosAtendimentoModel()
+                        { 
+                            AtendimentoId = servico.AtendimentoId,
+                            AtendimentoIdExterno = servico.AtendimentoIdExterno,
+                            Id = servico.Id,
+                            IdExterno = servico.IdExterno,
+                            ServicoId = servico.ServicoId,
+                            ServicoIdExterno = servico.ServicoIdExterno,
+                            ValorCobrado = servico.ValorCobrado,
+                        };
+
+                        atendimentoModel.MapServicosAtendimen = new List<AssociacaoServicosAtendimentoModel>();
+                        atendimentoModel.MapServicosAtendimen.Add(servicoModel);
+                    });
+
+                    atendimentos.Add(atendimentoModel);
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+
+
+            return atendimentos;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<Atendimento> UpdateAtendimento(AtendimentoModel model)
         {
             Atendimento atendimento = _imapper.Map<Atendimento>(model);
@@ -159,7 +209,7 @@ namespace InventoryControl.Application.Services
                 await _mapServicosAtendimentoRepository.Delete(atend);
             }
 
-            foreach (var associacao in model.ServicosAssociados)
+            foreach (var associacao in model.MapServicosAtendimen)
             {
                 var servico = await _servicoRepository.Table.Where(s => s.Id == associacao.ServicoId).FirstOrDefaultAsync();
                 var map = new MapServicosAtendimento
@@ -189,6 +239,49 @@ namespace InventoryControl.Application.Services
             await _atendimentoRepository.CommitAsync();
 
             return atendimento;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task UpdateCarga()
+        {
+            try
+            {
+                var servicos = await _atendimentoRepository.Table.Include(a => a.MapServicosAtendimentos)
+                    .Where(a => a.Situacao == 0).ToListAsync();
+                  
+                foreach (var servico in servicos)
+                {
+                    servico.IdExterno = Guid.NewGuid().ToString();
+                    _atendimentoRepository.Update(servico);
+                 
+                    foreach (var i in servico.MapServicosAtendimentos)
+                    {
+                        i.IdExterno = Guid.NewGuid().ToString();
+                        _mapServicosAtendimentoRepository.Update(i);
+                    }
+
+                    //_messageRepository.Insert(new Message
+                    //{
+                    //    JsonMessage = JsonConvert.SerializeObject(servico),
+                    //    Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                    //    TypeMessage = (int)TypeMessage.Servico
+                    //});
+                }
+
+                await _messageRepository.CommitAsync();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                await _servicoRepository.CommitAsync();
+            }
         }
     }
 }

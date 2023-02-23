@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using InventoryControl.Models.DTOs;
+using Newtonsoft.Json;
 
 namespace InventoryControl.Models.Entities
 {
-    public class AtendimentoModel : BaseModel
+    public class AtendimentoDTO : BaseDTO
     {
-        public DateTime Data { get; set; }
+        public string Data { get; set; }
 
         public int ClienteId { get; set; }
         [JsonIgnore]
@@ -22,6 +23,6 @@ namespace InventoryControl.Models.Entities
         public string? IdExterno { get; set; }
         public string? ClienteIdExterno { get; set; }
 
-        public List<AssociacaoServicosAtendimentoModel> MapServicosAtendimen { get; set; }
+        public List<AssociacaoServicosAtendimentoModel> ServicosAssociados { get; set; }
     }
 }

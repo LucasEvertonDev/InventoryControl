@@ -65,11 +65,11 @@ namespace InventoryControl.WebUI.Factories
                 ValorAtendimento = model.ValorAtendimento.ToString(),
                 ValorPago = model.ValorPago?.ToString(),
                 ComboClientes = clientes.Select(a => new SelectListItem { Text = a.Nome, Value = a.Id.ToString() }).ToList(),
-                ServicosAssociados = model.ServicosAssociados.Select(servico => 
+                ServicosAssociados = model.MapServicosAtendimen.Select(servico => 
                     new AssociacaoServicoAtendimentoViewModel 
                     {
                         AtendimentoId = model.Id,
-                        PosicaoLista = model.ServicosAssociados.ToList().FindIndex(a => a.Id == servico.Id),
+                        PosicaoLista = model.MapServicosAtendimen.ToList().FindIndex(a => a.Id == servico.Id),
                         Id = servico.Id,
                         ServicoId = servico.ServicoId,
                         ValorCobrado = servico.ValorCobrado.ToString(),
@@ -112,7 +112,7 @@ namespace InventoryControl.WebUI.Factories
                 Situacao = (int)viewModel.SituacaoAtendimento,
                 ValorAtendimento = string.IsNullOrEmpty(viewModel.ValorAtendimento) ? 0 : decimal.Parse(viewModel.ValorAtendimento),
                 ValorPago = string.IsNullOrEmpty(viewModel.ValorPago) ? null : decimal.Parse(viewModel.ValorPago),
-                ServicosAssociados = viewModel.ServicosAssociados.Where(a => !a.Apagado).Select(a => 
+                MapServicosAtendimen = viewModel.ServicosAssociados.Where(a => !a.Apagado).Select(a => 
                     new AssociacaoServicosAtendimentoModel
                     {
                         AtendimentoId = a.Id.GetValueOrDefault(),

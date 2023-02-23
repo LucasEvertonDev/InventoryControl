@@ -28,6 +28,8 @@ public class Startup
         services.AddScoped<IMessageModelFactory, MessageModelFactory>();
         services.AddScoped<IServicoModelFactory, ServicoModelFactory>();
         services.AddScoped<IClienteModelFactory, ClienteModelFactory>();
+        services.AddScoped<IAtendimentoModelFactory, AtendimentoModelFactory>();
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

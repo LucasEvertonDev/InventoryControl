@@ -55,7 +55,7 @@ namespace InventoryControl.Application.Services
                 .Where(a => !situacao.HasValue || a.Situacao == situacao.Value)
                 .ToListAsync();
 
-            foreach (var msg in messages)
+            foreach (var msg in messages.OrderBy(a => a.Id))
             {
                 msg.Situacao = (int)SituacaoMessage.PROCESSADA;
                 _messageRepository.Update(msg);

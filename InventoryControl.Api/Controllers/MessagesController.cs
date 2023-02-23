@@ -20,6 +20,8 @@ namespace InventoryControl.Api.Controllers
         private readonly IMessageModelFactory _messageModelFactory;
         private readonly IClienteModelFactory _clienteModelFactory;
         private readonly IServicoModelFactory _servicoModelFactory;
+        private readonly IAtendimentoService _atendimentoService;
+        private readonly IAtendimentoModelFactory _atendimentoModelFactory;
 
         public MessagesController(ILogger<MessagesController> logger,
             IMessageService messageService,
@@ -27,7 +29,9 @@ namespace InventoryControl.Api.Controllers
             IServicosService servicosService,
             IMessageModelFactory messageModelFactory,
             IClienteModelFactory clienteModelFactory,
-            IServicoModelFactory servicoModelFactory
+            IServicoModelFactory servicoModelFactory,
+            IAtendimentoService atendimentoService,
+            IAtendimentoModelFactory atendimentoModelFactory
         )
         {
             _logger = logger;
@@ -37,6 +41,8 @@ namespace InventoryControl.Api.Controllers
             this._messageModelFactory = messageModelFactory;
             this._clienteModelFactory = clienteModelFactory;
             this._servicoModelFactory = servicoModelFactory;
+            this._atendimentoService = atendimentoService;
+            this._atendimentoModelFactory = atendimentoModelFactory;
         }
 
         /// <summary>
@@ -102,6 +108,7 @@ namespace InventoryControl.Api.Controllers
             {
                 var clientes = await _clienteService.SearchClientes(new ClienteModel()); ;
                 var servicos = await _servicosService.SearchServicos(new ServicoModel());
+                var mapServicos = await _atendimentoService.GetAtendimentos();
 
                 var itens = new List<MessageDTO>();
 
@@ -124,6 +131,17 @@ namespace InventoryControl.Api.Controllers
                         TypeMessage = (int)TypeMessage.Servico
                     });
                 });
+
+                //mapServicos.ForEach(servico =>
+                //{
+                //    itens.Add(new MessageDTO()
+                //    {
+                //        JsonMessage = JsonConvert.SerializeObject(_atendimentoModelFactory.ConvertModelToDto(servico)),
+                //        Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                //        TypeMessage = (int)TypeMessage.Atendimento
+                //    });
+                //});
+
 
                 return new ResponseDto<MessageDTO>
                 {
@@ -150,6 +168,7 @@ namespace InventoryControl.Api.Controllers
         {
             await _clienteService.UpdateCarga();
             await _servicosService.UpdateCarga();
+            await _atendimentoService.UpdateCarga();
             return new ResponseDto<MessageDTO>();
         }
     }

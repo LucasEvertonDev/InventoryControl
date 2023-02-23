@@ -129,12 +129,12 @@ namespace InventoryControl.Application.Services
                 {
                     servico.IdExterno = Guid.NewGuid().ToString();
                     _servicoRepository.Update(servico);
-                    _messageRepository.Insert(new Message
-                    {
-                        JsonMessage = JsonConvert.SerializeObject(servico),
-                        Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
-                        TypeMessage = (int)TypeMessage.Servico
-                    });
+                    //_messageRepository.Insert(new Message
+                    //{
+                    //    JsonMessage = JsonConvert.SerializeObject(servico),
+                    //    Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                    //    TypeMessage = (int)TypeMessage.Servico
+                    //});
                 }
             }
             catch
@@ -146,6 +146,7 @@ namespace InventoryControl.Application.Services
                 await _servicoRepository.CommitAsync();
             }
         }
+
 
     }
 }

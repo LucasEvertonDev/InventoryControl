@@ -120,6 +120,13 @@ namespace InventoryControl.Application.Services
         {
             try
             {
+                var lista = await _messageRepository.Table.ToListAsync();
+
+                foreach(var msg in lista)
+                {
+                    _messageRepository.Delete(msg);
+                }
+
                 var clientes = await _clienteRepository.Table.ToListAsync();
                 foreach (var cliente in clientes)
                 {
@@ -131,12 +138,12 @@ namespace InventoryControl.Application.Services
 
                     cliente.IdExterno = Guid.NewGuid().ToString();
                     _clienteRepository.Update(cliente);
-                    _messageRepository.Insert(new Message
-                    {
-                        JsonMessage = JsonConvert.SerializeObject(cliente),
-                        Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
-                        TypeMessage = (int)TypeMessage.Cliente
-                    });
+                    //_messageRepository.Insert(new Message
+                    //{
+                    //    JsonMessage = JsonConvert.SerializeObject(cliente),
+                    //    Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                    //    TypeMessage = (int)TypeMessage.Cliente
+                    //});
 
                     await _clienteRepository.CommitAsync();
                 }
