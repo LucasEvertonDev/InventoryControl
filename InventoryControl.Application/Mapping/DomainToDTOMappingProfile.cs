@@ -14,6 +14,7 @@ namespace InventoryControl.Application.Mapping
             CreateMap<Atendimento, AtendimentoModel>().ReverseMap();
             CreateMap<AssociacaoServicosAtendimentoModel, MapServicosAtendimento>().ReverseMap();
             CreateMap<Custo, CustosModel>().ReverseMap();
+            CreateMap<Atendimento, AtendimentoDTO>().ReverseMap();
             CreateMap<Message, MessageModel>().ReverseMap();
         }
     }

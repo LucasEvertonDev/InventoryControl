@@ -138,13 +138,7 @@ namespace InventoryControl.Application.Services
 
                     cliente.IdExterno = Guid.NewGuid().ToString();
                     _clienteRepository.Update(cliente);
-                    //_messageRepository.Insert(new Message
-                    //{
-                    //    JsonMessage = JsonConvert.SerializeObject(cliente),
-                    //    Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
-                    //    TypeMessage = (int)TypeMessage.Cliente
-                    //});
-
+                   
                     await _clienteRepository.CommitAsync();
                 }
             }

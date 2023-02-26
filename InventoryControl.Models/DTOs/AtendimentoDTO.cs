@@ -23,6 +23,6 @@ namespace InventoryControl.Models.Entities
         public string? IdExterno { get; set; }
         public string? ClienteIdExterno { get; set; }
 
-        public List<AssociacaoServicosAtendimentoModel> ServicosAssociados { get; set; }
+        public List<AssociacaoServicosAtendimentoModel> MapServicosAtendimen { get; set; }
     }
 }

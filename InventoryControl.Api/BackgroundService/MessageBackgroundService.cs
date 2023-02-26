@@ -37,19 +37,20 @@ namespace InventoryControl.Api.BackService
         /// <param name="state"></param>
         private void DoWork(object? state)
         {
-            var messages = _messageService.Find((int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_WEB).Result;
-            if (messages != null && messages.Any())
-            {
-                foreach (var message in messages)
+            Task.WaitAll(
+                Task.Run(async () =>
                 {
-                    Task.WaitAll(
-                        Task.Run(async () =>
+                    var messages = await _messageService.Find((int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_WEB);
+
+                    if (messages != null && messages.Any())
+                    {
+                        foreach (var message in messages)
                         {
                             await _messageService.IntegrateMessage(message);
-                        })
-                    );
-                }
-            }
+                        }
+                    }
+                })
+            );
         }
 
         /// <summary>

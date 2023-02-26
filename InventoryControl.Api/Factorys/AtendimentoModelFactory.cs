@@ -41,7 +41,7 @@ namespace InventoryControl.Api.Factorys
                 Situacao = atendimentoModel.Situacao ,
                 ValorAtendimento = atendimentoModel.ValorAtendimento,
                 ValorPago = atendimentoModel.ValorPago,
-                ServicosAssociados = list
+                MapServicosAtendimen = list
             };
         }
     }

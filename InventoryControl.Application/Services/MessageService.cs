@@ -14,16 +14,22 @@ namespace InventoryControl.Application.Services
         private readonly IRepository<Message> _messageRepository;
         private readonly IRepository<Cliente> _clienteRepository;
         private readonly IRepository<Servico> _servicoRepository;
+        private readonly IRepository<Atendimento> _atendimentoRepository;
+        private readonly IRepository<MapServicosAtendimento> _mapServicosAtendimentoRepository;
         private readonly IMapper _mapper;
 
         public MessageService(IRepository<Message> messageRepository,
             IRepository<Cliente> clienteRepository,
             IRepository<Servico> servicoRepository,
-            IMapper mapper)
+            IRepository<Atendimento> atendimentoRepository,
+            IMapper mapper,
+            IRepository<MapServicosAtendimento> mapServicosAtendimentoRepository)
         {
             this._messageRepository = messageRepository;
             this._clienteRepository = clienteRepository;
             this._servicoRepository = servicoRepository;
+            this._atendimentoRepository = atendimentoRepository;
+            this._mapServicosAtendimentoRepository = mapServicosAtendimentoRepository;
             this._mapper = mapper;
         }
 
@@ -140,6 +146,93 @@ namespace InventoryControl.Application.Services
             await UpdateMessageProcessada(idMessage);
         }
 
+        /// 
+        /// </summary>
+        /// <param name="servicoModel"></param>
+        /// <returns></returns>
+        public async Task IntegrateMessageAtendimento(AtendimentoModel atendimentoModel, int idMessage)
+        {
+            var atendimento = _mapper.Map<Atendimento>(atendimentoModel);
+
+            var atendimentoDb = await _atendimentoRepository.Table.Where(c => c.IdExterno == atendimento.IdExterno).FirstOrDefaultAsync();
+
+            if (atendimentoDb != null)
+            {
+                var clienteDb = await _clienteRepository.Table.Where(cliente => cliente.IdExterno == atendimento.ClienteIdExterno).FirstOrDefaultAsync();
+
+                atendimentoDb.Data = atendimento.Data;
+                atendimentoDb.ClienteId = clienteDb.Id;
+                atendimentoDb.Situacao = atendimento.Situacao;
+                atendimentoDb.ObservacaoAtendimento = atendimento.ObservacaoAtendimento;
+                atendimentoDb.ValorPago = atendimento.ValorPago;
+                atendimentoDb.ValorAtendimento = atendimento.ValorAtendimento;
+
+                _atendimentoRepository.Update(atendimentoDb);
+
+                var maps = await _mapServicosAtendimentoRepository.Table.Where(a => a.AtendimentoId == atendimentoDb.Id).ToListAsync();
+
+                maps.ForEach(a =>
+                {
+                    _mapServicosAtendimentoRepository.Delete(a);
+                });
+
+                foreach (var mapServicoModel in atendimentoModel.MapServicosAtendimen)
+                {
+                    var mapServico = _mapper.Map<MapServicosAtendimento>(mapServicoModel);
+                 
+                    var servicoDb = _servicoRepository.Table.Where(a => a.IdExterno == mapServico.IdExterno).FirstOrDefaultAsync();
+                    mapServico.Id = -1;
+                    mapServico.ServicoId = servicoDb.Id;
+                    mapServico.AtendimentoId = atendimentoDb.Id;
+
+                    await _mapServicosAtendimentoRepository.Insert(mapServico);
+                }
+            }
+            else
+            {
+
+                var clienteDb = await _clienteRepository.Table.Where(cliente => cliente.IdExterno == atendimento.ClienteIdExterno).FirstOrDefaultAsync();
+
+                var atendimentoToSave = new Atendimento
+                {
+                    Data = atendimento.Data,
+                    Cliente = clienteDb,
+                    ClienteId = clienteDb.Id,
+                    Situacao = atendimento.Situacao,
+                    ObservacaoAtendimento = atendimento.ObservacaoAtendimento,
+                    ValorPago = atendimento.ValorPago,
+                    ValorAtendimento = atendimento.ValorAtendimento,
+                    IdExterno = atendimento.IdExterno,
+                    ClienteAtrasado = atendimento.ClienteAtrasado,
+                    ClienteIdExterno = atendimento.ClienteIdExterno,
+                    MapServicosAtendimentos = new List<MapServicosAtendimento>()
+                };
+
+                atendimentoToSave = await _atendimentoRepository.Insert(atendimentoToSave);
+
+                foreach (var mapServicoModel in atendimentoModel.MapServicosAtendimen)
+                {
+                    var servicoDb = await _servicoRepository.Table.Where(a => a.IdExterno == mapServicoModel.ServicoIdExterno).FirstOrDefaultAsync();
+
+                    var mapServico = new MapServicosAtendimento()
+                    {
+                        IdExterno = mapServicoModel.IdExterno,
+                        AtendimentoIdExterno = atendimentoToSave.IdExterno,
+                        AtendimentoId = atendimentoToSave.Id,
+                        ServicoId = servicoDb.Id,
+                        ServicoIdExterno = servicoDb.IdExterno,
+                        Atendimento = atendimentoToSave,
+                        Servico = servicoDb,
+                        ValorCobrado = mapServicoModel.ValorCobrado,
+                    };
+
+                    await _mapServicosAtendimentoRepository.Insert(mapServico);
+                }
+            }
+
+            await UpdateMessageProcessada(idMessage);
+        }
+
 
         /// <summary>
         /// 
@@ -161,6 +254,12 @@ namespace InventoryControl.Application.Services
                     var servico = JsonConvert.DeserializeObject<ServicoModel>(messageModel.JsonMessage);
 
                     await IntegrateMessageServico(servico, messageModel.Id.GetValueOrDefault());
+                }
+                else if (messageModel.TypeMessage == (int)TypeMessage.Atendimento)
+                {
+                    var atendimentoModel = JsonConvert.DeserializeObject<AtendimentoModel>(messageModel.JsonMessage);
+
+                    await IntegrateMessageAtendimento(atendimentoModel, messageModel.Id.GetValueOrDefault());
                 }
             }
             catch (Exception ex)

@@ -263,13 +263,6 @@ namespace InventoryControl.Application.Services
                         i.IdExterno = Guid.NewGuid().ToString();
                         _mapServicosAtendimentoRepository.Update(i);
                     }
-
-                    //_messageRepository.Insert(new Message
-                    //{
-                    //    JsonMessage = JsonConvert.SerializeObject(servico),
-                    //    Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
-                    //    TypeMessage = (int)TypeMessage.Servico
-                    //});
                 }
 
                 await _messageRepository.CommitAsync();

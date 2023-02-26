@@ -132,15 +132,15 @@ namespace InventoryControl.Api.Controllers
                     });
                 });
 
-                //mapServicos.ForEach(servico =>
-                //{
-                //    itens.Add(new MessageDTO()
-                //    {
-                //        JsonMessage = JsonConvert.SerializeObject(_atendimentoModelFactory.ConvertModelToDto(servico)),
-                //        Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
-                //        TypeMessage = (int)TypeMessage.Atendimento
-                //    });
-                //});
+                mapServicos.ForEach(servico =>
+                {
+                    itens.Add(new MessageDTO()
+                    {
+                        JsonMessage = JsonConvert.SerializeObject(_atendimentoModelFactory.ConvertModelToDto(servico)),
+                        Situacao = (int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_MOBILE,
+                        TypeMessage = (int)TypeMessage.Atendimento
+                    });
+                });
 
 
                 return new ResponseDto<MessageDTO>
