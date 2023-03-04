@@ -7,6 +7,7 @@ using InventoryControl.Domain.Interfaces;
 using InventoryControl.Infra.Data.Context;
 using InventoryControl.Infra.Data.Repository;
 using InventoryControl.Infra.IoC.Extensions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

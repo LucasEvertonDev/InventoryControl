@@ -1,7 +1,10 @@
-﻿<footer class="content-footer footer bg-footer-theme">
+﻿@using Microsoft.Data.SqlClient;
+@using Microsoft.Extensions.Configuration;
+@inject IConfiguration Configuration
+<footer class="content-footer footer bg-footer-theme">
     <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
         <div class="mb-2 mb-md-0">
-            ©2022, made with by Lucas Everton
+            ©2022, made with by Lucas Everton -  @(new SqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnection")).InitialCatalog);
         </div>
         <div>
             <a href="https://github.com/LucasEvertonDev/" target="_blank" class="footer-link me-4">GitHub</a>
