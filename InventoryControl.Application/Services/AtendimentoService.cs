@@ -255,6 +255,7 @@ namespace InventoryControl.Application.Services
                   
                 foreach (var servico in servicos)
                 {
+                    servico.Situacao = servico.Data < DateTime.Now.AddDays(-3) ? 2 : 0;
                     servico.IdExterno = Guid.NewGuid().ToString();
                     _atendimentoRepository.Update(servico);
                  

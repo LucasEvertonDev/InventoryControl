@@ -40,15 +40,23 @@ namespace InventoryControl.Api.BackService
             Task.WaitAll(
                 Task.Run(async () =>
                 {
-                    var messages = await _messageService.Find((int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_WEB);
-
-                    if (messages != null && messages.Any())
+                    try 
                     {
-                        foreach (var message in messages)
+                        var messages = await _messageService.Find((int)SituacaoMessage.AGUARDANDO_PROCESSAMENTO_WEB, false);
+
+                        if (messages != null && messages.Any())
                         {
-                            await _messageService.IntegrateMessage(message);
+                            foreach (var message in messages)
+                            {
+                                await _messageService.IntegrateMessage(message);
+                            }
                         }
                     }
+                    catch(Exception e)
+                    {
+
+                    }
+
                 })
             );
         }

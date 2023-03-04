@@ -13,7 +13,9 @@ namespace InventoryControl.Infra.Data.Context
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options)
-        { }
+        {
+            //this.Database.SetCommandTimeout(300);
+        }
 
         public DbSet<Usuario> Users { get; set; }
         public DbSet<Acesso> Acessos { get; set; }

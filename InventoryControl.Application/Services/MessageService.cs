@@ -5,6 +5,7 @@ using InventoryControl.Domain.Interfaces;
 using InventoryControl.Models.Entities;
 using InventoryControl.Models.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 
 namespace InventoryControl.Application.Services
@@ -55,19 +56,23 @@ namespace InventoryControl.Application.Services
         /// <param name="model"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<List<MessageModel>> Find(int? situacao)
+        public async Task<List<MessageModel>> Find(int? situacao, bool SaveProcessed = true)
         {
             var messages = await _messageRepository.Table
                 .Where(a => !situacao.HasValue || a.Situacao == situacao.Value)
                 .ToListAsync();
 
-            foreach (var msg in messages.OrderBy(a => a.Id))
+            if (SaveProcessed)
             {
-                msg.Situacao = (int)SituacaoMessage.PROCESSADA;
-                _messageRepository.Update(msg);
-            }
+                foreach (var msg in messages)
+                {
+                    msg.Situacao = (int)SituacaoMessage.PROCESSADA;
 
-            await _messageRepository.CommitAsync();
+                    await _messageRepository.Update(msg);
+                }
+
+                await _messageRepository.CommitAsync();
+            }
 
             return _mapper.Map<List<MessageModel>>(messages);
         }
@@ -162,6 +167,8 @@ namespace InventoryControl.Application.Services
 
                 atendimentoDb.Data = atendimento.Data;
                 atendimentoDb.ClienteId = clienteDb.Id;
+                atendimentoDb.Cliente = clienteDb;
+                atendimentoDb.ClienteIdExterno = atendimento.ClienteIdExterno;
                 atendimentoDb.Situacao = atendimento.Situacao;
                 atendimentoDb.ObservacaoAtendimento = atendimento.ObservacaoAtendimento;
                 atendimentoDb.ValorPago = atendimento.ValorPago;
@@ -178,12 +185,19 @@ namespace InventoryControl.Application.Services
 
                 foreach (var mapServicoModel in atendimentoModel.MapServicosAtendimen)
                 {
-                    var mapServico = _mapper.Map<MapServicosAtendimento>(mapServicoModel);
-                 
-                    var servicoDb = _servicoRepository.Table.Where(a => a.IdExterno == mapServico.IdExterno).FirstOrDefaultAsync();
-                    mapServico.Id = -1;
-                    mapServico.ServicoId = servicoDb.Id;
-                    mapServico.AtendimentoId = atendimentoDb.Id;
+                    var servicoDb = await _servicoRepository.Table.Where(a => a.IdExterno == mapServicoModel.ServicoIdExterno).FirstOrDefaultAsync();
+
+                    var mapServico = new MapServicosAtendimento()
+                    {
+                        IdExterno = mapServicoModel.IdExterno,
+                        AtendimentoIdExterno = atendimentoDb.IdExterno,
+                        AtendimentoId = atendimentoDb.Id,
+                        ServicoId = servicoDb.Id,
+                        ServicoIdExterno = servicoDb.IdExterno,
+                        Atendimento = atendimentoDb,
+                        Servico = servicoDb,
+                        ValorCobrado = mapServicoModel.ValorCobrado,
+                    };
 
                     await _mapServicosAtendimentoRepository.Insert(mapServico);
                 }
