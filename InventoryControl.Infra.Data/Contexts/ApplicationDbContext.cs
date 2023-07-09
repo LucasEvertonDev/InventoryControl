@@ -1,10 +1,5 @@
 ﻿using InventoryControl.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventoryControl.Infra.Data.Context
 {
@@ -15,7 +10,7 @@ namespace InventoryControl.Infra.Data.Context
            : base(options)
         { }
 
-        public DbSet<Usuario> Users { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Acesso> Acessos { get; set; }
         public DbSet<MapPerfilUsuariosAcessos> MapPerfilUsuariosAcessos { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)

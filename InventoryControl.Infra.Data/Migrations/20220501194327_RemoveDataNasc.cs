@@ -13,7 +13,7 @@ namespace InventoryControl.Infra.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "DataNascimento",
-                table: "Usuario");
+                table: "Usuarios");
         }
 
         /// <inheritdoc />

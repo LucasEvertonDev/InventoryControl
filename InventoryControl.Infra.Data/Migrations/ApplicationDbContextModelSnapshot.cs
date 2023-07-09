@@ -135,7 +135,7 @@ namespace InventoryControl.Infra.Data.Migrations
 
                     b.HasIndex("PerfilUsuarioId");
 
-                    b.ToTable("Usuario", (string)null);
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("InventoryControl.Domain.Entities.MapPerfilUsuariosAcessos", b =>
